@@ -1,0 +1,7 @@
+# Mac system file
+.DS_Store
+
+# Temp files
+vimrc
+theme/
+pluginManager/
