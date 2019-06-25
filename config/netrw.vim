@@ -12,9 +12,13 @@
 let g:netrw_liststyle = 3   " Netrw默认展示文件目录结构
 let g:netrw_keepdir = 0     " 让Netrw的current directory和我们正在浏览的目录一致，否则每次执行mc，mm，md等之前都要先c一下
 
+" 自定义markfile的高亮
+highlight clear netrwMarkFile
+hi link netrwMarkFile MatchParen
+
 " mf -> mo：在多个tab中打开使用mf标记的mark files
-autocmd Filetype netrw nnoremap mo :<C-r>=OpenMarkFiles()<CR><CR>
-function OpenMarkFiles()
+autocmd Filetype netrw nnoremap mo :<C-r>=Jiang_OpenMarkFiles()<CR><CR>
+function Jiang_OpenMarkFiles()
     let markList = netrw#Expose("netrwmarkfilelist")
     let str = ""
     let i = 0

@@ -1,7 +1,4 @@
 " ---------- edit.vim ----------
-" 允许删除键删除vim的indent，行首和行末字符
-set backspace=indent,eol,start
-
 " 全选快捷键，在normal和visual模式下按Ctrl + a即可
 nnoremap <C-a> ggvG$
 vnoremap <C-a> <ESC>ggvG$
@@ -31,8 +28,8 @@ inoremap <C-e> <End>
 inoremap <C-d> <C-o>dw
 
 " Ctrl + k：删除到行尾
-inoremap <C-k> <C-r>=DeleteToEnd()<CR>
-function DeleteToEnd()
+inoremap <C-k> <C-r>=Jiang_DeleteToEnd()<CR>
+function Jiang_DeleteToEnd()
     let line = getline('.')
     let len = strlen(line)
     if len == 0     " 本行没有字符
@@ -52,12 +49,12 @@ endf
 inoremap ( ()<ESC>i
 inoremap [ []<ESC>i
 inoremap { {}<ESC>i
-inoremap ) <C-r>=ClosePair(')')<CR>
-inoremap ] <C-r>=ClosePair(']')<CR>
-inoremap } <C-r>=ClosePair('}')<CR>
+inoremap ) <C-r>=Jiang_ClosePair(')')<CR>
+inoremap ] <C-r>=Jiang_ClosePair(']')<CR>
+inoremap } <C-r>=Jiang_ClosePair('}')<CR>
 " 只有在html和vim文件中才开启<>匹配，其他文件中为比较符号
-autocmd Syntax html,vim inoremap < <lt>><ESC>i| inoremap > <C-r>=ClosePair('>')<CR>
-function ClosePair(char)
+autocmd Syntax html,vim inoremap < <lt>><ESC>i| inoremap > <C-r>=Jiang_ClosePair('>')<CR>
+function Jiang_ClosePair(char)
     if getline('.')[col('.') - 1] == a:char     " 当已有)的时候再输入)就只是右移
         return "\<Right>"
     else
@@ -66,8 +63,8 @@ function ClosePair(char)
 endf
 
 " 按键映射：编写function时，当光标在{}中间（如{|}）时回车就会把光标定位回参数那里
-inoremap <CR> <C-r>=SmartEnter()<CR>
-function SmartEnter()
+inoremap <CR> <C-r>=Jiang_SmartEnter()<CR>
+function Jiang_SmartEnter()
     if getline('.')[col('.') - 2] == '{' && getline('.')[col('.') - 1] == '}'
         return "\<CR>\<ESC>bhh"
     else
@@ -76,10 +73,10 @@ function SmartEnter()
 endf
 
 " 按键映射：英文符号``''""等自动补全
-inoremap ` <C-r>=QuoteDelim("`")<CR>
-inoremap ' <C-r>=QuoteDelim("'")<CR>
-inoremap " <C-r>=QuoteDelim('"')<CR>
-function QuoteDelim(char)
+inoremap ` <C-r>=Jiang_QuoteDelim("`")<CR>
+inoremap ' <C-r>=Jiang_QuoteDelim("'")<CR>
+inoremap " <C-r>=Jiang_QuoteDelim('"')<CR>
+function Jiang_QuoteDelim(char)
     let line = getline('.')
     let col  = col('.')
     if line[col - 2] == a:char && line[col - 1] == a:char       " 当前位置和前一位都有符号，再次输入右移一位

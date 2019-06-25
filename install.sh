@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Name
-#       install.sh - Install and config vim automaticly on Ubuntu and Mac.
+#       install.sh - Install and config neovim automaticly on Ubuntu and Mac.
 # 
 # SYNOPSIS
 #       install.sh [-c] [-h|--help] [-u]
@@ -27,7 +27,7 @@
 #       jiangfangxin
 #
 # REPOSITORY
-#       https://github.com/jiangfangxin/vim-installer
+#       https://github.com/jiangfangxin/neovim-installer
 
 # Variables
 startDir=$PWD
@@ -39,7 +39,7 @@ quit() {
 cd `dirname $0`
 workDir=$PWD
 
-vimrcDir=$HOME
+vimrcDir=$HOME/.config/nvim
 vimColorDir=$HOME/.vim/colors
 vimPluginManagerDir=$HOME/.vim/autoload
 vimPluginsDir=$HOME/.vim/plugged
@@ -186,33 +186,29 @@ installVimrc() {
         echo "config/plugin.vim >> vimrc"
     cat config/mac-keyboard.vim >> vimrc
         echo "config/mac-keyboard.vim >> vimrc"
-    case "$OSTYPE" in
-        "darwin"*) cat config/macos.vim >> vimrc
-                       echo "config/macos.vim >> vimrc" ;; # macOS
-        "linux"*)  cat config/linux.vim >> vimrc
-                       echo "config/linux.vim >> vimrc" ;; # linux
-    esac
+    cat config/clipboard.vim >> vimrc
+        echo "config/clipboard.vim >> vimrc"
 
     # Check vimrc
-    if [ -f $vimrcDir/.vimrc ]; then
-        if cmp vimrc $vimrcDir/.vimrc; then
+    if [ -f $vimrcDir/init.vim ]; then
+        if cmp vimrc $vimrcDir/init.vim; then
             # Same
             echo "vimrc has no change, no need to update."
         else
             # Use newer vimrc and backup old one.
-            mv $vimrcDir/.vimrc $vimrcDir/vimrc~`date +%Y%m%d%H%M%S`
+            mv $vimrcDir/init.vim $vimrcDir/init.vim~`date +%Y%m%d%H%M%S`
             echo "Old vimrc backuped."
-            cp vimrc $vimrcDir/.vimrc
+            cp vimrc $vimrcDir/init.vim
             echo "vimrc updated."
         fi
     else
-        # $HOME/.vimrc not exist.
-        cp vimrc $vimrcDir/.vimrc
+        # $HOME/init.vim not exist.
+        cp vimrc $vimrcDir/init.vim
         echo "vimrc updated."
     fi
 
     # Delete old backup
-    cleanOldBackup $vimrcDir/vimrc~
+    cleanOldBackup $vimrcDir/init.vim~
 }
 
 installTheme() {
@@ -296,6 +292,7 @@ EOF
 # Main
 main() {
     if [ $# == 0 ]; then
+        quit
         echo "Start vim-installer."
         echo "Checking install environment..."
         installHomeBrewIfMac
@@ -315,6 +312,7 @@ main() {
                 echo "Start update vimrc."
                 installVimrc
             elif [ $i == "-c" ]; then
+                quit
                 echo "Start clean all backup."
                 cleanOldBackup -a $vimrcDir/vimrc~
                 cleanOldBackup -a $vimColorDir~ .tar.gz

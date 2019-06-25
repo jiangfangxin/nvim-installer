@@ -1,7 +1,7 @@
 " ---------- file.vim ----------
-set wildmenu        " 在命令栏敲击tab会显示一个可选清单
 set splitright      " 纵向打开文件显示在右侧
 set splitbelow      " 横向打开文件显示在下侧
+
 " 在新页面打开光标所在路径的文件，gf默认情况下在本页面打开需要跳转的文件，我们让它在新页面打开
 nnoremap gf :vertical wincmd f<CR>
 

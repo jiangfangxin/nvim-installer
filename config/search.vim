@@ -3,11 +3,10 @@
 " 替换语法:%s/Windows\C/Mac/gc
 " %：代表全文，20,30：表示搜索20到30行，'<,'>：表示选择区域，不填表示当前行
 " s：search的缩写
+" \c：表示忽略大小写
 " \C：表示要区分大小写
 " g：global的缩写，表示每一行都要找到所有匹配项，否则只匹配改行的第一个
 " c：comform的缩写，表示每次替换都要弹出提示
-set hlsearch        " 开启搜索高亮
-set incsearch       " 开启实时搜索
 set ignorecase      " 搜索时忽略大小写
 
 " 对选中的字符，按f快速搜索，搜索后自动高亮
@@ -23,8 +22,8 @@ vnoremap F <ESC>:set hlsearch!<CR>gv
 
 " 每次在命令行搜索栏回车时，都再次开启搜索高亮
 " 避免手动关闭高亮后，搜索不明显
-cnoremap <CR> <C-r>=HeighlightForSearch()<CR><CR>
-function HeighlightForSearch()
+cnoremap <CR> <C-r>=Jiang_HeighlightForSearch()<CR><CR>
+function Jiang_HeighlightForSearch()
     if getcmdtype() =~ '[/?]'
         execute "set hlsearch"
     endif

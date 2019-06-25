@@ -47,14 +47,14 @@ nnoremap ª :tablast<CR>
 inoremap ª <ESC>:tablast<CR>
 vnoremap ª <ESC>:tablast<CR>
 
-" Alt + 0：关闭其他Window
-nnoremap º :only<CR>
-inoremap º <ESC>:only<CR>a
-vnoremap º <ESC>:only<CR>gv
-" Alt + o（字母o）：关闭其他tab
-nnoremap ø :tabonly<CR>
-inoremap ø <ESC>:tabonly<CR>a
-vnoremap ø <ESC>:tabonly<CR>gv
+" Alt + o（字母o）：关闭其他窗口
+nnoremap ø :only<CR>
+inoremap ø <ESC>:only<CR>a
+vnoremap ø <ESC>:only<CR>gv
+" Alt + Shift + o（字母o）：关闭其他tab
+nnoremap Ø :tabonly<CR>
+inoremap Ø <ESC>:tabonly<CR>a
+vnoremap Ø <ESC>:tabonly<CR>gv
 
 " Alt + >：当前tab往前移动一位
 nnoremap ≥ :+tabmove<CR>
@@ -73,4 +73,26 @@ vnoremap æ <ESC>g,
 nnoremap … g;
 inoremap … <ESC>g;
 vnoremap … <ESC>g;
+
+" Alt + =：横向增大窗口
+nnoremap ≠ 5<C-w>>
+inoremap ≠ <ESC>5<C-w>>a
+vnoremap ≠ <ESC>5<C-w>>gv
+" Alt + -：横向缩小窗口
+nnoremap – 5<C-w><
+inoremap – <ESC>5<C-w><a
+vnoremap – <ESC>5<C-w><gv
+" Alt + Shift + =：纵向增大窗口
+nnoremap ± 2<C-w>+
+inoremap ± <ESC>2<C-w>+a
+vnoremap ± <ESC>2<C-w>+gv
+" Alt + Shift + -：纵向缩小窗口
+nnoremap — 2<C-w>-
+inoremap — <ESC>2<C-w>-a
+vnoremap — <ESC>2<C-w>-gv
+" Alt + 0：平分所有窗口
+nnoremap º <C-w>=
+inoremap º <ESC><C-w>=a
+vnoremap º <ESC><C-w>=gv
+
 
