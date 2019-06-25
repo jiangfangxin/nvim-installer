@@ -95,4 +95,20 @@ nnoremap º <C-w>=
 inoremap º <ESC><C-w>=a
 vnoremap º <ESC><C-w>=gv
 
+" Alt + j：光标移动到下边窗口
+nnoremap ∆ <C-w>j
+inoremap ∆ <ESC><C-w>j
+vnoremap ∆ <ESC><C-w>j
+" Alt + k：光标移动到上边窗口
+nnoremap ˚ <C-w>k
+inoremap ˚ <ESC><C-w>k
+vnoremap ˚ <ESC><C-w>k
+" Alt + l：光标移动到右边窗口
+nnoremap ¬ <C-w>l
+inoremap ¬ <ESC><C-w>l
+vnoremap ¬ <ESC><C-w>l
+" Alt + h：光标移动到左边窗口
+nnoremap ˙ <C-w>h
+inoremap ˙ <ESC><C-w>h
+vnoremap ˙ <ESC><C-w>h
 
