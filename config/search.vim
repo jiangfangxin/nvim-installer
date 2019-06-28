@@ -14,7 +14,11 @@ set ignorecase      " 搜索时忽略大小写
 " 这里使用了一个自定义的register：a
 vnoremap n "ay/<C-r>a<CR>:set hlsearch<CR>
 
-" 在normal和virtual模式按F切换显示搜索高亮
+" 快速搜索单词时，自动开启高亮
+nnoremap <silent> * :set hlsearch<CR>*
+nnoremap <silent> # :set hlsearch<CR>#
+
+" 在normal和virtual模式按S切换显示搜索高亮
 " 避免有的时候高亮打扰代码的编写
 " 参考：[Highlight all search pattern matches](https://vim.fandom.com/wiki/Highlight_all_search_pattern_matches)
 nnoremap S :set hlsearch!<CR>
