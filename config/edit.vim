@@ -1,4 +1,7 @@
 " ---------- edit.vim ----------
+" H：把光标移动到视图顶部   L：把光标移动到视图底部     M：把光标移动到视图中部
+" zt：把当前行移动到顶部    zb：把当前行移动到底部      zz：把当前行移动到中部
+
 " 全选快捷键，在normal和visual模式下按Ctrl + a即可
 nnoremap <C-a> ggvG$
 vnoremap <C-a> <ESC>ggvG$
