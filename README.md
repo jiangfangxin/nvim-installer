@@ -1,35 +1,35 @@
-# vim-installer
+# nvim-installer
 
 ## 摘要
 
-在Mac或者Ubuntu中自动安装Vim和Vim的主题以及Vim插件
+在Mac或者Ubuntu中自动安装Neovim和Neovim的主题以及Neovim插件
 
 ## 如何使用
 
-在新的系统中安装和配置Vim，首先使用Git克隆项目到任意目录，或者直接下载项目的zip包到任意目录。
+在新的系统中安装和配置Neovim，首先使用Git克隆项目到任意目录，或者直接下载项目的zip包到任意目录。
 
 ```bash
-git clone https://github.com/jiangfangxin/vim-installer.git
+git clone https://github.com/jiangfangxin/nvim-installer.git
 ```
 
 然后通过命令行进入项目根目录，运行install.sh文件
 
 ```bash
-cd your_clone_directory/vim-installer
+cd your_clone_directory/nvim-installer
 ./install.sh
 ```
 
-vim-installer会自动检测并安装Git，如果Mac系统没有安装Git，会自动安装HomeBrew，并用HomeBrew来帮助用户安装Git。
+nvim-installer会自动检测并安装Git，如果Mac系统没有安装Git，会自动安装HomeBrew，并用HomeBrew来帮助用户安装Git。
 
-如果系统中已经安装了Vim，vim-installer会把之前Vim的.vimrc、主题以及插件用tar打包备份，然后再安装新的配置。如果要删除
+如果系统中已经安装了Neovim，vim-installer会把之前Neovim的init.vim、主题以及插件用tar打包备份，然后再安装新的配置。如果要删除
 自动备份的配置使用
 
 ```bash
 ./install.sh -c
 ```
 
-如果只是想更新一下.vimrc而无需动主题和更新插件，那么直接使用-u命令，这个命令只会把config目录中的.vim配置文件合并到系统
-的.vimrc中
+如果只是想更新一下init.vim而无需动主题和更新插件，那么直接使用-u命令，这个命令只会把config目录中的.vim配置文件合并到系统
+的init.vim中
 
 ```bash
 ./install.sh -u
