@@ -9,10 +9,11 @@
 " c：comform的缩写，表示每次替换都要弹出提示
 set ignorecase      " 搜索时忽略大小写
 
-" 对选中的字符，按n快速搜索，搜索后自动高亮
+" 对选中的字符，按n/N快速搜索，搜索后自动高亮
 " 参考：[Vim registers: The basics and beyond](https://www.brianstorti.com/vim-registers/)
 " 这里使用了一个自定义的register：a
 vnoremap n "ay/<C-r>a<CR>:set hlsearch<CR>
+vnoremap N "ay/<C-r>a<CR>NN:set hlsearch<CR>
 
 " 快速搜索单词时，自动开启高亮
 nnoremap <silent> * :set hlsearch<CR>*

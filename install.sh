@@ -33,16 +33,16 @@
 startDir=$PWD
 quit() {
     cd $startDir
-    exit
+    exit $1     # Exit with a number code.
 }
 
-cd `dirname $0`
+cd $(dirname $0)
 workDir=$PWD
 
-vimrcDir=$HOME/.config/nvim
-vimColorDir=$HOME/.vim/colors
-vimPluginManagerDir=$HOME/.vim/autoload
-vimPluginsDir=$HOME/.vim/plugged
+initDir=$HOME/.config/nvim
+colorDir=$HOME/.config/nvim/colors
+pluginManagerDir=$HOME/.local/share/nvim/site/autoload
+pluginsDir=$HOME/.local/share/nvim/plugged
 
 # Theme
 themeRepostry=https://github.com/tomasr/molokai.git
@@ -52,75 +52,88 @@ themeFilePath=colors/molokai.vim
 pluginManagerRepostry=https://github.com/junegunn/vim-plug.git
 pluginManagerPath=plug.vim
 
-# System package tool
-if [[ "$OSTYPE" == "darwin"* ]]; then  # Mac
-    pkg=brew
-elif [[ "$OSTYPE" == "linux"* && -x "`which apt`" ]]; then   # Ubuntu
-    pkg=sudo apt
-else    # Others
-    echo "System not support now."
-    quit
+# System check
+if [[ "$OSTYPE" == "darwin"* ]] || [[ "$OSTYPE" == "linux"* && -x "$(which apt)" ]]; then
+    echo "System supported."
+else
+    echo "System not support."
+    quit 1
 fi
 
 # Functions
 installHomeBrewIfMac() {
-    if [[ "$OSTYPE" == "darwin"* && ! -x "`which brew`" ]]; then   # [[]] is more powerfull test command which support pattern.
+    if [[ "$OSTYPE" == "darwin"* && ! -x "$(which brew)" ]]; then
         read -p "Package manager HomeBrew not exits, do you want to install it? [y/n] " choice
         if [ "$choice" == "y" ]; then
             # There always has ruby on mac.
-            /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-            echo "HomeBrew installed."
+            if /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"; then
+                echo "HomeBrew installed."
+            else
+                echo "Install HomeBrew failed."
+                quit 1
+            fi
         else
             echo "Install abort due to without HomeBrew, you can install it permaticly later."
-            quit
+            quit 1
         fi
     fi
 }
 
 installGit() {
-    if [ ! -x "`which git`" ]; then
+    if [ ! -x "$(which git)" ]; then
         read -p "Git is not exist, try to install it? [y/n] " choice
         if [ "$choice" == "y" ]; then
-            $pkg install git
-            echo "Git installed."
+            case "$OSTYPE" in
+                "darwin"*) # Mac
+                    if brew install git; then
+                        echo "Git installed."
+                    else
+                        echo "Install Git failed."
+                        quit 1
+                    fi;;
+                "linux"*) # Ubuntu
+                    if sudo apt install git; then
+                        echo "Git installed."
+                    else
+                        echo "Install Git failed."
+                        quit 1
+                    fi;;
+            esac
         else
             echo "Install abort due to without git."
-            quit
+            quit 1
         fi
     fi
 }
 
-installVim() {
-    if [[ "$OSTYPE" == "darwin"* ]]; then   # macOS
-        if [[ ! -x "`which vim`" || "`which vim`" == "/usr/bin/vim" ]]; then
-            # There is no vim or the vim comes with macOS.
-            read -p "Try to install vim through HomeBrew? [y/n] " choice
-            if [ "$choice" == "y" ]; then
-                # The vim HomeBrew installed will be put at /usr/local/bin/vim
-                $pkg install vim
-                echo "Vim installed, restart shell before you can use it."
+installNeovim() {
+    case "$OSTYPE" in
+        "darwin"*) # Mac
+            if brew install neovim; then
+                echo "Neovim installed."
             else
-                echo 'Install abort due to rejecting HomeBrew vim installation.'
-                quit
-            fi
-        fi
-    else    # Ubuntu
-        if [ ! -x "`which vim`" ]; then
-            read -p "Vim is not exist, try to install it? [y/n] " choice
-            if [ "$choice" == "y" ]; then
-                $pkg apt install vim
-                echo "Vim installed."
+                echo "Install neovim failed."
+                quit 1
+            fi;;
+        "linux"*) # Ubuntu
+            # Install from the source on Ubuntu.
+            git clone https://github.com/neovim/neovim.git neovim
+            cd neovim
+            git checkout stable
+            make CMAKE_BUILD_TYPE=Release
+			if sudo make install; then
+                echo "Neovim installed."
+                cd ../
             else
-                echo 'Install abort due to without vim.'
-                quit
-            fi
-        fi
-    fi
+                echo "Install neovim failed."
+                quit 1
+            fi;;
+    esac
 }
 
 cleanOldBackup() {
     all=0       # If delete all backup.
-    prefix=""   # Backup file prefix, like: /home/name/vimrc~, or like: /home/name/.vim/colors~
+    prefix=""   # Backup file prefix, like: /home/name/.config/nvim/init.vim~, or like: /home/name/.config/nvim/colors~
     suffix=""   # Backup file suffix, like: .tar.gz
     for i in $@; do
         if [[ $i == "-"* ]]; then
@@ -145,15 +158,13 @@ cleanOldBackup() {
             rm $f
             echo "Backup file $f be deleted."
         done
-    elif [ `ls $prefix*$suffix 2>/dev/null | wc -l` -gt 3 ]; then   # Only delete backup when count more than 3.
+    elif [ $(ls $prefix*$suffix 2>/dev/null | wc -l) -gt 3 ]; then   # Only delete backup when count more than 3.
         # Delete backup more than 30 days.
         # The date syntax has some diffrent between Ubuntu and Mac.
-        if [[ "$OSTYPE" == "darwin"* ]]; then
-            lastMonth=`date -v -30d +%Y%m%d%H%M%S`
-        else
-            lastMonth=`date -d "-30 days" +%Y%m%d%H%M%S`
-        fi
-
+        case "$OSTYPE" in
+            "darwin"*) lastMonth=$(date -v -30d +%Y%m%d%H%M%S) ;;       # Mac
+            "linux"*)  lastMonth=$(date -d "-30 days" +%Y%m%d%H%M%S) ;; # Ubuntu
+        esac
         for f in $prefix*$suffix; do
             # Delete path only leave time to compare.
             time=${f/$prefix/}
@@ -166,64 +177,64 @@ cleanOldBackup() {
     fi    
 }
 
-installVimrc() {
-    # Merge vim config to one vimrc file
-    cat config/basic.vim > vimrc
-        echo "config/basic.vim > vimrc"
-    cat config/theme.vim >> vimrc
-        echo "config/theme.vim >> vimrc"
-    cat config/search.vim >> vimrc
-        echo "config/search.vim >> vimrc"
-    cat config/file.vim >> vimrc
-        echo "config/file.vim >> vimrc"
-    cat config/netrw.vim >> vimrc
-        echo "config/netrw.vim >> vimrc"
-    cat config/fn.vim >> vimrc
-        echo "config/fn.vim >> vimrc"
-    cat config/edit.vim >> vimrc
-        echo "config/edit.vim >> vimrc"
-    cat config/plugin.vim >> vimrc
-        echo "config/plugin.vim >> vimrc"
-    cat config/mac-keyboard.vim >> vimrc
-        echo "config/mac-keyboard.vim >> vimrc"
-    cat config/clipboard.vim >> vimrc
-        echo "config/clipboard.vim >> vimrc"
+installConfig() {
+    # Merge neovim config to one init.vim file
+    cat config/basic.vim > init.vim
+        echo "config/basic.vim > init.vim"
+    cat config/theme.vim >> init.vim
+        echo "config/theme.vim >> init.vim"
+    cat config/search.vim >> init.vim
+        echo "config/search.vim >> init.vim"
+    cat config/file.vim >> init.vim
+        echo "config/file.vim >> init.vim"
+    cat config/netrw.vim >> init.vim
+        echo "config/netrw.vim >> init.vim"
+    cat config/fn.vim >> init.vim
+        echo "config/fn.vim >> init.vim"
+    cat config/edit.vim >> init.vim
+        echo "config/edit.vim >> init.vim"
+    cat config/plugin.vim >> init.vim
+        echo "config/plugin.vim >> init.vim"
+    cat config/mac-keyboard.vim >> init.vim
+        echo "config/mac-keyboard.vim >> init.vim"
+    cat config/clipboard.vim >> init.vim
+        echo "config/clipboard.vim >> init.vim"
 
-    # Check vimrc
-    if [ -f $vimrcDir/init.vim ]; then
-        if cmp vimrc $vimrcDir/init.vim; then
+    # Check init.vim
+    if [ -f $initDir/init.vim ]; then
+        if cmp init.vim $initDir/init.vim; then
             # Same
-            echo "vimrc has no change, no need to update."
+            echo "init.vim has no change, no need to update."
         else
-            # Use newer vimrc and backup old one.
-            mv $vimrcDir/init.vim $vimrcDir/init.vim~`date +%Y%m%d%H%M%S`
-            echo "Old vimrc backuped."
-            cp vimrc $vimrcDir/init.vim
-            echo "vimrc updated."
+            # Use newer init.vim and backup old one.
+            mv $initDir/init.vim $initDir/init.vim~$(date +%Y%m%d%H%M%S)
+            echo "Old init.vim backuped."
+            cp init.vim $initDir/
+            echo "init.vim updated."
         fi
     else
-        # $HOME/init.vim not exist.
-        cp vimrc $vimrcDir/init.vim
-        echo "vimrc updated."
+        # ~/.config/nvim/init.vim not exist.
+        cp init.vim $initDir/
+        echo "init.vim updated."
     fi
 
     # Delete old backup
-    cleanOldBackup $vimrcDir/init.vim~
+    cleanOldBackup $initDir/init.vim~
 }
 
 installTheme() {
-    # Check vim colors
-    if [ -d $vimColorDir ]; then
-        if [ -n "`ls $vimColorDir`" ]; then
+    # Check neovim colors
+    if [ -d $colorDir ]; then
+        if [ -n "$(ls $colorDir)" ]; then
             # Has other colers
-            cd `dirname $vimColorDir`
-            tar -czf $vimColorDir~`date +%Y%m%d%H%M%S`.tar.gz `basename $vimColorDir`
+            cd $(dirname $colorDir)
+            tar -czf $colorDir~$(date +%Y%m%d%H%M%S).tar.gz $(basename $colorDir)
             cd $workDir
             echo "Old theme backuped."
-            rm -r $vimColorDir/*
+            rm -r $colorDir/*
         fi
     else
-        mkdir -p $vimColorDir
+        mkdir -p $colorDir
     fi
 
     if [ -d theme ]; then
@@ -231,24 +242,24 @@ installTheme() {
     fi
 
     git clone $themeRepostry theme
-    cp theme/$themeFilePath $vimColorDir/
+    cp theme/$themeFilePath $colorDir/
     echo "Theme updated."
     
-    cleanOldBackup $vimColorDir~ .tar.gz
+    cleanOldBackup $colorDir~ .tar.gz
 }
 
 installPluginManager() {
-    if [ -d $vimPluginManagerDir ]; then
-        if [ -n "`ls $vimPluginManagerDir`" ]; then
+    if [ -d $pluginManagerDir ]; then
+        if [ -n "$(ls $pluginManagerDir)" ]; then
             # Backup old plugin manager
-            cd `dirname $vimPluginManagerDir`
-            tar -czf $vimPluginManagerDir~`date +%Y%m%d%H%M%S`.tar.gz `basename $vimPluginManagerDir`
+            cd $(dirname $pluginManagerDir)
+            tar -czf $pluginManagerDir~$(date +%Y%m%d%H%M%S).tar.gz $(basename $pluginManagerDir)
             cd $workDir
             echo "Old plugin manager backuped."
-            rm -r $vimPluginManagerDir/*
+            rm -r $pluginManagerDir/*
         fi
     else
-        mkdir -p $vimPluginManagerDir
+        mkdir -p $pluginManagerDir
     fi
 
     if [ -d pluginManager ]; then
@@ -256,26 +267,36 @@ installPluginManager() {
     fi
 
     git clone $pluginManagerRepostry pluginManager
-    cp pluginManager/$pluginManagerPath $vimPluginManagerDir/
+    cp pluginManager/$pluginManagerPath $pluginManagerDir/
     echo "Plugin manager updated."
 
-    cleanOldBackup $vimPluginManagerDir~ .tar.gz
+    cleanOldBackup $pluginManagerDir~ .tar.gz
 }
 
 installPluginNeedTools() {
     echo "Start install plugin need tools."
     # Plugin [rking/ag.vim](https://github.com/rking/ag.vim) needed.
-    if [[ "$OSTYPE" == "darwin"* ]]; then
-        $pkg install the_silver_searcher
-    else
-        $pkg install silversearcher-ag
-    fi
+    case "$OSTYPE" in
+        "darwin"*) brew install the_silver_searcher;;   # Mac
+        "linux"*)  sudo apt install silversearcher-ag;; # Ubuntu
+    esac
+    # Plugin [Shougo/deoplete.nvim](https://github.com/Shougo/deoplete.nvim.git) needed.
+    case "$OSTYPE" in
+        "darwin"*) brew install python3;;     # Mac
+        "linux"*)  sudo apt install python3;; # Ubuntu
+    esac
+    pip3 install pynvim
+    # Plugin [phpactor/phpactor](https://github.com/phpactor/phpactor.git) needed.
+    case "$OSTYPE" in
+        "darwin"*) brew install composer;;     # Mac
+        "linux"*)  sudo apt install composer;; # Ubuntu
+    esac
     echo "Tools installed.";
 }
 
 installPlugins() {
     echo "Start install plugins..."
-    vim -c PlugClean! -c PlugInstall -c qall
+    nvim -c PlugClean! -c PlugInstall -c qall
     echo "Plugin installed."
 }
 
@@ -285,45 +306,43 @@ Usage: install.sh [-c] [-h|--help] [-u]
 Options:
 -c         : Clean all backup.
 -h, --help : Show usage an options.
--u         : Only combine and update vimrc.
+-u         : Only combine and update init.vim.
 EOF
 }
 
 # Main
 main() {
     if [ $# == 0 ]; then
-        quit
-        echo "Start vim-installer."
+        echo "Start nvim-installer."
         echo "Checking install environment..."
         installHomeBrewIfMac
         installGit
-        installVim
-        installVimrc
+        installNeovim
+        installConfig
         installTheme
         installPluginManager
         installPluginNeedTools
         installPlugins
-        echo "Vim installed, all configured."
+        echo "Neovim installed, all configured."
     else
         for i in $@; do
             if [[ $i == "-h" || $i == "--help" ]]; then
                 echoHelp
             elif [ $i == "-u" ]; then
-                echo "Start update vimrc."
-                installVimrc
+                echo "Start update init.vim."
+                installConfig
             elif [ $i == "-c" ]; then
-                quit
                 echo "Start clean all backup."
-                cleanOldBackup -a $vimrcDir/vimrc~
-                cleanOldBackup -a $vimColorDir~ .tar.gz
-                cleanOldBackup -a $vimPluginManagerDir~ .tar.gz
+                cleanOldBackup -a $initDir/init.vim~
+                cleanOldBackup -a $colorDir~ .tar.gz
+                cleanOldBackup -a $pluginManagerDir~ .tar.gz
                 echo "All backup cleaned."
             else
                 echo "Unknown option: $i."
             fi
         done
     fi
-    quit
+    quit 0
 }
 
 # Run

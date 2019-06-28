@@ -2,6 +2,6 @@
 .DS_Store
 
 # Temp files
-vimrc
+init.vim
 theme/
 pluginManager/

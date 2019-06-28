@@ -24,10 +24,19 @@ let g:multi_cursor_exit_from_visual_mode = 0
 let g:multi_cursor_exit_from_insert_mode = 0
 " 在使用多光标模式的时候自动禁用我的Jiang_SmartEnter映射，有冲突
 function! Multiple_cursors_before()
+    iunmap ( | )
+    iunmap [ | ]
+    iunmap { | }
     iunmap <CR>
     call deoplete#custom#buffer_option('auto_complete', v:false)
 endfunction
 function! Multiple_cursors_after()
+    inoremap ( ()<ESC>i
+    inoremap [ []<ESC>i
+    inoremap { {}<ESC>i
+    inoremap ) <C-r>=Jiang_ClosePair(')')<CR>
+    inoremap ] <C-r>=Jiang_ClosePair(']')<CR>
+    inoremap } <C-r>=Jiang_ClosePair('}')<CR>
     inoremap <CR> <C-r>=Jiang_SmartEnter()<CR>
     call deoplete#custom#buffer_option('auto_complete', v:true)
 endfunction
