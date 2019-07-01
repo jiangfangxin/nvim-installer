@@ -19,3 +19,7 @@ set shiftwidth=4    " 缩进宽度设置为4个space
 " 支持鼠标，a：表示所有模式，i：insert模式，v：visual模式
 set mouse=a
 
+" 在insert模式下按jf可以立即回到normal模式
+" `^：回到上一次insert的位置
+inoremap jf <ESC>`^
+
