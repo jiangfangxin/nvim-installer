@@ -6,6 +6,9 @@
 " 安装插件:PlugInstall
 " 删除插件:PlugClean
 call plug#begin('~/.local/share/nvim/plugged')
+Plug 'tpope/vim-fugitive'                                           " 支持在nvim中使用Git
+Plug 'airblade/vim-gitgutter'                                       " 显示Git文件的变化
+Plug 'vim-airline/vim-airline'                                      " 展示更多信息的导航条
 Plug 'terryma/vim-multiple-cursors'                                 " 像Sublime那样的多光标插件
 Plug 'kien/ctrlp.vim'                                               " 模糊搜索文件名来打开文件
 Plug 'brooth/far.vim'                                               " 多文件搜索和替换工具
@@ -19,6 +22,37 @@ Plug 'Shougo/deoplete.nvim', {'do':':UpdateRemotePlugins'}          " 代码自�
 Plug 'phpactor/phpactor', {'for': 'php', 'do': 'composer install'}  " PHP代码补全
 Plug 'kristijanhusak/deoplete-phpactor', {'for': 'php'}             " 连接代码补全框架和PHP库
 call plug#end()
+
+" 插件tpope/vim-fugitive自定义设置
+" :G / :Git [command]       即：:!git [command]             在vim中调用bash命令git
+" :G / :Git / :Gstatus      即：git status                  显示所有文件状态
+" :Glog [ file ]            即：git log [ file ]            显示提交记录
+" :Gcommit -m 'msg'         即：git commit -m 'msg'         提交修改
+" :Gfetch                   即：git fetch                   获取远端的更新
+" :Gpush origin {branch}    即：git push origin {branch}    推送分支到远端
+" :Gdiffsplit               即：git diff %                  对比当前文件和HEAD的差异
+" :Gblame                   即：git blame %                 blame当前文件
+" :Gwrite                   即：git add %                   添加当前文件到stage
+" :Gread                    即：git checkout %              检出当前文件到HEAD版本
+" :Grebase {branch}         即：git rebase {branch}         基于分支做rebase
+" :Gremove                  即：git rm --cached %           从版本管理中移除当前文件
+" 通用快捷键
+" <CR>：直接打开文件
+" o    ：在横向窗口中打开文件   gO   ：在纵向窗口中打开文件
+" O    ：在新标签页中打开文件   p    ：在预览窗口中打开文件
+" <C-N>：跳转到下一个修改块     <C-P>：跳转到上一个修改块
+" COMMAND命令栏快捷键
+" Ctr + r Ctr + g：填入当前文件的文件路径
+" Status窗口中的快捷键
+" - ：git add       暂存文件或块修改    = ：git diff            展开文件修改
+" X ：git checkout  忽略块修改          dd：git diff            显示文件修改前后对比
+" cc：git commit    创建一个commit      ca：git commit --amend  创建一个commit来覆盖上一次提交
+" Log窗口中的快捷键
+" ri：git rebase -i HEAD~{commit}   从当前commit进入交互式的rebase
+" rr：git rebase --continue         继续当前的rebase                rs；git rebase --skip   跳过当前的commit然后继续rebase
+" re：git rebase --edit             编辑当前的rebase                ra：git rebase --abort  终止当前的rebase
+" Blame窗口的快捷键
+" -：进入光标所在的commit然后再blame    q：退出
 
 " 插件terryma/vim-multiple-cursors自定义设置
 " Ctrl + n：选择下一个      Ctrl + p：回到上一个选择

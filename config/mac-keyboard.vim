@@ -52,6 +52,10 @@ nnoremap ª :tablast<CR>
 inoremap ª <ESC>:tablast<CR>
 vnoremap ª <ESC>:tablast<CR>
 
+" Alt + x：关闭当前tab
+nnoremap ≈ :tabclose<CR>
+inoremap ≈ <ESC>:tabclose<CR>
+vnoremap ≈ <ESC>:tabclose<CR>
 " Alt + o（字母o）：关闭其他窗口
 nnoremap ø :only<CR>
 inoremap ø <ESC>:only<CR>a

@@ -20,6 +20,7 @@ set shiftwidth=4    " 缩进宽度设置为4个space
 " 支持鼠标，a：表示所有模式，i：insert模式，v：visual模式
 set mouse=a
 
+" 查看当前绑定快捷键的命令：verbose map {key}
 " 引导键设置为空格键
 let mapleader = "\<Space>"
 
