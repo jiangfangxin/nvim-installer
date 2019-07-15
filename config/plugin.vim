@@ -70,16 +70,16 @@ let g:ctrlp_working_path_mode = ''  " 空字符串表示在nvim的工作目录�
 " Ctrl + j：向下滚动预览窗口    Ctrl + k：向上滚动预览窗口
 " I ：包含所有替换              X ：排除所有替换
 " t ：包含/排除光标所在行的替换 p ：打开预览窗口
-" zo：展开文件搜索条目          zc：折叠文件搜索条目
-" zr：展开所有搜索条目          zm：折叠文件搜索条目
+" zo：展开文件搜索条目          zc：折叠文件搜索条目    za：展开/折叠文件搜索条目
+" zr：展开所有搜索条目          zm：折叠所有文件搜索条目
  
 " 插件majutsushi/tagbar自定义设置
 " 需要安装：brew/apt install universal ctags
 " <F8>：打开/关闭结构树
 " <CR>：跳转到定义的地方            p ：预览定义的地方
 " v   ：隐藏非public的变量和方法    s ：排序结构树
-" zo  ：展开文件搜索条目            zc：折叠文件搜索条目
-" zr  ：展开所有搜索条目            zm：折叠文件搜索条目
+" zo  ：展开目录树                  zc：折叠目录树      za：展开/折叠目录树
+" zr  ：展开所有目录树              zm：折叠所有目录树
 " Ctrl + n：跳转到上一个节点        Ctrl + p：跳转到下一个节点
 
 " 插件crooloose/nerdcommenter自定义设置
