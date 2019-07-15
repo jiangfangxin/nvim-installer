@@ -79,6 +79,24 @@ installHomeBrewIfMac() {
     fi
 }
 
+installMakeCMakeIfUbuntu() {
+    if [[ "$OSTYPE" == "linux"* && ! -x "$(which brew)" ]]; then
+        read -p "Package manager HomeBrew not exits, do you want to install it? [y/n] " choice
+        if [ "$choice" == "y" ]; then
+            # There always has ruby on mac.
+            if /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"; then
+                echo "HomeBrew installed."
+            else
+                echo "Install HomeBrew failed."
+                quit 1
+            fi
+        else
+            echo "Install abort due to without HomeBrew, you can install it permaticly later."
+            quit 1
+        fi
+    fi
+}
+
 installGit() {
     if [ ! -x "$(which git)" ]; then
         read -p "Git is not exist, try to install it? [y/n] " choice
@@ -275,10 +293,16 @@ installPluginManager() {
 
 installPluginNeedTools() {
     echo "Start install plugin need tools."
-    # Plugin [rking/ag.vim](https://github.com/rking/ag.vim) needed.
+    # Plugin [majutsushi/tagbar](https://github.com/majutsushi/tagbar) needed.
     case "$OSTYPE" in
-        "darwin"*) brew install the_silver_searcher;;   # Mac
-        "linux"*)  sudo apt install silversearcher-ag;; # Ubuntu
+        "darwin"*) brew tap universal-ctags/universal-ctags             # Mac
+				   brew install --HEAD universal-ctags;;
+        "linux"*)  git clone https://github.com/universal-ctags/ctags   # Ubuntu
+                   cd ctags
+                   ./autogen.sh
+                   ./configure  # 默认是安装到/usr/local
+                   make
+                   make install;; # 安装的时候可能还需要其他权限，未测试
     esac
     # Plugin [Shougo/deoplete.nvim](https://github.com/Shougo/deoplete.nvim.git) needed.
     case "$OSTYPE" in
@@ -316,6 +340,7 @@ main() {
         echo "Start nvim-installer."
         echo "Checking install environment..."
         installHomeBrewIfMac
+        installMakeCMakeIfUbuntu
         installGit
         installNeovim
         installConfig

@@ -5,11 +5,12 @@ set number relativenumber   " 显示行号，相对光标的行号
 
 " 聚焦的窗口显示相对行号，非聚焦的窗口显示绝对行号
 " normal模式显示相对行号，insert模式显示绝对行号
-augroup numbertoggle
-  autocmd!
-  autocmd BufEnter,FocusGained,InsertLeave * set number | set relativenumber
-  autocmd BufLeave,FocusLost,InsertEnter   * set number | set norelativenumber
-augroup END
+" 这段代码在一些第三方窗口里面会出现不兼容的情况，暂时禁用一下
+" augroup numbertoggle
+"   autocmd!
+"   autocmd BufEnter,FocusGained,InsertLeave * set number | set relativenumber
+"   autocmd BufLeave,FocusLost,InsertEnter   * set number | set norelativenumber
+" augroup END
 
 " 缩进设置
 set expandtab       " 用space来替换tab
@@ -19,7 +20,10 @@ set shiftwidth=4    " 缩进宽度设置为4个space
 " 支持鼠标，a：表示所有模式，i：insert模式，v：visual模式
 set mouse=a
 
-" 在insert模式下按jf可以立即回到normal模式
+" 引导键设置为空格键
+let mapleader = "\<Space>"
+
+" 在insert模式下按jj可以立即回到normal模式
 " `^：回到上一次insert的位置
-inoremap jf <ESC>`^
+inoremap jj <ESC>`^
 

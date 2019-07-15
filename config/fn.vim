@@ -15,6 +15,12 @@ vnoremap <F3> <ESC>:set cursorcolumn!<CR>gv
 nnoremap <F4> :q<CR>
 inoremap <F4> <ESC>:q<CR>
 vnoremap <F4> <ESC>:q<CR>
+" F7：切换paste粘贴模式，insert模式下从外部复制代码就不会改变代码原格式
+set pastetoggle=<F7>
+" F8：关闭或开启Tagbar，用于浏览当前文件对象和函数大纲
+nnoremap <silent> <F8> :TagbarToggle<CR>
+inoremap <silent> <F8> <ESC>:TagbarToggle<CR>a
+vnoremap <silent> <F8> <ESC>:TagbarToggle<CR>gv
 " F9/F10：保存当前文件，避免盲按出错，设置挨着的这两个按键一样的功能
 " :w：无论缓冲区是否更改都会写入，:update：只有当缓冲区更改了才会写入
 nnoremap <F9> :update<CR>
