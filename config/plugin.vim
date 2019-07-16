@@ -24,8 +24,9 @@ Plug 'kristijanhusak/deoplete-phpactor', {'for': 'php'}             " 连接代�
 call plug#end()
 
 " 插件tpope/vim-fugitive自定义设置
-" :G / :Git [command]       即：:!git [command]             在vim中调用bash命令git
-" :G / :Git / :Gstatus      即：git status                  显示所有文件状态
+" :G  / :Git   [command]    即：:!git [command]             在vim中调用bash命令git
+" :G! / :Git!  [command]    即：:!git [command]             在vim中调用bash命令git，输出结果到一个临时文件中
+" :G  / :Git / :Gstatus     即：git status                  显示所有文件状态
 " :Glog [ file ]            即：git log [ file ]            显示提交记录
 " :Gcommit -m 'msg'         即：git commit -m 'msg'         提交修改
 " :Gfetch                   即：git fetch                   获取远端的更新
@@ -44,15 +45,26 @@ call plug#end()
 " COMMAND命令栏快捷键
 " Ctr + r Ctr + g：填入当前文件的文件路径
 " Status窗口中的快捷键
-" - ：git add       暂存文件或块修改    = ：git diff            展开文件修改
-" X ：git checkout  忽略块修改          dd：git diff            显示文件修改前后对比
-" cc：git commit    创建一个commit      ca：git commit --amend  创建一个commit来覆盖上一次提交
+" s ：git add       Stage文件或块修改           u ：git reset           Unstage文件或块修改
+" - ：git add       Toggle stage文件或块修改    X ：git checkout        忽略块修改
+" = ：git diff      展开文件修改                dd：git diff            显示文件修改前后对比
+" cc：git commit    创建一个commit              ca：git commit --amend  创建一个commit来覆盖上一次提交
 " Log窗口中的快捷键
 " ri：git rebase -i HEAD~{commit}   从当前commit进入交互式的rebase
 " rr：git rebase --continue         继续当前的rebase                rs；git rebase --skip   跳过当前的commit然后继续rebase
 " re：git rebase --edit             编辑当前的rebase                ra：git rebase --abort  终止当前的rebase
 " Blame窗口的快捷键
 " -：进入光标所在的commit然后再blame    q：退出
+
+" 插件airblade/vim-gitgutter自定义设置
+set updatetime=1000 " 设置gutter更新时间为1秒，默认是4秒
+" 更新所有可视窗口的gutter
+nnoremap <Leader>hh :GitGutterAll<CR>
+" 折叠当前文件中所有未修改的代码
+nnoremap <Leader>hz :GitGutterFold<CR>
+" ]c        ：跳转到下一个修改      [c        ：跳转到上一个修改
+" <Leader>hs：暂存光标所在的hunk    <Leader>hu：撤销光标所在的hunk 
+" <Leader>hp：预览光标所在的hunk
 
 " 插件terryma/vim-multiple-cursors自定义设置
 " Ctrl + n：选择下一个      Ctrl + p：回到上一个选择
