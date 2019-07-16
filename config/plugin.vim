@@ -9,21 +9,23 @@
 " U：更新选中的插件         L：加载插件
 " q：关闭插件窗口
 call plug#begin('~/.local/share/nvim/plugged')
-Plug 'tpope/vim-fugitive'                                                   " 支持在nvim中使用Git
-Plug 'airblade/vim-gitgutter', { 'on': 'GitGutterAll' }                     " 显示Git文件的变化
-Plug 'vim-airline/vim-airline'                                              " 展示更多信息的导航条
-Plug 'terryma/vim-multiple-cursors'                                         " 像Sublime那样的多光标插件
-Plug 'kien/ctrlp.vim'                                                       " 模糊搜索文件名来打开文件
-Plug 'brooth/far.vim', { 'on': ['F', 'Far', 'Fardo'] }                      " 多文件搜索和替换工具
-Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }                          " 显示对象和函数大纲
-Plug 'scrooloose/nerdcommenter'                                             " 快速注释代码
-Plug 'tpope/vim-surround'                                                   " 成对修改''()[]{}<>等字符
-Plug 'easymotion/vim-easymotion', { 'on': '<Plug>(easymotion-overwin-f)' }  " 文档内精确快速移动光标
-Plug 'StanAngeloff/php.vim', { 'for': 'php' }                               " PHP语法支持插件
-Plug 'pangloss/vim-javascript'                                              " Javascript语法支持插件
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }               " 代码自动补全框架
-Plug 'phpactor/phpactor', { 'for': 'php', 'do': 'composer install' }        " PHP代码补全
-Plug 'kristijanhusak/deoplete-phpactor', { 'for': 'php' }                   " 连接代码补全框架和PHP库
+Plug 'tpope/vim-fugitive'                                                                     " 支持在nvim中使用Git
+Plug 'airblade/vim-gitgutter', { 'on': 'GitGutterAll' }                                       " 显示Git文件的变化
+Plug 'vim-airline/vim-airline'                                                                " 展示更多信息的导航条
+Plug 'terryma/vim-multiple-cursors'                                                           " 像Sublime那样的多光标插件
+Plug 'kien/ctrlp.vim'                                                                         " 模糊搜索文件名来打开文件
+Plug 'brooth/far.vim', { 'on': ['F', 'Far', 'Fardo'] }                                        " 多文件搜索和替换工具
+Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }                                            " 显示对象和函数大纲
+Plug 'scrooloose/nerdcommenter'                                                               " 快速注释代码
+Plug 'tpope/vim-surround'                                                                     " 成对修改''()[]{}<>等字符
+Plug 'easymotion/vim-easymotion', { 'on': '<Plug>(easymotion-overwin-f)' }                    " 文档内精确快速移动光标
+Plug 'junegunn/vim-easy-align', { 'on': ['EasyAlign', 'LiveEasyAlign', '<Plug>(EasyAlign)'] } " 片段代码对齐工具
+Plug 'mattn/emmet-vim', { 'on': 'EmmetInstall' }                                              " 快速编写HTML和CSS的插件
+Plug 'StanAngeloff/php.vim', { 'for': 'php' }                                                 " PHP语法支持插件
+Plug 'pangloss/vim-javascript'                                                                " Javascript语法支持插件
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }                                 " 代码自动补全框架
+Plug 'phpactor/phpactor', { 'for': 'php', 'do': 'composer install' }                          " PHP代码补全
+Plug 'kristijanhusak/deoplete-phpactor', { 'for': 'php' }                                     " 连接代码补全框架和PHP库
 call plug#end()
 
 " 插件tpope/vim-fugitive自定义设置
@@ -107,7 +109,7 @@ endfunction
 " <Enter> ：在本窗口中打开文件      Ctrl + t：在新标签页中打开
 " Ctrl + v：在纵向窗口中打开        Ctrl + s：在水平窗口中打开
 " Ctrl + n：下一条搜索              Ctrl + p：上一条搜索
-" Ctrl + z：标记/取消标记文件
+" Ctrl + y：在工作目录创建文件      Ctrl + z：标记/取消标记文件
 let g:ctrlp_working_path_mode = ''  " 空字符串表示在nvim的工作目录里搜索
 
 " 插件brooth/far.vim自定义设置
@@ -154,6 +156,49 @@ let g:EasyMotion_do_mapping = 0 " 禁用默认的快捷键
 let g:EasyMotion_smartcase = 1  " 忽略大小写
 " 通过s键来启动快速跳转，按下s之后通过一个字符来定位想要跳转的位置
 nmap s <Plug>(easymotion-overwin-f)
+
+" 插件junegunn/vim-easy-align自定义设置
+" 在完成motion之后进入交互的align命令模式，例如：gaip
+nmap ga <Plug>(EasyAlign)
+" 进入交互的align命令模式，例如：vipga
+vmap ga <Plug>(EasyAlign)
+" COMMAND命令
+" :'<,'>EasyAlign {content} 例如：EasyAlign *= 也可以使用正则：EasyAlign */[+-]*=/ 其中输入ea<Tab>即可弹出EasyAlign
+" :'<,'>LiveEasyAlign       进入实时预览的align命令模式
+" align命令模式输入项
+" 输入项最后以分隔符结束，默认的分隔符有：<Space> <Bar> : . , & # " =（包含：= == != += &&= 等）
+" {delimiter}   ：对每行的第一个分隔符进行对齐
+" 2{delimiter}  ：对每行的第二个分隔符进行对齐
+" n{delimiter}  ：对每行的第n个分隔符进行对齐
+" -{delimiter}  ：对每行的倒数第一个分隔符进行对齐
+" -2{delimiter} ：对每行的倒数第二个分隔符进行对齐
+" -n{delimiter} ：对每行的倒数第n个分隔符进行对齐
+" *{delimiter}  ：对每行的所有分隔符进行对齐
+" **{delimiter} ：对每行的所有分隔符进行对齐，分隔的内容成对的左右对齐，例如：name = Tom    =    age = 25
+" align命令模式快捷键
+" <Enter> ：切换分隔内容的对齐方式，L R C
+" <Right> ：分隔符右对齐
+" <Left>  ：分隔符左侧紧贴着分隔内容
+" <Down>  ：分隔符右对齐，分隔符右侧紧贴着分隔内容
+" Ctrl + p：切换EasyAlign的命令模式和LiveEasyAlign的命令模式
+" Ctrl + x：输入自定义正则分隔符
+" Ctrl + i：切换第一个分隔内容的缩进方式，keep，deep，shallow，none
+" Ctrl + l：输入分隔符左侧的空格数
+" Ctrl + r：输入分隔符右侧的空格数
+" Ctrl + d：切换分隔符的对齐方式，L R C
+" Ctrl + g：切换需要忽略的分隔符组，[]，['String']，['Comment']，['String', 'Comment']
+" 高级应用
+" Ctrl + v：当要对某一小块代码对齐而不是整行的时候可以块选择再ga对齐
+" 使用参考：[vim-easy-align](https://github.com/junegunn/vim-easy-align)
+
+" 插件mattn/emmet-vim自定义设置
+" 只在html和css文件中启用Emmet
+let g:user_emmet_install_global = 0
+autocmd FileType html,css EmmetInstall
+" 只在insert和visual模式下启用Emmet
+let g:user_emmet_mode = 'iv'
+" Ctrl + y + , ：触发Emmet自动生成代码
+" Emmet语法参考：[Emmet Tutorial](https://raw.githubusercontent.com/mattn/emmet-vim/master/TUTORIAL)
 
 " 插件StanAngeloff/php.vim自定义设置
 " 修复类和方法在molokai主题上的显色错误
