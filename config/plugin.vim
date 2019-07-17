@@ -8,12 +8,37 @@
 " S：显示所有插件的状态     R：重试安装或更新失败的任务
 " U：更新选中的插件         L：加载插件
 " q：关闭插件窗口
+
+" 安装fzf的函数
+function Jiang_InstallFzf(info)
+  " info是vim-plug传来的字典变量，有以下三个参数
+  " - name  ：插件的名字
+  " - status：插件的状态，'installed'，'updated'，'unchanged'
+  " - force ：强制安装或更新，PlugInstall! 或 PlugUpdate!
+  if a:info.status == 'installed' || a:info.force
+    !./install --all
+    let uname = substitute(system('uname'), '[^a-zA-Z]', '', '')
+    if uname == 'Darwin'
+        " Mac中Bash的配置存储在~/.bash_profile中，而fzf的install脚本把配置写入了~/.bashrc中，因此我们要把内容移过来
+        echom system('grep fzf ~/.bash_profile')
+        if v:shell_error != 0
+            !echo "\# 设置fzf命令行模糊搜索工具" >> ~/.bash_profile
+            !cat ~/.bashrc >> ~/.bash_profile
+            !echo "export FZF_DEFAULT_OPTS=\"--height 30% --layout=reverse --preview '[ -f {} ] && head {} || [ -d {} ] && file {} || echo {}'\"" >> ~/.bash_profile
+        endif
+        !rm ~/.bashrc
+    endif
+  endif
+endf
+
 call plug#begin('~/.local/share/nvim/plugged')
 Plug 'tpope/vim-fugitive'                                                                     " 支持在nvim中使用Git
 Plug 'airblade/vim-gitgutter', { 'on': 'GitGutterAll' }                                       " 显示Git文件的变化
 Plug 'vim-airline/vim-airline'                                                                " 展示更多信息的导航条
 Plug 'terryma/vim-multiple-cursors'                                                           " 像Sublime那样的多光标插件
 Plug 'kien/ctrlp.vim'                                                                         " 模糊搜索文件名来打开文件
+Plug 'junegunn/fzf', { 'on': 'FZF', 'do': function('Jiang_InstallFzf') }                      " Bash命令行以及Vim的模糊搜索工具
+Plug 'junegunn/fzf.vim'                                                                       " Fzf功能扩展插件
 Plug 'brooth/far.vim', { 'on': ['F', 'Far', 'Fardo'] }                                        " 多文件搜索和替换工具
 Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }                                            " 显示对象和函数大纲
 Plug 'scrooloose/nerdcommenter'                                                               " 快速注释代码
@@ -111,6 +136,30 @@ endfunction
 " Ctrl + n：下一条搜索              Ctrl + p：上一条搜索
 " Ctrl + y：在工作目录创建文件      Ctrl + z：标记/取消标记文件
 let g:ctrlp_working_path_mode = ''  " 空字符串表示在nvim的工作目录里搜索
+
+" 插件junegunn/fzf自定义设置
+" Bash命令行：
+"   Ctrl + r：实时模糊搜索命令历史    Ctrl + t：实时模糊搜索文件和文件夹
+"   文件或文件夹实时模糊搜索
+"     cd **<Tab>        vim **<Tab>         nvim ~/program/**<Tab> 
+"   主机IP实时模糊搜索
+"     ssh **<Tab>       telnet **<Tab>
+"   环境变量实时模糊搜索
+"     unset **<Tab>     export **<Tab>      unalias **<Tab>
+"   进程实时模糊搜索，这时无需**
+"     kill <Tab>
+" 在Vim中：
+"   :FZF  显示实时模糊搜索文件窗口
+"   <Enter> ：在本窗口中打开文件
+"   <Tab>   ：选择当前行          Shift + <Tab>：取消当前行的选择
+"   Ctrl + t：在新标签页中打开    Ctrl + v     ：在纵向窗口中打开
+"   Ctrl + x：在水平窗口中打开    Ctrl + g     ：关闭搜索窗口
+" 模糊搜索技巧：
+"   sbtrkt：对整行字符模糊匹配
+"   'wild  ：不拆分单词匹配           ^music：以这个单词开头的匹配
+"   .mp3$  ：以这个单词结尾的匹配     !fire ：不包含这个单词的匹配
+"   !^music：不以这个单词开头的匹配   !.mp3$：不以这个单词结尾的匹配
+
 
 " 插件brooth/far.vim自定义设置
 " :F     {pattern} {file-mask} {params}                 多文件搜索

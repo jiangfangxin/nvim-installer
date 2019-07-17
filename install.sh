@@ -79,24 +79,6 @@ installHomeBrewIfMac() {
     fi
 }
 
-installMakeCMakeIfUbuntu() {
-    if [[ "$OSTYPE" == "linux"* && ! -x "$(which brew)" ]]; then
-        read -p "Package manager HomeBrew not exits, do you want to install it? [y/n] " choice
-        if [ "$choice" == "y" ]; then
-            # There always has ruby on mac.
-            if /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"; then
-                echo "HomeBrew installed."
-            else
-                echo "Install HomeBrew failed."
-                quit 1
-            fi
-        else
-            echo "Install abort due to without HomeBrew, you can install it permaticly later."
-            quit 1
-        fi
-    fi
-}
-
 installGit() {
     if [ ! -x "$(which git)" ]; then
         read -p "Git is not exist, try to install it? [y/n] " choice
@@ -134,14 +116,8 @@ installNeovim() {
                 quit 1
             fi;;
         "linux"*) # Ubuntu
-            # Install from the source on Ubuntu.
-            git clone https://github.com/neovim/neovim.git neovim
-            cd neovim
-            git checkout stable
-            make CMAKE_BUILD_TYPE=Release
-			if sudo make install; then
+            if sudo apt install neovim; then
                 echo "Neovim installed."
-                cd ../
             else
                 echo "Install neovim failed."
                 quit 1
@@ -295,9 +271,9 @@ installPluginNeedTools() {
     echo "Start install plugin need tools."
     # Plugin [majutsushi/tagbar](https://github.com/majutsushi/tagbar) needed.
     case "$OSTYPE" in
-        "darwin"*) brew tap universal-ctags/universal-ctags             # Mac
+        "darwin"*) brew tap universal-ctags/universal-ctags           # Mac
 				   brew install --HEAD universal-ctags;;
-        "linux"*)  git clone https://github.com/universal-ctags/ctags   # Ubuntu
+        "linux"*)  git clone https://github.com/universal-ctags/ctags # Ubuntu
                    cd ctags
                    ./autogen.sh
                    ./configure  # 默认是安装到/usr/local
@@ -340,7 +316,6 @@ main() {
         echo "Start nvim-installer."
         echo "Checking install environment..."
         installHomeBrewIfMac
-        installMakeCMakeIfUbuntu
         installGit
         installNeovim
         installConfig
