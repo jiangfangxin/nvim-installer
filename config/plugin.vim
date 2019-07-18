@@ -89,12 +89,12 @@ call plug#end()
 " 插件airblade/vim-gitgutter自定义设置
 set updatetime=1000 " 设置gutter更新时间为1秒，默认是4秒
 " 更新所有可视窗口的gutter
-nnoremap <Leader>hh :GitGutterAll<CR>
+nnoremap <leader>hh :GitGutterAll<CR>
 " 折叠当前文件中所有未修改的代码
-nnoremap <Leader>hz :GitGutterFold<CR>
+nnoremap <leader>hz :GitGutterFold<CR>
 " ]c        ：跳转到下一个修改      [c        ：跳转到上一个修改
-" <Leader>hs：暂存光标所在的hunk    <Leader>hu：撤销光标所在的hunk 
-" <Leader>hp：预览光标所在的hunk
+" <leader>hs：暂存光标所在的hunk    <leader>hu：撤销光标所在的hunk 
+" <leader>hp：预览光标所在的hunk
 
 " 插件terryma/vim-multiple-cursors自定义设置
 " Ctrl + n：选择下一个      Ctrl + p：回到上一个选择
@@ -162,6 +162,9 @@ let g:ctrlp_working_path_mode = ''  " 空字符串表示在nvim的工作目录�
 
 
 " 插件brooth/far.vim自定义设置
+" 下面两项设置，懒加载来提高滚动的流畅性
+set lazyredraw
+set regexpengine=1
 " :F     {pattern} {file-mask} {params}                 多文件搜索
 " :Far   {pattern} {replace-with} {file-mask} {params}  预览多文件替换
 " :Fardo {params}                                       执行替换
