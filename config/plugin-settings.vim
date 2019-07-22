@@ -7,17 +7,27 @@ nnoremap <silent> <leader>gs :Gstatus<CR>
 " :Glog [ file ]            即：git log [ file ]            显示提交记录
 " :Gcommit -m 'msg'         即：git commit -m 'msg'         提交修改
 " :Gfetch                   即：git fetch                   获取远端的更新
+nnoremap <leader>gf :Gfetch<CR>
 " :Gpush origin {branch}    即：git push origin {branch}    推送分支到远端
+nnoremap <leader>gp :Gpush origin <C-r>=fugitive#head()<CR>
 " :Gdiffsplit               即：git diff %                  对比当前文件和HEAD的差异
+nnoremap <leader>fd :Gdiffsplit<CR>
 " :Gblame                   即：git blame %                 blame当前文件
+nnoremap <leader>fb :Gblame<CR>
 " :Gwrite                   即：git add %                   添加当前文件到stage
+nnoremap <leader>fs :Gwrite<CR>
+" :G reset HEAD %           即：git reset HEAD %            添加当前文件到unstage
+nnoremap <leader>fu :G reset HEAD %<CR><CR>
 " :Gread                    即：git checkout %              检出当前文件到HEAD版本
+nnoremap <leader>fx :Gread<CR>
 " :Grebase {branch}         即：git rebase {branch}         基于分支做rebase
+nnoremap <leader>gr :Grebase master
 " :Gremove                  即：git rm --cached %           从版本管理中移除当前文件
+nnoremap <leader>gd :Gremove<CR>
 " 通用快捷键
 " <CR>：直接打开文件
-" o    ：在横向窗口中打开文件   gO   ：在纵向窗口中打开文件
-" O    ：在新标签页中打开文件   p    ：在预览窗口中打开文件
+" o    ：在横向窗口中打开文件   O    ：在新标签页中打开文件
+" gO   ：在纵向窗口中打开文件   p    ：在预览窗口中打开文件
 " <C-N>：跳转到下一个修改块     <C-P>：跳转到上一个修改块
 " Status窗口中的快捷键
 " s ：git add       Stage文件或块修改           u ：git reset           Unstage文件或块修改
@@ -33,13 +43,21 @@ nnoremap <silent> <leader>gs :Gstatus<CR>
 
 " 插件airblade/vim-gitgutter自定义设置
 set updatetime=1000 " 设置gutter更新时间为1秒，默认是4秒
-" 开启或者关闭gutter
-nnoremap <leader>hh :GitGutterToggle<CR>
+let g:gitgutter_map_keys = 0 " 取消gitgutter插件默认的按键绑定
+" 手动刷新所有文件的gutter
+nnoremap <leader>hh :GitGutterAll<CR>
 " 折叠当前文件中所有未修改的代码
 nnoremap <leader>hz :GitGutterFold<CR>
-" ]c        ：跳转到下一个修改      [c        ：跳转到上一个修改
-" <leader>hs：暂存光标所在的hunk    <leader>hu：撤销光标所在的hunk 
+" ]h：跳转到下一个修改
+nmap ]h <Plug>GitGutterNextHunk
+" [h：跳转到上一个修改
+nmap [h <Plug>GitGutterPrevHunk
+" <leader>hs：暂存光标所在的hunk
+nmap <leader>hs <Plug>GitGutterStageHunk
+" <leader>hx：撤销光标所在的hunk的修改
+nmap <leader>hx <Plug>GitGutterUndoHunk
 " <leader>hp：预览光标所在的hunk
+nmap <leader>hp <Plug>GitGutterPreviewHunk
 
 " 插件terryma/vim-multiple-cursors自定义设置
 " Ctrl + n：选择下一个      Ctrl + p：回到上一个选择

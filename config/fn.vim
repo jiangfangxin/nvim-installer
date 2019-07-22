@@ -1,6 +1,6 @@
 " ---------- fn.vim ----------
 " 功能键映射
-" F1：打开Vim手册（默认）
+" F1：搜索Vim手册（在插件junegunn/fzf.vim自定义设置中绑定）
 " F2：切换显示行号
 " number后面的!表示toggle的意思
 " 参考：[Vim’s absolute, relative and hybrid line numbers](https://jeffkreeftmeijer.com/vim-number/)

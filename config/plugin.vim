@@ -10,7 +10,7 @@
 
 call plug#begin(g:jiang_plugin_dir)
 Plug 'tpope/vim-fugitive'                                                                     " 支持在nvim中使用Git
-Plug 'airblade/vim-gitgutter', { 'on': 'GitGutterToggle' }                                    " 显示Git文件的变化
+Plug 'airblade/vim-gitgutter', { 'on': 'GitGutterAll' }                                       " 显示Git文件的变化
 Plug 'vim-airline/vim-airline'                                                                " 展示更多信息的导航条
 Plug 'terryma/vim-multiple-cursors'                                                           " 像Sublime那样的多光标插件
 Plug 'junegunn/fzf', { 'on': ['Files', 'Buffers', 'Ag', 'BLines', 'Tags', 'BTags', 'History',
