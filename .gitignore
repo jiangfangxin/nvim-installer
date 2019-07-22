@@ -5,3 +5,6 @@
 init.vim
 theme/
 pluginManager/
+
+# Tags file
+tags

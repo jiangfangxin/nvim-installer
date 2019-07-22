@@ -1,6 +1,10 @@
 " ---------- edit.vim ----------
+" normal模式下
 " H：把光标移动到视图顶部   L：把光标移动到视图底部     M：把光标移动到视图中部
 " zt：把当前行移动到顶部    zb：把当前行移动到底部      zz：把当前行移动到中部
+"
+" insert模式下
+" Ctrl + t：增加整行tab缩进     Ctrl + f：将整行回归到最佳缩进
 
 " 全选快捷键，在normal和visual模式下按Ctrl + a即可
 nnoremap <C-a> ggvG$
@@ -90,4 +94,17 @@ function Jiang_QuoteDelim(char)
         return a:char
     endif
 endf
+
+" 在行末添加log标识，用于调试
+nnoremap <silent> <leader>cj A " ' --jfx'<ESC>F'b
+" 新增函数log
+nnoremap <silent> <leader>cf oechom '-> ' . ' --jfx'<ESC>F'F'i
+" 新增变量log
+nnoremap <silent> <leader>cv oechom ': ' . ' --jfx'<ESC>F:i
+" 注释掉所有log
+nnoremap <silent> <leader>cd :<C-u>%s/^\( *\)\([^ "].*--jfx.*\)$/\1" \2/<CR>
+" 启用所有注释的log
+nnoremap <silent> <leader>cD :<C-u>%s/^\( *\)" \(.*--jfx.*\)$/\1\2/<CR>
+" 清除所有的log
+nnoremap <silent> <leader>cJ :<C-u>%s/^.*--jfx.*$\n//<CR>
 

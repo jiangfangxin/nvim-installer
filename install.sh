@@ -187,8 +187,12 @@ installConfig() {
         echo "config/fn.vim >> init.vim"
     cat config/edit.vim >> init.vim
         echo "config/edit.vim >> init.vim"
+    cat config/plugin-dependent.vim >> init.vim
+        echo "config/plugin-dependent.vim >> init.vim"
     cat config/plugin.vim >> init.vim
         echo "config/plugin.vim >> init.vim"
+    cat config/plugin-settings.vim >> init.vim
+        echo "config/plugin-settings.vim >> init.vim"
     cat config/mac-keyboard.vim >> init.vim
         echo "config/mac-keyboard.vim >> init.vim"
     cat config/clipboard.vim >> init.vim
