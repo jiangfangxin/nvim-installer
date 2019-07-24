@@ -61,9 +61,9 @@ nmap <leader>hp <Plug>GitGutterPreviewHunk
 
 " 插件terryma/vim-multiple-cursors自定义设置
 " Ctrl + n：选择下一个      Ctrl + p：回到上一个选择
-" Ctrl + x：跳过这个选择    Ctrl + k：选择全部匹配
+" Ctrl + x：跳过这个选择    Alt  + m：选择全部匹配（mac-keyboard）
 " :MultipleCursorsFind [your-search-string][\c|\C]  选择命令
-let g:multi_cursor_select_all_word_key = '<C-k>'
+let g:multi_cursor_select_all_word_key = 'µ'
 " 退出visual模式时不退出多光标模式
 let g:multi_cursor_exit_from_visual_mode = 0
 " 退出insert模式时不退出多光标模式
@@ -127,6 +127,8 @@ endfunction
 " 插件junegunn/fzf.vim自定义设置
 " :Files [PATH] 实时模糊搜索文件
 nnoremap <silent> <C-p> :Files<CR>
+inoremap <silent> <C-p> <ESC>:Files<CR>
+vnoremap <silent> <C-p> :<C-u>Files<CR>
 " :Buffers 实时模糊搜索buffers
 nnoremap <silent> <C-b> :Buffers<CR>
 " 回到上一个buffer
@@ -142,7 +144,9 @@ nnoremap <silent> † :Tags<CR>
 " :BTags [QUERY] 搜索当前文件内的所有标签
 nnoremap <silent> <C-t> :BTags<CR>
 " :History 搜索之前打开的文件以及buffer
-noremap <silent> <C-h> :History<CR>
+nnoremap <silent> <C-h> :History<CR>
+inoremap <silent> <C-h> <ESC>:History<CR>
+vnoremap <silent> <C-h> :<C-u>History<CR>
 " :History: 搜索命令历史    :History/ 搜索查找历史
 cnoremap <silent><expr> <C-h> (getcmdtype() =~ '[/?]') ? '<ESC>:<C-u>History/<CR>' : '<C-u>History:<CR>'
 " :Commits 搜索项目的提交历史
@@ -161,6 +165,8 @@ vnoremap <silent> <F1> :<C-u>Helptags<CR>
 " 下面两项设置，懒加载来提高滚动的流畅性
 set lazyredraw
 set regexpengine=1
+" 删除所有far.vim产生的无用buffer
+nnoremap <leader>bd :bdelete FAR*<C-a><CR>
 " :F     {pattern} {file-mask} {params}                 多文件搜索
 " :Far   {pattern} {replace-with} {file-mask} {params}  预览多文件替换
 " :Fardo {params}                                       执行替换

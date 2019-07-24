@@ -64,3 +64,45 @@ function Jiang_InstallFzfVim(info)
     endif
 endf
 
+" 安装ctags这个工具
+function Jiang_InstallCtags(info)
+    let os = Jiang_GetSystemType()
+    if (os == 'macOS')
+        !brew tap universal-ctags/universal-ctags
+        !brew install --HEAD universal-ctags
+    elseif (os == 'Ubuntu')
+        let path = getcwd()
+        !cd /tmp
+        !git clone https://github.com/universal-ctags/ctags
+        !cd ctags
+        !./autogen.sh
+        !./configure " 默认是安装到/usr/local
+        !make
+        !make install " 安装的时候可能还需要其他权限，未测试
+        execute '!cd ' . path
+    endif
+endf
+
+" 安装deoplete的依赖
+function Jiang_InstallDeoplete(info)
+    let os = Jiang_GetSystemType()
+    if (os == 'macOS')
+        !brew install python3
+    elseif (os == 'Ubuntu')
+        !sudo apt install python3
+    endif
+    !pip3 install pynvim
+    execute 'UpdateRemotePlugins'
+endf
+
+" 安装phpactor的依赖
+function Jiang_InstallPhpactor(info)
+    let os = Jiang_GetSystemType()
+    if (os == 'macOS')
+        !brew install composer
+    elseif (os == 'Ubuntu')
+        !sudo apt install composer
+    endif
+    !composer install
+endf
+

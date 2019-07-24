@@ -20,7 +20,7 @@ Plug 'junegunn/fzf.vim', { 'on': ['Files', 'Buffers', 'Ag', 'BLines', 'Tags', 'B
                          \ 'Commits', 'BCommits', 'Commands', 'Maps', 'Helptags', 'Filetypes'],
                          \ 'do': function('Jiang_InstallFzfVim') }                            " Fzf功能扩展
 Plug 'brooth/far.vim', { 'on': ['F', 'Far', 'Fardo'] }                                        " 多文件搜索和替换工具
-Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }                                            " 显示对象和函数大纲
+Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' , 'do': function('Jiang_InstallCtags')}      " 显示对象和函数大纲
 Plug 'scrooloose/nerdcommenter'                                                               " 快速注释代码
 Plug 'tpope/vim-surround'                                                                     " 成对修改''()[]{}<>等字符
 Plug 'easymotion/vim-easymotion', { 'on': '<Plug>(easymotion-overwin-f)' }                    " 文档内精确快速移动光标
@@ -28,8 +28,8 @@ Plug 'junegunn/vim-easy-align', { 'on': ['EasyAlign', 'LiveEasyAlign', '<Plug>(E
 Plug 'mattn/emmet-vim', { 'on': 'EmmetInstall' }                                              " 快速编写HTML和CSS的插件
 Plug 'StanAngeloff/php.vim', { 'for': 'php' }                                                 " PHP语法支持插件
 Plug 'pangloss/vim-javascript'                                                                " Javascript语法支持插件
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }                                 " 代码自动补全框架
-Plug 'phpactor/phpactor', { 'for': 'php', 'do': 'composer install' }                          " PHP代码补全
+Plug 'Shougo/deoplete.nvim', { 'do': function('Jiang_InstallDeoplete') }                      " 代码自动补全框架
+Plug 'phpactor/phpactor', { 'for': 'php', 'do': function('Jiang_InstallPhpactor') }           " PHP代码补全
 Plug 'kristijanhusak/deoplete-phpactor', { 'for': 'php' }                                     " 连接代码补全框架和PHP库
 call plug#end()
 

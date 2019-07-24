@@ -107,22 +107,24 @@ installGit() {
 }
 
 installNeovim() {
-    case "$OSTYPE" in
-        "darwin"*) # Mac
-            if brew install neovim; then
-                echo "Neovim installed."
-            else
-                echo "Install neovim failed."
-                quit 1
-            fi;;
-        "linux"*) # Ubuntu
-            if sudo apt install neovim; then
-                echo "Neovim installed."
-            else
-                echo "Install neovim failed."
-                quit 1
-            fi;;
-    esac
+    if [ ! -x $(which nvim) ]; then
+        case "$OSTYPE" in
+            "darwin"*) # Mac
+                if brew install neovim; then
+                    echo "Neovim installed."
+                else
+                    echo "Install neovim failed."
+                    quit 1
+                fi;;
+            "linux"*) # Ubuntu
+                if sudo apt install neovim; then
+                    echo "Neovim installed."
+                else
+                    echo "Install neovim failed."
+                    quit 1
+                fi;;
+        esac
+    fi
 }
 
 cleanOldBackup() {
@@ -272,29 +274,29 @@ installPluginManager() {
 }
 
 installPluginNeedTools() {
-    echo "Start install plugin need tools."
+    # echo "Start install plugin need tools."
     # Plugin [majutsushi/tagbar](https://github.com/majutsushi/tagbar) needed.
-    case "$OSTYPE" in
-        "darwin"*) brew tap universal-ctags/universal-ctags           # Mac
-				   brew install --HEAD universal-ctags;;
-        "linux"*)  git clone https://github.com/universal-ctags/ctags # Ubuntu
-                   cd ctags
-                   ./autogen.sh
-                   ./configure  # 默认是安装到/usr/local
-                   make
-                   make install;; # 安装的时候可能还需要其他权限，未测试
-    esac
+    # case "$OSTYPE" in
+    #     "darwin"*) brew tap universal-ctags/universal-ctags           # Mac
+	#                brew install --HEAD universal-ctags;;
+    #     "linux"*)  git clone https://github.com/universal-ctags/ctags # Ubuntu
+    #                cd ctags
+    #                ./autogen.sh
+    #                ./configure  # 默认是安装到/usr/local
+    #                make
+    #                make install;; # 安装的时候可能还需要其他权限，未测试
+    # esac
     # Plugin [Shougo/deoplete.nvim](https://github.com/Shougo/deoplete.nvim.git) needed.
-    case "$OSTYPE" in
-        "darwin"*) brew install python3;;     # Mac
-        "linux"*)  sudo apt install python3;; # Ubuntu
-    esac
-    pip3 install pynvim
+    # case "$OSTYPE" in
+    #     "darwin"*) brew install python3;;     # Mac
+    #     "linux"*)  sudo apt install python3;; # Ubuntu
+    # esac
+    # pip3 install pynvim
     # Plugin [phpactor/phpactor](https://github.com/phpactor/phpactor.git) needed.
-    case "$OSTYPE" in
-        "darwin"*) brew install composer;;     # Mac
-        "linux"*)  sudo apt install composer;; # Ubuntu
-    esac
+    # case "$OSTYPE" in
+    #     "darwin"*) brew install composer;;     # Mac
+    #     "linux"*)  sudo apt install composer;; # Ubuntu
+    # esac
     echo "Tools installed.";
 }
 
