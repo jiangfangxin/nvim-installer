@@ -139,10 +139,10 @@ nnoremap <silent> <leader>bn :bnext<CR>
 nnoremap <silent> <C-f> :Ag<CR>
 " :BLines [QUERY] 对当前文件进行行搜索
 nnoremap <silent> <C-l> :BLines<CR>
-" :Tags [QUERY] 搜索项目内的所有标签，绑定苹果键盘的Alt + t（mac-keyboard）
-nnoremap <silent> † :Tags<CR>
+" :Tags [QUERY] 搜索项目内的所有标签，绑定苹果键盘的Alt + g（mac-keyboard）
+nnoremap <silent> © :Tags<CR>
 " :BTags [QUERY] 搜索当前文件内的所有标签
-nnoremap <silent> <C-t> :BTags<CR>
+nnoremap <silent> <C-g> :BTags<CR>
 " :History 搜索之前打开的文件以及buffer
 nnoremap <silent> <C-h> :History<CR>
 inoremap <silent> <C-h> <ESC>:History<CR>
