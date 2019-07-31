@@ -22,19 +22,42 @@ function Jiang_InstallFzf(info)
     " - force ：强制安装或更新，PlugInstall! 或 PlugUpdate!
     if a:info.status == 'installed' || a:info.force
         !./install --all
+
+        " 添加默认设置
+        let lines = []
+        call add(lines, "export FZF_DEFAULT_OPTS=\"--height 40% \\")
+        call add(lines, "                         --layout=reverse \\")
+        call add(lines, "                         --preview 'if [ -f {} ]; then \\")
+        call add(lines, "                                        bat -nr 1:1000 --color=always {}; \\")
+        call add(lines, "                                    elif [ -d {} ]; then \\")
+        call add(lines, "                                        file {}; \\")
+        call add(lines, "                                    else \\")
+        call add(lines, "                                        echo {}; \\")
+        call add(lines, "                                    fi'\"")
+
         let os = Jiang_GetSystemType()
         if os == 'macOS'
+            " 安装bat命令行工具
+            !brew install bat
             " Mac中Bash的配置存储在~/.bash_profile中，而fzf的install脚本把配置写入了~/.bashrc中，因此我们要把内容移过来
             echom system('grep fzf ~/.bash_profile')
             if v:shell_error != 0
                 !echo "\# 设置fzf命令行模糊搜索工具" >> ~/.bash_profile
                 !cat ~/.bashrc >> ~/.bash_profile
-                !echo "export FZF_DEFAULT_OPTS=\"--height 40\%
-                                               \ --layout=reverse
-                                               \ --preview '[ -f {} ] && head -n 20 {} || [ -d {} ] && file {} || echo {}'\""
-                                               \ >> ~/.bash_profile
+                call writefile(lines, expand('~/.bash_profile'), 'a')
             endif
             !rm ~/.bashrc
+        elseif os == 'Ubuntu'
+            " 安装bat命令行工具
+            let dir = trim(system('mktemp -d nvim_bat.XXXXXX'))
+            execute "!curl https://github.com/sharkdp/bat/releases/download/v0.11.0/bat-musl_0.11.0_amd64.deb -o " . dir . "/bat-musl_0.11.0_amd64.deb"
+            execute "!sudo dpkg -i " . dir . "/bat-musl_0.11.0_amd64.deb"
+            " 将默认设置写入~/.bashrc中
+            echom system('grep FZF_DEFAULT_OPTS ~/.bashrc')
+            if v:shell_error != 0
+                !echo "\# 设置fzf命令行模糊搜索工具" >> ~/.bashrc
+                call writefile(lines, expand('~/.bashrc'), 'a')
+            endif
         endif
     endif
 endf
@@ -61,6 +84,24 @@ function Jiang_InstallFzfVim(info)
         execute "!sed -i '' -e 's/--layout=reverse-list/--layout=reverse/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
     elseif (os == 'Ubuntu')
         execute "!sed -i -e 's/--layout=reverse-list/--layout=reverse/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
+    endif
+    " :Ag、:Tags、:BTags、:BLines、:Buffers 命令不用显示preview-window
+    if (os == 'macOS')
+        execute "!sed -i '' -E 's/BLines> .,/& \"--preview-window=hidden\",/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
+        execute "!sed -i '' -E 's/capname\\..> .,/& \"--preview-window=hidden\",/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
+        execute "!sed -i '' -E 's/Tags> .,/& \"--preview-window=hidden\",/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
+        execute "!sed -i '' -E 's/Buf> .,/& \"--preview-window=hidden\",/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
+        execute "!sed -i '' -E 's/Hist[:\\/]> ./& --preview-window=hidden/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
+        execute "!sed -i '' -E 's/File types> ./& --preview-window=hidden/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
+        execute "!sed -i '' -E 's/Maps \\(.\\.a:mode\\..\\)> ./& --preview-window=hidden/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
+    elseif (os == 'Ubuntu')
+        execute "!sed -i -E 's/BLines> .,/& \"--preview-window=hidden\",/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
+        execute "!sed -i -E 's/capname\\..> .,/& \"--preview-window=hidden\",/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
+        execute "!sed -i -E 's/Tags> .,/& \"--preview-window=hidden\",/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
+        execute "!sed -i -E 's/Buf> .,/& \"--preview-window=hidden\",/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
+        execute "!sed -i -E 's/Hist[:\\/]> ./& --preview-window=hidden/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
+        execute "!sed -i -E 's/File types> ./& --preview-window=hidden/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
+        execute "!sed -i -E 's/Maps \\(.\\.a:mode\\..\\)> ./& --preview-window=hidden/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
     endif
 endf
 

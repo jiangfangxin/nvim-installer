@@ -1,4 +1,10 @@
 " ---------- plugin-settings.vim ----------
+" 插件mhinz/vim-startify自定义设置
+" 关闭自动cd到打开文件的目录
+let g:startify_change_to_dir = 0
+" 打开文件时自动cd到git等项目的根目录
+let g:startify_change_to_vcs_root = 1
+
 " 插件tpope/vim-fugitive自定义设置
 " :G  / :Git   [command]    即：:!git [command]             在vim中调用bash命令git
 " :G! / :Git!  [command]    即：:!git [command]             在vim中调用bash命令git，输出结果到一个临时文件中
@@ -125,6 +131,8 @@ endfunction
 "   !^music：不以这个单词开头的匹配   !.mp3$：不以这个单词结尾的匹配
 
 " 插件junegunn/fzf.vim自定义设置
+" 关闭fzf弹出窗的行号
+autocmd FileType fzf setlocal nonumber norelativenumber
 " :Files [PATH] 实时模糊搜索文件
 nnoremap <silent> <C-p> :Files<CR>
 inoremap <silent> <C-p> <ESC>:Files<CR>
