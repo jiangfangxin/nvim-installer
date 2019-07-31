@@ -148,7 +148,7 @@ nnoremap <silent> <C-h> :History<CR>
 inoremap <silent> <C-h> <ESC>:History<CR>
 vnoremap <silent> <C-h> :<C-u>History<CR>
 " :History: 搜索命令历史    :History/ 搜索查找历史
-cnoremap <silent><expr> <C-h> (getcmdtype() =~ '[/?]') ? '<ESC>:<C-u>History/<CR>' : '<C-u>History:<CR>'
+cnoremap <silent><expr> <C-h> (getcmdtype() =~ '[/?]') ? '<C-u><BS>:<C-u>History/<CR>' : '<C-u>History:<CR>'
 " :Commits 搜索项目的提交历史
 nnoremap <silent> <leader>gl :Commits<CR>
 " :BCommits 搜索当前文件的提交历史
@@ -157,14 +157,24 @@ nnoremap <silent> <leader>fl :BCommits<CR>
 nnoremap <silent> <F1> :Helptags<CR>
 inoremap <silent> <F1> <ESC>:Helptags<CR>
 vnoremap <silent> <F1> :<C-u>Helptags<CR>
-" :Maps      搜索快捷键绑定
-" :Commands  搜索vim命令
+cnoremap <silent> <F1> <C-u><BS>:Helptags<CR>
+" :Maps 搜索快捷键绑定
+nnoremap <silent> <leader>km :Maps<CR>
 " :Filetypes 设置文件类型
+nnoremap <silent> <leader>ft :Filetypes<CR>
+" :Commands 搜索vim命令
 
 " 插件brooth/far.vim自定义设置
 " 下面两项设置，懒加载来提高滚动的流畅性
 set lazyredraw
 set regexpengine=1
+" 设置Far默认的搜索引擎为Ag，默认vimgrep引擎太慢了
+" 注意：使用Ag引擎后，有2点变化：
+" 1. 使用的正则语法由BRE变为了ERE。
+" 2. 文件路径不再是通配符，而是ERE正则，如：
+" 由原来的 :F word app/**/*.php 变为 :F word app/.*\.php
+" 搜索所有 :F word **/*         变为 :F word .*
+let g:far#source = 'ag'
 " 删除所有far.vim产生的无用buffer
 nnoremap <leader>bd :bdelete FAR*<C-a><CR>
 " :F     {pattern} {file-mask} {params}                 多文件搜索
@@ -178,6 +188,30 @@ nnoremap <leader>bd :bdelete FAR*<C-a><CR>
 " t ：包含/排除光标所在行的替换 p ：打开预览窗口
 " zo：展开文件搜索条目          zc：折叠文件搜索条目    za：展开/折叠文件搜索条目
 " zr：展开所有搜索条目          zm：折叠所有文件搜索条目
+" 字符串匹配的规则：
+" String Match
+"   |
+"   |__Wildcard character（https://en.wikipedia.org/wiki/Wildcard_character）
+"   |    |__程序：Unix文件路径、Bash(==右侧pattern)、Bash(case选项)
+"   |    |__规则：任意字符任意个*、任意字符?、单个字符[]
+"   |
+"   |__Regular Expressions（https://en.wikipedia.org/wiki/Regular_expression）
+"        |
+"        |__Perl（事实上的标准）
+"        |   |__程序：grep -P、pcregrep、Perl、PHP、Java、Javascript、Python、C#
+"        |   |__规则：https://www.php.net/manual/zh/reference.pcre.pattern.syntax.php
+"        |   |__匹配：匹配项$0-9
+"        |
+"        |__POSIX（Portable Operating System Interface）
+"             |
+"             |__BRE（Basic Regular Expressions）
+"             |    |__程序：grep [-G]、vim(断言有区别)、sed(不支持\n)、awk、Far(vimgrep引擎)（大部分Unix程序默认BRE）
+"             |    |__差异：有无\？、至少一个\+、可选\|、模式\(\)、数量\{\}
+"             |    |__替换：匹配项\0-9
+"             |
+"             |__ERE（Extended Regular Expressions）
+"                  |__程序：grep -E、man(/?)、vim(\v断言有区别)、Ag、Far(Ag引擎)、Bash(=~右侧pattern)（大部分Unix程序可以通过-E来使用ERE）
+"                  |__替换：匹配项\0-9
  
 " 插件majutsushi/tagbar自定义设置
 " 需要安装：brew/apt install universal ctags
@@ -187,6 +221,10 @@ nnoremap <leader>bd :bdelete FAR*<C-a><CR>
 " zo  ：展开目录树                  zc：折叠目录树      za：展开/折叠目录树
 " zr  ：展开所有目录树              zm：折叠所有目录树
 " Ctrl + n：跳转到上一个节点        Ctrl + p：跳转到下一个节点
+
+" 插件ludovicchabant/vim-gutentags自定义设置
+let g:gutentags_cache_dir = '~/.cache/gutentags' " 在gutentags这个缓存目录中存放所有项目的tags文件避免污染项目
+" Ctrl + ]：跳转到定义  Ctrl + t：跳转回来
 
 " 插件crooloose/nerdcommenter自定义设置
 let g:NERDSpaceDelims = 1       " 注释后添加空格
@@ -246,6 +284,25 @@ vmap ga <Plug>(EasyAlign)
 " Ctrl + v：当要对某一小块代码对齐而不是整行的时候可以块选择再ga对齐
 " 使用参考：[vim-easy-align](https://github.com/junegunn/vim-easy-align)
 
+" 插件Konfekt/FastFold自定义设置
+" 插件会在保存buffer、展开或折叠代码、折叠间跳转的时候自动更新折叠
+let g:fastfold_minlines = 0 " 即便文件代码很少也折叠
+" 开启以下语言的代码折叠
+let g:markdown_folding = 1
+let g:tex_fold_enabled = 1
+let g:vimsyn_folding = 'af'
+let g:xml_syntax_folding = 1
+let g:javaScript_fold = 1
+let g:sh_fold_enabled= 7
+let g:ruby_fold = 1
+let g:perl_fold = 1
+let g:perl_fold_blocks = 1
+let g:r_syntax_folding = 1
+let g:rust_fold = 1
+let g:php_folding = 1
+" zuz：手动更新当前buffer的折叠
+" zj ：跳转到上一个折叠处       zk：跳转到下一个折叠处
+
 " 插件mattn/emmet-vim自定义设置
 " 只在html和css文件中启用Emmet
 let g:user_emmet_install_global = 0
@@ -275,4 +332,10 @@ call deoplete#custom#option({
 " 修复Omni删除最后一个字母时还显示提示的Bug
 " inoremap <expr> <BS> deoplete#smart_close_popup()."\<BS>"
 " inoremap <expr> <C-h> deoplete#smart_close_popup()."\<BS>"
+
+" 插件phpactor/phpactor自定义设置
+" 调用phpactor的选项菜单
+nnoremap <leader>mm :call phpactor#ContextMenu()<CR>
+" 跳转到定义处
+autocmd FileType php nnoremap <buffer> <C-]> :call phpactor#GotoDefinition()<CR>
 

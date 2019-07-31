@@ -9,22 +9,25 @@
 " q：关闭插件窗口
 
 call plug#begin(g:jiang_plugin_dir)
+Plug 'mhinz/vim-startify'                                                                     " 自定义vim启动页
 Plug 'tpope/vim-fugitive'                                                                     " 支持在nvim中使用Git
 Plug 'airblade/vim-gitgutter', { 'on': 'GitGutterAll' }                                       " 显示Git文件的变化
 Plug 'vim-airline/vim-airline'                                                                " 展示更多信息的导航条
 Plug 'terryma/vim-multiple-cursors'                                                           " 像Sublime那样的多光标插件
-Plug 'junegunn/fzf', { 'on': ['Files', 'Buffers', 'Ag', 'BLines', 'Tags', 'BTags', 'History',
-                         \ 'Commits', 'BCommits', 'Commands', 'Maps', 'Helptags', 'Filetypes'],
+Plug 'junegunn/fzf', { 'on': ['FZF', 'Files', 'Buffers', 'Ag', 'BLines', 'Tags', 'BTags', 'Maps',
+                         \ 'Commits', 'BCommits', 'Commands', 'History', 'Helptags', 'Filetypes'],
                          \ 'do': function('Jiang_InstallFzf') }                               " Fzf模糊搜索
-Plug 'junegunn/fzf.vim', { 'on': ['Files', 'Buffers', 'Ag', 'BLines', 'Tags', 'BTags', 'History',
-                         \ 'Commits', 'BCommits', 'Commands', 'Maps', 'Helptags', 'Filetypes'],
+Plug 'junegunn/fzf.vim', { 'on': ['FZF', 'Files', 'Buffers', 'Ag', 'BLines', 'Tags', 'BTags', 'Maps',
+                         \ 'Commits', 'BCommits', 'Commands', 'History', 'Helptags', 'Filetypes'],
                          \ 'do': function('Jiang_InstallFzfVim') }                            " Fzf功能扩展
-Plug 'brooth/far.vim', { 'on': ['F', 'Far', 'Fardo'] }                                        " 多文件搜索和替换工具
+Plug 'brooth/far.vim', { 'on': ['F', 'Far', 'Fardo'], 'do': function('Jiang_ChangeFar') }     " 多文件搜索和替换工具
 Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' , 'do': function('Jiang_InstallCtags')}      " 显示对象和函数大纲
+Plug 'ludovicchabant/vim-gutentags'                                                           " 自动化生成和管理tags文件
 Plug 'scrooloose/nerdcommenter'                                                               " 快速注释代码
 Plug 'tpope/vim-surround'                                                                     " 成对修改''()[]{}<>等字符
 Plug 'easymotion/vim-easymotion', { 'on': '<Plug>(easymotion-overwin-f)' }                    " 文档内精确快速移动光标
 Plug 'junegunn/vim-easy-align', { 'on': ['EasyAlign', 'LiveEasyAlign', '<Plug>(EasyAlign)'] } " 片段代码对齐工具
+Plug 'Konfekt/FastFold'                                                                       " 代码语法折叠插件
 Plug 'mattn/emmet-vim', { 'on': 'EmmetInstall' }                                              " 快速编写HTML和CSS的插件
 Plug 'StanAngeloff/php.vim', { 'for': 'php' }                                                 " PHP语法支持插件
 Plug 'pangloss/vim-javascript'                                                                " Javascript语法支持插件

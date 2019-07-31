@@ -4,7 +4,7 @@ let g:jiang_plugin_dir = '~/.local/share/nvim/plugged'
 
 " 获得系统类别
 function Jiang_GetSystemType()
-    let uname = system('uname')
+    let uname = system('uname -a')
     if uname =~ 'Darwin'
         return 'macOS'
     elseif uname =~ 'Ubuntu'
@@ -50,18 +50,63 @@ function Jiang_InstallFzfVim(info)
     endif
     " 修改Ag中全选按钮为mac-keyboard 上的alt + a（å）, 取消全选的按钮为Ctrl + d（∂）
     if (os == 'macOS')
-        execute "!sed -i '' 's/alt-a/å/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
-        execute "!sed -i '' 's/alt-d/∂/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
+        execute "!sed -i '' -e 's/alt-a/å/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
+        execute "!sed -i '' -e 's/alt-d/∂/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
     elseif (os == 'Ubuntu')
-        execute "!sed -i 's/alt-a/å/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
-        execute "!sed -i 's/alt-d/∂/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
+        execute "!sed -i -e 's/alt-a/å/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
+        execute "!sed -i -e 's/alt-d/∂/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
     endif
     " :Lines，:BLines，:BCommits 等命令的的layout应该是和:Files等保持一直
     if (os == 'macOS')
-        execute "!sed -i '' 's/--layout=reverse-list/--layout=reverse/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
+        execute "!sed -i '' -e 's/--layout=reverse-list/--layout=reverse/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
     elseif (os == 'Ubuntu')
-        execute "!sed -i 's/--layout=reverse-list/--layout=reverse/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
+        execute "!sed -i -e 's/--layout=reverse-list/--layout=reverse/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
     endif
+endf
+
+" 修改Far.vim源代码使其搜索目录可以根据vim的pwd变化
+" 由于sed给文件添加行的时候需要换行符，vim不支持换行的command，故先把command写入临时文件再执行。
+function Jiang_ChangeFar(info)
+    let os = Jiang_GetSystemType()
+    let file = trim(system('mktemp -t nvim_sed.XXXXXX'))
+    let lines = []
+    
+    " 添加一行let g:far#cwd = getcwd()让Far搜索当前所在目录
+    if (os == 'macOS')
+        call add(lines, "sed -i '' -e '/function.*s:create_far_params() abort/a\\")
+    elseif (os == 'Ubuntu')
+        call add(lines, "sed -i -e '/function.*s:create_far_params() abort/a\\")
+    endif
+    call add(lines, "\\    let g:far#cwd = getcwd()' " . g:jiang_plugin_dir . "/far.vim/autoload/far.vim")
+    
+    " 把--smart-case移动到--ignore-case之后，避开ag命令行的bug
+    if (os =='macOS')
+        call add(lines, "sed -i '' -E '/if &smartcase/,/endif/d' " . g:jiang_plugin_dir . "/far.vim/autoload/far.vim")
+        call add(lines, "sed -i '' -E '/far#tools#setdefault\\(.g:far#sources\\.(ag|ack|rg).,/i\\")
+    elseif (os == 'Ubuntu')
+        call add(lines, "sed -i -E '/if &smartcase/,/endif/d' " . g:jiang_plugin_dir . "/far.vim/autoload/far.vim")
+        call add(lines, "sed -i -E '/far#tools#setdefault\\(.g:far#sources\\.(ag|ack|rg).,/i\\")
+    endif
+    call add(lines, "\\    if &smartcase\\")
+    call add(lines, "\\        call add\\(cmd, \"--smart-case\"\\)\\")
+    call add(lines, "\\    endif\\")
+    call add(lines, "' " . g:jiang_plugin_dir . "/far.vim/autoload/far.vim")
+    call writefile(lines, file)
+
+    " 修复Python的re.compile()的导致的不支持\c和\C的bug
+    if (os =='macOS')
+        call add(lines, "sed -i '' -E 's/cpat = re\\.compile\\(pattern\\)/ls = re.findall(\"\\\\\\\\\\\\+(?=[cC]$)\", pattern)\\")
+    elseif (os == 'Ubuntu')
+        call add(lines, "sed -i -E 's/cpat = re\\.compile\\(pattern\\)/ls = re.findall(\"\\\\\\\\\\\\+(?=[cC]$)\", pattern)\\")
+    endif
+    call add(lines, "            if len(ls) > 0 and len(ls[0]) % 2 != 0:\\")
+    call add(lines, "                cpat = re.compile(pattern[:-2])\\")
+    call add(lines, "            else:\\")
+    call add(lines, "                cpat = re.compile(pattern)/' " . g:jiang_plugin_dir . "/far.vim/rplugin/python3/far/sources/shell.py")
+    call writefile(lines, file)
+    
+    " 执行所有命令
+    execute "!bash " . file
 endf
 
 " 安装ctags这个工具

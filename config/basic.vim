@@ -1,4 +1,6 @@
 " ---------- basic.vim ----------
+" vim中使用&来查看一个配置的值，如：&number
+
 " 行号设置 
 " 参考：[Vim’s absolute, relative and hybrid line numbers](https://jeffkreeftmeijer.com/vim-number/)
 set number relativenumber   " 显示行号，相对光标的行号
