@@ -192,3 +192,37 @@ function Jiang_InstallPhpactor(info)
     !composer install
 endf
 
+" 安装代码格式化工具
+function Jiang_InstallFormatters(info)
+	let os = Jiang_GetSystemType()
+    let file = trim(system('mktemp -t nvim_sed.XXXXXX'))
+    let lines = []
+    " " 安装js-beautify的python版本
+    if (os == 'macOS')
+        !brew install node
+        !npm -g install js-beautify
+    elseif (os == 'Ubuntu')
+        !sudo apt install nodejs
+        !npm -g install js-beautify
+    endif
+    " 安装php-cs-fixer
+    if (os == 'macOS')
+        !brew install php-cs-fixer
+    elseif (os == 'Ubuntu')
+        !curl -L https://cs.symfony.com/download/php-cs-fixer-v2.phar -o php-cs-fixer
+        !sudo chmod a+x php-cs-fixer
+        !sudo mv php-cs-fixer /usr/local/bin/php-cs-fixer
+    endif
+    " 修复Neoformat中php-cs-fixer的问题
+    if (os == 'macOS')
+        call add(lines, "sed -i '' -E '/exe.: .php-cs-fixer.,/a\\")
+    elseif (os == 'Ubuntu')
+        call add(lines, "sed -i -e '/function.*s:create_far_params() abort/a\\")
+    endif
+    call add(lines, "\\           \\\\ \"replace\": 1,\\")
+    call add(lines, "' " . g:jiang_plugin_dir . "/neoformat/autoload/neoformat/formatters/php.vim")
+    call writefile(lines, file)
+    " " Run
+    execute "!bash " . file
+endf
+

@@ -34,5 +34,6 @@ Plug 'pangloss/vim-javascript'                                                  
 Plug 'Shougo/deoplete.nvim', { 'do': function('Jiang_InstallDeoplete') }                      " 代码自动补全框架
 Plug 'phpactor/phpactor', { 'for': 'php', 'do': function('Jiang_InstallPhpactor') }           " PHP代码补全
 Plug 'kristijanhusak/deoplete-phpactor', { 'for': 'php' }                                     " 连接代码补全框架和PHP库
+Plug 'sbdchd/neoformat', { 'on': 'Neoformat', 'do': function('Jiang_InstallFormatters') }     " 代码自动化格式化工具
 call plug#end()
 

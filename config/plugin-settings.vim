@@ -347,3 +347,6 @@ nnoremap <leader>mm :call phpactor#ContextMenu()<CR>
 " 跳转到定义处
 autocmd FileType php nnoremap <buffer> <C-]> :call phpactor#GotoDefinition()<CR>
 
+" 插件Chiel92/vim-autoformat自定义设置
+nnoremap <leader>ff :Neoformat<CR>
+
