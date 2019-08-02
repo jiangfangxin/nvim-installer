@@ -196,30 +196,6 @@ nnoremap <leader>bd :bdelete FAR*<C-a><CR>
 " t ：包含/排除光标所在行的替换 p ：打开预览窗口
 " zo：展开文件搜索条目          zc：折叠文件搜索条目    za：展开/折叠文件搜索条目
 " zr：展开所有搜索条目          zm：折叠所有文件搜索条目
-" 字符串匹配的规则：
-" String Match
-"   |
-"   |__Wildcard character（https://en.wikipedia.org/wiki/Wildcard_character）
-"   |    |__程序：Unix文件路径、Bash(==右侧pattern)、Bash(case选项)
-"   |    |__规则：任意字符任意个*、任意字符?、单个字符[]
-"   |
-"   |__Regular Expressions（https://en.wikipedia.org/wiki/Regular_expression）
-"        |
-"        |__Perl（事实上的标准）
-"        |   |__程序：grep -P、pcregrep、Perl、PHP、Java、Javascript、Python、C#
-"        |   |__规则：https://www.php.net/manual/zh/reference.pcre.pattern.syntax.php
-"        |   |__匹配：匹配项$0-9
-"        |
-"        |__POSIX（Portable Operating System Interface）
-"             |
-"             |__BRE（Basic Regular Expressions）
-"             |    |__程序：grep [-G]、vim(断言有区别)、sed(不支持\n)、awk、Far(vimgrep引擎)（大部分Unix程序默认BRE）
-"             |    |__差异：有无\？、至少一个\+、可选\|、模式\(\)、数量\{\}
-"             |    |__替换：匹配项\0-9
-"             |
-"             |__ERE（Extended Regular Expressions）
-"                  |__程序：grep -E、man(/?)、vim(\v断言有区别)、Ag、Far(Ag引擎)、Bash(=~右侧pattern)（大部分Unix程序可以通过-E来使用ERE）
-"                  |__替换：匹配项\0-9
  
 " 插件majutsushi/tagbar自定义设置
 " 需要安装：brew/apt install universal ctags
