@@ -292,25 +292,6 @@ vmap ga <Plug>(EasyAlign)
 " Ctrl + v：当要对某一小块代码对齐而不是整行的时候可以块选择再ga对齐
 " 使用参考：[vim-easy-align](https://github.com/junegunn/vim-easy-align)
 
-" 插件Konfekt/FastFold自定义设置
-" 插件会在保存buffer、展开或折叠代码、折叠间跳转的时候自动更新折叠
-let g:fastfold_minlines = 0 " 即便文件代码很少也折叠
-" 开启以下语言的代码折叠
-let g:markdown_folding = 1
-let g:tex_fold_enabled = 1
-let g:vimsyn_folding = 'af'
-let g:xml_syntax_folding = 1
-let g:javaScript_fold = 1
-let g:sh_fold_enabled= 7
-let g:ruby_fold = 1
-let g:perl_fold = 1
-let g:perl_fold_blocks = 1
-let g:r_syntax_folding = 1
-let g:rust_fold = 1
-let g:php_folding = 1
-" zuz：手动更新当前buffer的折叠
-" zj ：跳转到上一个折叠处       zk：跳转到下一个折叠处
-
 " 插件mattn/emmet-vim自定义设置
 " 只在html和css文件中启用Emmet
 let g:user_emmet_install_global = 0

@@ -7,6 +7,25 @@
 " insert模式下
 " Ctrl + t：增加整行tab缩进     Ctrl + f：将整行回归到最佳缩进
 
+" vim自带的代码折叠设置
+let g:vimsyn_folding = 'af'
+let g:markdown_folding = 1
+let g:tex_fold_enabled = 1
+let g:xml_syntax_folding = 1
+let g:javaScript_fold = 1
+let g:sh_fold_enabled= 7
+let g:ruby_fold = 1
+let g:perl_fold = 1
+let g:perl_fold_blocks = 1
+let g:r_syntax_folding = 1
+let g:rust_fold = 1
+let g:php_folding = 1 " 启用php文件的syntax折叠
+set foldlevelstart=99 " 99表示打开文件时默认不折叠
+" zR：展开所有折叠          zM：关闭所有折叠
+" zr：折叠等级减一          zm：折叠等级加一
+" zo：展开当前折叠          zc：关闭当前折叠
+" za：展开或关闭当前折叠    zf：手动创建折叠
+
 " 全选快捷键，在normal和visual模式下按Ctrl + a即可
 nnoremap <C-a> ggvG$
 vnoremap <C-a> <ESC>ggvG$

@@ -27,9 +27,8 @@ Plug 'scrooloose/nerdcommenter'                                                 
 Plug 'tpope/vim-surround'                                                                     " 成对修改''()[]{}<>等字符
 Plug 'easymotion/vim-easymotion', { 'on': '<Plug>(easymotion-overwin-f)' }                    " 文档内精确快速移动光标
 Plug 'junegunn/vim-easy-align', { 'on': ['EasyAlign', 'LiveEasyAlign', '<Plug>(EasyAlign)'] } " 片段代码对齐工具
-Plug 'Konfekt/FastFold'                                                                       " 代码语法折叠插件
 Plug 'mattn/emmet-vim', { 'on': 'EmmetInstall' }                                              " 快速编写HTML和CSS的插件
-Plug 'StanAngeloff/php.vim', { 'for': 'php' }                                                 " PHP语法支持插件
+Plug 'StanAngeloff/php.vim', { 'for': 'php', 'do': function('Jiang_ChangePhpHighlight') }     " PHP语法支持插件
 Plug 'pangloss/vim-javascript'                                                                " Javascript语法支持插件
 Plug 'Shougo/deoplete.nvim', { 'do': function('Jiang_InstallDeoplete') }                      " 代码自动补全框架
 Plug 'phpactor/phpactor', { 'for': 'php', 'do': function('Jiang_InstallPhpactor') }           " PHP代码补全

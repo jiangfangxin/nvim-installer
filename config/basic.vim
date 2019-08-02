@@ -26,7 +26,10 @@ set mouse=a
 " 引导键设置为空格键
 let mapleader = "\<Space>"
 
-" 在insert模式下按jj可以立即回到normal模式
+" 在insert模式下连续按j-k可以立即回到normal模式
 " `^：回到上一次insert的位置
 inoremap jj <ESC>`^
+inoremap kk <ESC>`^
+inoremap jk <ESC>`^
+inoremap kj <ESC>`^
 

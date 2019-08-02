@@ -72,37 +72,18 @@ function Jiang_InstallFzfVim(info)
         !sudo apt install silversearcher-ag
     endif
     " 修改Ag中全选按钮为mac-keyboard 上的alt + a（å）, 取消全选的按钮为Ctrl + d（∂）
-    if (os == 'macOS')
-        execute "!sed -i '' -e 's/alt-a/å/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
-        execute "!sed -i '' -e 's/alt-d/∂/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
-    elseif (os == 'Ubuntu')
-        execute "!sed -i -e 's/alt-a/å/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
-        execute "!sed -i -e 's/alt-d/∂/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
-    endif
+    execute "!sed -i" . (os == 'macOS' ? " ''" : "") . " -e 's/alt-a/å/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
+    execute "!sed -i" . (os == 'macOS' ? " ''" : "") . " -e 's/alt-d/∂/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
     " :Lines，:BLines，:BCommits 等命令的的layout应该是和:Files等保持一直
-    if (os == 'macOS')
-        execute "!sed -i '' -e 's/--layout=reverse-list/--layout=reverse/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
-    elseif (os == 'Ubuntu')
-        execute "!sed -i -e 's/--layout=reverse-list/--layout=reverse/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
-    endif
+    execute "!sed -i" . (os == 'macOS' ? " ''" : "") . " -e 's/--layout=reverse-list/--layout=reverse/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
     " :Ag、:Tags、:BTags、:BLines、:Buffers 命令不用显示preview-window
-    if (os == 'macOS')
-        execute "!sed -i '' -E 's/BLines> .,/& \"--preview-window=hidden\",/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
-        execute "!sed -i '' -E 's/capname\\..> .,/& \"--preview-window=hidden\",/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
-        execute "!sed -i '' -E 's/Tags> .,/& \"--preview-window=hidden\",/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
-        execute "!sed -i '' -E 's/Buf> .,/& \"--preview-window=hidden\",/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
-        execute "!sed -i '' -E 's/Hist[:\\/]> ./& --preview-window=hidden/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
-        execute "!sed -i '' -E 's/File types> ./& --preview-window=hidden/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
-        execute "!sed -i '' -E 's/Maps \\(.\\.a:mode\\..\\)> ./& --preview-window=hidden/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
-    elseif (os == 'Ubuntu')
-        execute "!sed -i -E 's/BLines> .,/& \"--preview-window=hidden\",/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
-        execute "!sed -i -E 's/capname\\..> .,/& \"--preview-window=hidden\",/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
-        execute "!sed -i -E 's/Tags> .,/& \"--preview-window=hidden\",/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
-        execute "!sed -i -E 's/Buf> .,/& \"--preview-window=hidden\",/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
-        execute "!sed -i -E 's/Hist[:\\/]> ./& --preview-window=hidden/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
-        execute "!sed -i -E 's/File types> ./& --preview-window=hidden/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
-        execute "!sed -i -E 's/Maps \\(.\\.a:mode\\..\\)> ./& --preview-window=hidden/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
-    endif
+    execute "!sed -i" . (os == 'macOS' ? " ''" : "") . " -E 's/BLines> .,/& \"--preview-window=hidden\",/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
+    execute "!sed -i" . (os == 'macOS' ? " ''" : "") . " -E 's/capname\\..> .,/& \"--preview-window=hidden\",/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
+    execute "!sed -i" . (os == 'macOS' ? " ''" : "") . " -E 's/Tags> .,/& \"--preview-window=hidden\",/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
+    execute "!sed -i" . (os == 'macOS' ? " ''" : "") . " -E 's/Buf> .,/& \"--preview-window=hidden\",/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
+    execute "!sed -i" . (os == 'macOS' ? " ''" : "") . " -E 's/Hist[:\\/]> ./& --preview-window=hidden/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
+    execute "!sed -i" . (os == 'macOS' ? " ''" : "") . " -E 's/File types> ./& --preview-window=hidden/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
+    execute "!sed -i" . (os == 'macOS' ? " ''" : "") . " -E 's/Maps \\(.\\.a:mode\\..\\)> ./& --preview-window=hidden/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
 endf
 
 " 修改Far.vim源代码使其搜索目录可以根据vim的pwd变化
@@ -113,21 +94,12 @@ function Jiang_ChangeFar(info)
     let lines = []
     
     " 添加一行let g:far#cwd = getcwd()让Far搜索当前所在目录
-    if (os == 'macOS')
-        call add(lines, "sed -i '' -e '/function.*s:create_far_params() abort/a\\")
-    elseif (os == 'Ubuntu')
-        call add(lines, "sed -i -e '/function.*s:create_far_params() abort/a\\")
-    endif
+    call add(lines, "sed -i" . (os == 'macOS' ? " ''" : "") . " -e '/function.*s:create_far_params() abort/a\\")
     call add(lines, "\\    let g:far#cwd = getcwd()' " . g:jiang_plugin_dir . "/far.vim/autoload/far.vim")
     
     " 把--smart-case移动到--ignore-case之后，避开ag命令行的bug
-    if (os =='macOS')
-        call add(lines, "sed -i '' -E '/if &smartcase/,/endif/d' " . g:jiang_plugin_dir . "/far.vim/autoload/far.vim")
-        call add(lines, "sed -i '' -E '/far#tools#setdefault\\(.g:far#sources\\.(ag|ack|rg).,/i\\")
-    elseif (os == 'Ubuntu')
-        call add(lines, "sed -i -E '/if &smartcase/,/endif/d' " . g:jiang_plugin_dir . "/far.vim/autoload/far.vim")
-        call add(lines, "sed -i -E '/far#tools#setdefault\\(.g:far#sources\\.(ag|ack|rg).,/i\\")
-    endif
+    call add(lines, "sed -i" . (os == 'macOS' ? " ''" : "") . " -E '/if &smartcase/,/endif/d' " . g:jiang_plugin_dir . "/far.vim/autoload/far.vim")
+    call add(lines, "sed -i" . (os == 'macOS' ? " ''" : "") . " -E '/far#tools#setdefault\\(.g:far#sources\\.(ag|ack|rg).,/i\\")
     call add(lines, "\\    if &smartcase\\")
     call add(lines, "\\        call add\\(cmd, \"--smart-case\"\\)\\")
     call add(lines, "\\    endif\\")
@@ -135,11 +107,7 @@ function Jiang_ChangeFar(info)
     call writefile(lines, file)
 
     " 修复Python的re.compile()的导致的不支持\c和\C的bug
-    if (os =='macOS')
-        call add(lines, "sed -i '' -E 's/cpat = re\\.compile\\(pattern\\)/ls = re.findall(\"\\\\\\\\\\\\+(?=[cC]$)\", pattern)\\")
-    elseif (os == 'Ubuntu')
-        call add(lines, "sed -i -E 's/cpat = re\\.compile\\(pattern\\)/ls = re.findall(\"\\\\\\\\\\\\+(?=[cC]$)\", pattern)\\")
-    endif
+    call add(lines, "sed -i" . (os == 'macOS' ? " ''" : "") . " -E 's/cpat = re\\.compile\\(pattern\\)/ls = re.findall(\"\\\\\\\\\\\\+(?=[cC]$)\", pattern)\\")
     call add(lines, "            if len(ls) > 0 and len(ls[0]) % 2 != 0:\\")
     call add(lines, "                cpat = re.compile(pattern[:-2])\\")
     call add(lines, "            else:\\")
@@ -167,6 +135,13 @@ function Jiang_InstallCtags(info)
         !make install " 安装的时候可能还需要其他权限，未测试
         execute '!cd ' . path
     endif
+endf
+
+" 修改php.vim的颜色设置
+function Jiang_ChangePhpHighlight(info)
+    let os = Jiang_GetSystemType()
+    " 修改因为折叠导致的public、protected等颜色被覆盖的bug
+    execute "!sed -i" . (os == 'macOS' ? " ''" : "") . " -E 's/(syn region phpFoldFunction matchgroup=Storageclass start=[^)]+\\))([^$]+\\$)(.+z1)}(.+)$/\\1\\\\(\\2\\\\)\\3\\\\(}\\\\)\\\\@=\\4/g' " . g:jiang_plugin_dir . "/php.vim/syntax/php.vim"
 endf
 
 " 安装deoplete的依赖
@@ -214,11 +189,7 @@ function Jiang_InstallFormatters(info)
         !sudo mv php-cs-fixer /usr/local/bin/php-cs-fixer
     endif
     " 修复Neoformat中php-cs-fixer的问题
-    if (os == 'macOS')
-        call add(lines, "sed -i '' -E '/exe.: .php-cs-fixer.,/a\\")
-    elseif (os == 'Ubuntu')
-        call add(lines, "sed -i -e '/function.*s:create_far_params() abort/a\\")
-    endif
+    call add(lines, "sed -i" . (os == 'macOS' ? " ''" : "") . " -E '/exe.: .php-cs-fixer.,/a\\")
     call add(lines, "\\           \\\\ \"replace\": 1,\\")
     call add(lines, "' " . g:jiang_plugin_dir . "/neoformat/autoload/neoformat/formatters/php.vim")
     call writefile(lines, file)
