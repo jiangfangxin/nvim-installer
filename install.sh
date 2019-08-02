@@ -27,7 +27,7 @@
 #       jiangfangxin
 #
 # REPOSITORY
-#       https://github.com/jiangfangxin/neovim-installer
+#       https://github.com/jiangfangxin/nvim-installer
 
 # Variables
 startDir=$PWD

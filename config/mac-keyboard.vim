@@ -64,6 +64,10 @@ vnoremap ø <ESC>:only<CR>gv
 nnoremap Ø :tabonly<CR>
 inoremap Ø <ESC>:tabonly<CR>a
 vnoremap Ø <ESC>:tabonly<CR>gv
+" Alt + p：关闭预览窗口
+nnoremap π :pclose<CR>
+inoremap π <ESC>:pclose<CR>a
+vnoremap π <ESC>:pclose<CR>gv
 
 " Alt + >：当前tab往前移动一位
 nnoremap ≥ :+tabmove<CR>

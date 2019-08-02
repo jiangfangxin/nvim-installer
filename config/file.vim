@@ -14,6 +14,7 @@ nnoremap <leader>yy :let @*='<C-r>=expand("%:p")<CR>'<CR>
 
 " 在新页面打开光标所在路径的文件，gf默认情况下在本页面打开需要跳转的文件，我们让它在新页面打开
 nnoremap gf :vertical wincmd f<CR>
+" gx：用系统软件打开光标所在路径的文件
 
 " nvim自带的文件模糊搜索方式
 " 例如输入:tabe **/*file<Tab>   弹出选项有：config/plugin.vim  init.vim  install.sh  pluginManager/
