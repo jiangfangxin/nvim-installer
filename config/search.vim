@@ -16,28 +16,28 @@
 " 搜索时在正则表达式前加对应选项以使用不同的规则，如：/\v(apple|java)script 
 " 字符串匹配的规则：
 " String Match
-"   |
-"   |__Wildcard character（https://en.wikipedia.org/wiki/Wildcard_character）
-"   |    |__程序：Unix文件路径、Bash(==右侧pattern)、Bash(case选项)
-"   |    |__规则：任意字符任意个*、任意字符?、单个字符[]
-"   |
-"   |__Regular Expressions（https://en.wikipedia.org/wiki/Regular_expression）
-"        |
-"        |__PCRE（事实上的标准）
-"        |   |__程序：grep -P、pcregrep、Perl、PHP、Java、Javascript、Python、C#
-"        |   |__规则：https://www.php.net/manual/zh/reference.pcre.pattern.syntax.php
-"        |   |__匹配：匹配项$0-9
-"        |
-"        |__POSIX（Portable Operating System Interface）
-"             |
-"             |__BRE（Basic Regular Expressions）
-"             |    |__程序：grep [-G]、vim(断言有区别)、MultipleCursorsFind、sed(不支持\n)、awk、Far(vimgrep引擎)（大部分Unix程序默认BRE）
-"             |    |__差异：有无\？、至少一个\+、可选\|、模式\(\)、数量\{\}
-"             |    |__替换：匹配项\0-9
-"             |
-"             |__ERE（Extended Regular Expressions）
-"                  |__程序：grep -E、man(/?)、vim(\v断言有区别)、Ag、Far(Ag引擎)、Bash(=~右侧pattern)（大部分Unix程序可以通过-E来使用ERE）
-"                  |__替换：匹配项\0-9
+"   │
+"   ├──Wildcard character（https://en.wikipedia.org/wiki/Wildcard_character）
+"   │    │──程序：Unix文件路径、Bash(==右侧pattern)、Bash(case选项)
+"   │    └──规则：任意字符任意个*、任意字符?、单个字符[]
+"   │
+"   └──Regular Expressions（https://en.wikipedia.org/wiki/Regular_expression）
+"        │
+"        │──PCRE（事实上的标准）
+"        │    │──程序：grep -P、pcregrep、Perl、PHP、Java、Javascript、Python、C#
+"        │    │──规则：https://www.php.net/manual/zh/reference.pcre.pattern.syntax.php
+"        │    └──匹配：匹配项$0-9
+"        │
+"        └──POSIX（Portable Operating System Interface）
+"             │
+"             │──BRE（Basic Regular Expressions）
+"             │    │──程序：grep [-G]、vim(断言有区别)、MultipleCursorsFind、sed(不支持\n)、awk、Far(vimgrep引擎)（大部分Unix程序默认BRE）
+"             │    │──差异：有无\？、至少一个\+、可选\|、模式\(\)、数量\{\}
+"             │    └──替换：匹配项\0-9
+"             │
+"             └──ERE（Extended Regular Expressions）
+"                  │──程序：grep -E、man(/?)、vim(\v断言有区别)、Ag、Far(Ag引擎)、Bash(=~右侧pattern)（大部分Unix程序可以通过-E来使用ERE）
+"                  └──替换：匹配项\0-9
 
 set ignorecase " 搜索时忽略大小写，大写字符也可以匹配小写，会被\c和\C选项覆盖
 set smartcase  " 智能大小写，正则中一旦出现大写会开启区分大小写模式，需开启ignorecase，会被\c和\C选项覆盖
