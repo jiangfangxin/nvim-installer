@@ -11,7 +11,7 @@
 call plug#begin(g:jiang_plugin_dir)
 Plug 'mhinz/vim-startify'                                                                     " 自定义vim启动页
 Plug 'tpope/vim-fugitive'                                                                     " 支持在nvim中使用Git
-Plug 'airblade/vim-gitgutter', { 'on': 'GitGutterAll' }                                       " 显示Git文件的变化
+Plug 'airblade/vim-gitgutter', { 'on': ['GitGutterAll', 'GitGutterToggle'] }                  " 显示Git文件的变化
 Plug 'vim-airline/vim-airline'                                                                " 展示更多信息的导航条
 Plug 'terryma/vim-multiple-cursors'                                                           " 像Sublime那样的多光标插件
 Plug 'junegunn/fzf', { 'on': ['FZF', 'Files', 'Buffers', 'Ag', 'BLines', 'Tags', 'BTags', 'Maps',
@@ -21,6 +21,7 @@ Plug 'junegunn/fzf.vim', { 'on': ['FZF', 'Files', 'Buffers', 'Ag', 'BLines', 'Ta
                          \ 'Commits', 'BCommits', 'Commands', 'History', 'Helptags', 'Filetypes'],
                          \ 'do': function('Jiang_InstallFzfVim') }                            " Fzf功能扩展
 Plug 'brooth/far.vim', { 'on': ['F', 'Far', 'Fardo'], 'do': function('Jiang_ChangeFar') }     " 多文件搜索和替换工具
+Plug 'scrooloose/nerdtree', { 'do': function('Jiang_CustomNerdtree') }                        " 文件浏览器
 Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' , 'do': function('Jiang_InstallCtags')}      " 显示对象和函数大纲
 Plug 'ludovicchabant/vim-gutentags'                                                           " 自动化生成和管理tags文件
 Plug 'scrooloose/nerdcommenter'                                                               " 快速注释代码

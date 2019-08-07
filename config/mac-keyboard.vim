@@ -48,35 +48,35 @@ nnoremap • 8gt
 inoremap • <ESC>8gt
 vnoremap • <ESC>8gt
 " Alt + 9：切换至最后一个tab
-nnoremap ª :tablast<CR>
-inoremap ª <ESC>:tablast<CR>
-vnoremap ª <ESC>:tablast<CR>
+nnoremap <silent> ª :tablast<CR>
+inoremap <silent> ª <ESC>:tablast<CR>
+vnoremap <silent> ª <ESC>:tablast<CR>
 
 " Alt + x：关闭当前tab
-nnoremap ≈ :tabclose<CR>
-inoremap ≈ <ESC>:tabclose<CR>
-vnoremap ≈ <ESC>:tabclose<CR>
+nnoremap <silent> ≈ :tabclose<CR>
+inoremap <silent> ≈ <ESC>:tabclose<CR>
+vnoremap <silent> ≈ <ESC>:tabclose<CR>
 " Alt + o（字母o）：关闭其他窗口
-nnoremap ø :only<CR>
-inoremap ø <ESC>:only<CR>a
-vnoremap ø <ESC>:only<CR>gv
+nnoremap <silent> ø :only<CR>
+inoremap <silent> ø <ESC>:only<CR>a
+vnoremap <silent> ø <ESC>:only<CR>gv
 " Alt + Shift + o（字母o）：关闭其他tab
-nnoremap Ø :tabonly<CR>
-inoremap Ø <ESC>:tabonly<CR>a
-vnoremap Ø <ESC>:tabonly<CR>gv
+nnoremap <silent> Ø :tabonly<CR>
+inoremap <silent> Ø <ESC>:tabonly<CR>a
+vnoremap <silent> Ø <ESC>:tabonly<CR>gv
 " Alt + p：关闭预览窗口
-nnoremap π :pclose<CR>
-inoremap π <ESC>:pclose<CR>a
-vnoremap π <ESC>:pclose<CR>gv
+nnoremap <silent> π :pclose<CR>
+inoremap <silent> π <ESC>:pclose<CR>a
+vnoremap <silent> π <ESC>:pclose<CR>gv
 
 " Alt + >：当前tab往前移动一位
-nnoremap ≥ :+tabmove<CR>
-inoremap ≥ <ESC>:+tabmove<CR>
-vnoremap ≥ <ESC>:+tabmove<CR>
+nnoremap <silent> ≥ :+tabmove<CR>
+inoremap <silent> ≥ <ESC>:+tabmove<CR>
+vnoremap <silent> ≥ <ESC>:+tabmove<CR>
 " Alt + <：当前tab往后移动一位
-nnoremap ≤ :-tabmove<CR>
-inoremap ≤ <ESC>:-tabmove<CR>
-vnoremap ≤ <ESC>:-tabmove<CR>
+nnoremap <silent> ≤ :-tabmove<CR>
+inoremap <silent> ≤ <ESC>:-tabmove<CR>
+vnoremap <silent> ≤ <ESC>:-tabmove<CR>
 
 " Alt + '：去到下一次编辑的地方
 nnoremap æ g,

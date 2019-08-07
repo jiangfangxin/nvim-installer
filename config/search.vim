@@ -18,7 +18,7 @@
 " String Match
 "   │
 "   ├──Wildcard character（https://en.wikipedia.org/wiki/Wildcard_character）
-"   │    │──程序：Unix文件路径、Bash(==右侧pattern)、Bash(case选项)
+"   │    │──程序：Unix文件路径、vim路径、Bash(==右侧pattern)、Bash(case选项)
 "   │    └──规则：任意字符任意个*、任意字符?、单个字符[]
 "   │
 "   └──Regular Expressions（https://en.wikipedia.org/wiki/Regular_expression）

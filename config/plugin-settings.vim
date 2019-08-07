@@ -52,6 +52,8 @@ set updatetime=1000 " 设置gutter更新时间为1秒，默认是4秒
 let g:gitgutter_map_keys = 0 " 取消gitgutter插件默认的按键绑定
 " 手动刷新所有文件的gutter
 nnoremap <leader>hh :GitGutterAll<CR>
+" 开启或关闭gitgutter
+nnoremap <leader>ho :GitGutterToggle<CR>
 " 折叠当前文件中所有未修改的代码
 nnoremap <leader>hz :GitGutterFold<CR>
 " ]h：跳转到下一个修改
@@ -129,6 +131,7 @@ endfunction
 "   'wild  ：不拆分单词匹配           ^music：以这个单词开头的匹配
 "   .mp3$  ：以这个单词结尾的匹配     !fire ：不包含这个单词的匹配
 "   !^music：不以这个单词开头的匹配   !.mp3$：不以这个单词结尾的匹配
+"   .py$ | .go$：以.py或者.go结尾的匹配
 
 " 插件junegunn/fzf.vim自定义设置
 " 关闭fzf弹出窗的行号
@@ -196,6 +199,22 @@ nnoremap <leader>bd :bdelete FAR*<C-a><CR>
 " t ：包含/排除光标所在行的替换 p ：打开预览窗口
 " zo：展开文件搜索条目          zc：折叠文件搜索条目    za：展开/折叠文件搜索条目
 " zr：展开所有搜索条目          zm：折叠所有文件搜索条目
+
+" 插件scrooloose/nerdtree自定义设置
+" <CR>：查看目录或在当前窗口打开文件
+" o：查看目录或在当前窗口打开文件   O：展开当前节点的所有子节点
+" x：关闭当前父节点                 X：关闭当前所有直接点
+" t：在新标签页打开文件或目录       T：静默地在新标签页打开文件或目录
+" v：在纵向窗口中打开文件或目录     s：在横向窗口中打开文件或目录
+" p：展开目录或预览当前文件         P：跳到root节点
+" J：跳转到最后一个孩子             K：跳转到第一个孩子
+" <C-j>：跳转到下一个兄弟节点       <C-k>：跳转到上一个兄弟节点
+" u：把当前root的父目录作为新的root e：把当前节点作为root来浏览
+" r：刷新当前目录                   R：刷新root下所有目录
+" cd：将当前目录设置为CWD           CD：将CWD设置为root
+" I：隐藏或显示隐藏文件             B：打开或关闭书签浏览器
+" q：关闭nerdtree文件浏览器         A：最小或最大化nerdtree窗口
+" m：显示选项菜单                   ?：toggle help
  
 " 插件majutsushi/tagbar自定义设置
 " 需要安装：brew/apt install universal ctags

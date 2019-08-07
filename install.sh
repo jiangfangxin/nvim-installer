@@ -183,8 +183,8 @@ installConfig() {
         echo "config/search.vim >> init.vim"
     cat config/file.vim >> init.vim
         echo "config/file.vim >> init.vim"
-    cat config/netrw.vim >> init.vim
-        echo "config/netrw.vim >> init.vim"
+    # cat config/netrw.vim >> init.vim
+    #     echo "config/netrw.vim >> init.vim"
     cat config/fn.vim >> init.vim
         echo "config/fn.vim >> init.vim"
     cat config/edit.vim >> init.vim
