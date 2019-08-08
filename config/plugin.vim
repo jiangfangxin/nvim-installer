@@ -10,8 +10,8 @@
 
 call plug#begin(g:jiang_plugin_dir)
 Plug 'mhinz/vim-startify'                                                                     " 自定义vim启动页
-Plug 'tpope/vim-fugitive'                                                                     " 支持在nvim中使用Git
-Plug 'airblade/vim-gitgutter', { 'on': ['GitGutterAll', 'GitGutterToggle'] }                  " 显示Git文件的变化
+Plug 'tpope/vim-fugitive', { 'do': function('Jiang_ChangeFugitive') }                         " 支持在nvim中使用Git
+Plug 'airblade/vim-gitgutter', { 'on': ['GitGutterEnable', 'GitGutterToggle'] }               " 显示Git文件的变化
 Plug 'vim-airline/vim-airline'                                                                " 展示更多信息的导航条
 Plug 'terryma/vim-multiple-cursors'                                                           " 像Sublime那样的多光标插件
 Plug 'junegunn/fzf', { 'on': ['FZF', 'Files', 'Buffers', 'Ag', 'BLines', 'Tags', 'BTags', 'Maps',

@@ -14,6 +14,17 @@ function Jiang_GetSystemType()
     endif
 endf
 
+" 修改fugitive的快捷键
+function Jiang_ChangeFugitive(info)
+    let os = Jiang_GetSystemType()
+    " 快捷键o在横向窗口中打开改为ctrl + x
+    execute "!sed -i" . (os == 'macOS' ? " ''" : "") . " -E 's/(map <buffer> <silent> [^ ]*)o/\\1<C-x>/g' " . g:jiang_plugin_dir . "/vim-fugitive/autoload/fugitive.vim"
+    " 快捷键gO在纵向窗口中打开改为ctrl + v
+    execute "!sed -i" . (os == 'macOS' ? " ''" : "") . " -E 's/(map <buffer> <silent> .*)gO/\\1<C-v>/g' " . g:jiang_plugin_dir . "/vim-fugitive/autoload/fugitive.vim"
+    " 快捷键O在新标签页中打开改为ctrl + t
+    execute "!sed -i" . (os == 'macOS' ? " ''" : "") . " -E 's/(map <buffer> <silent> )O/\\1<C-t>/g' " . g:jiang_plugin_dir . "/vim-fugitive/autoload/fugitive.vim"
+endf
+
 " 安装fzf的函数
 function Jiang_InstallFzf(info)
     " info是vim-plug传来的字典变量，有以下三个参数
@@ -124,6 +135,7 @@ function Jiang_CustomNerdtree(info)
     call add(lines, "call NERDTreeAddKeyMap({ 'key': '<CR>', 'callback': 'Jiang_NERDTreeOpenFile', 'quickhelpText': '查看目录或在当前窗口打开文件', 'scope': 'FileNode', 'override': 1 })")
     call add(lines, "call NERDTreeAddKeyMap({ 'key': 'o', 'callback': 'Jiang_NERDTreeOpenFile', 'quickhelpText': '查看目录或在当前窗口打开文件', 'scope': 'FileNode', 'override': 1 })")
     call add(lines, "call NERDTreeAddKeyMap({ 'key': 't', 'callback': 'Jiang_NERDTreeOpenInTab', 'quickhelpText': '在新标签页打开文件或目录', 'scope': 'Node', 'override': 1 })")
+    call add(lines, "call NERDTreeAddKeyMap({ 'key': 'T', 'callback': 'Jiang_NERDTreeOpenBlankTab', 'quickhelpText': '非节点处打开新的空白标签页', 'scope': 'all'})")
     call add(lines, "call NERDTreeAddKeyMap({ 'key': 'v', 'callback': 'Jiang_NERDTreeOpenInVSplit', 'quickhelpText': '在纵向窗口中打开文件或目录', 'scope': 'Node', 'override': 1 })")
     call add(lines, "call NERDTreeAddKeyMap({ 'key': 's', 'callback': 'Jiang_NERDTreeOpenInSplit', 'quickhelpText': '在横向窗口中打开文件或目录', 'scope': 'Node', 'override': 1 })")
     call add(lines, "call NERDTreeAddKeyMap({ 'key': 'p', 'callback': 'Jiang_NERDTreeLivePreview', 'quickhelpText': '展开目录或预览当前文件', 'scope': 'Node', 'override': 1 })")
@@ -133,6 +145,9 @@ function Jiang_CustomNerdtree(info)
     call add(lines, "endf")
     call add(lines, "function Jiang_NERDTreeOpenInTab(dirnode)")
     call add(lines, "    execute 'pclose | e ' . a:dirnode.path.str() . ' | wincmd T'")
+    call add(lines, "endf")
+    call add(lines, "function Jiang_NERDTreeOpenBlankTab()")
+    call add(lines, "    execute 'tabe'")
     call add(lines, "endf")
     call add(lines, "function Jiang_NERDTreeOpenInVSplit(dirnode)")
     call add(lines, "    execute 'pclose | vs ' . a:dirnode.path.str()")

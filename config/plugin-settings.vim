@@ -50,10 +50,15 @@ nnoremap <leader>gd :Gremove<CR>
 " 插件airblade/vim-gitgutter自定义设置
 set updatetime=1000 " 设置gutter更新时间为1秒，默认是4秒
 let g:gitgutter_map_keys = 0 " 取消gitgutter插件默认的按键绑定
-" 手动刷新所有文件的gutter
-nnoremap <leader>hh :GitGutterAll<CR>
 " 开启或关闭gitgutter
-nnoremap <leader>ho :GitGutterToggle<CR>
+nnoremap <silent> <leader>hh :call Jiang_ToggleGitGutter()<CR>
+function Jiang_ToggleGitGutter()
+    if exists('g:gitgutter_enabled')
+        execute 'GitGutterToggle'
+    else
+        execute 'GitGutterEnable'
+    endif
+endf
 " 折叠当前文件中所有未修改的代码
 nnoremap <leader>hz :GitGutterFold<CR>
 " ]h：跳转到下一个修改
