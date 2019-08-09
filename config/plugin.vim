@@ -12,13 +12,14 @@ call plug#begin(g:jiang_plugin_dir)
 Plug 'mhinz/vim-startify'                                                                     " 自定义vim启动页
 Plug 'tpope/vim-fugitive', { 'do': function('Jiang_ChangeFugitive') }                         " 支持在nvim中使用Git
 Plug 'airblade/vim-gitgutter', { 'on': ['GitGutterEnable', 'GitGutterToggle'] }               " 显示Git文件的变化
+Plug 'kshenoy/vim-signature', { 'do': function('Jiang_FixSignature') }                        " 在最左侧显示marks
 Plug 'vim-airline/vim-airline'                                                                " 展示更多信息的导航条
 Plug 'terryma/vim-multiple-cursors'                                                           " 像Sublime那样的多光标插件
-Plug 'junegunn/fzf', { 'on': ['FZF', 'Files', 'Buffers', 'Ag', 'BLines', 'Tags', 'BTags', 'Maps',
-                         \ 'Commits', 'BCommits', 'Commands', 'History', 'Helptags', 'Filetypes'],
+Plug 'junegunn/fzf', { 'on': ['FZF', 'Files', 'Buffers', 'Ag', 'BLines', 'Tags', 'BTags', 'Marks',
+                         \  'Maps','Commits', 'BCommits', 'Commands', 'History', 'Helptags', 'Filetypes'],
                          \ 'do': function('Jiang_InstallFzf') }                               " Fzf模糊搜索
-Plug 'junegunn/fzf.vim', { 'on': ['FZF', 'Files', 'Buffers', 'Ag', 'BLines', 'Tags', 'BTags', 'Maps',
-                         \ 'Commits', 'BCommits', 'Commands', 'History', 'Helptags', 'Filetypes'],
+Plug 'junegunn/fzf.vim', { 'on': ['FZF', 'Files', 'Buffers', 'Ag', 'BLines', 'Tags', 'BTags', 'Marks',
+                         \ 'Maps','Commits', 'BCommits', 'Commands', 'History', 'Helptags', 'Filetypes'],
                          \ 'do': function('Jiang_InstallFzfVim') }                            " Fzf功能扩展
 Plug 'brooth/far.vim', { 'on': ['F', 'Far', 'Fardo'], 'do': function('Jiang_ChangeFar') }     " 多文件搜索和替换工具
 Plug 'scrooloose/nerdtree', { 'do': function('Jiang_CustomNerdtree') }                        " 文件浏览器

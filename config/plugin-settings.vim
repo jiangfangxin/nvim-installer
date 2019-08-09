@@ -32,9 +32,9 @@ nnoremap <leader>gr :Grebase master
 nnoremap <leader>gd :Gremove<CR>
 " 通用快捷键
 " <CR>：直接打开文件
-" o    ：在横向窗口中打开文件   O    ：在新标签页中打开文件
-" gO   ：在纵向窗口中打开文件   p    ：在预览窗口中打开文件
-" <C-N>：跳转到下一个修改块     <C-P>：跳转到上一个修改块
+" Ctrl + x：在横向窗口中打开文件   Ctrl + v：在纵向窗口中打开文件
+" Ctrl + t：在新标签页中打开文件   p       ：在预览窗口中打开文件
+" Ctrl + n：跳转到下一个修改块     Ctrl + p：跳转到上一个修改块
 " Status窗口中的快捷键
 " s ：git add       Stage文件或块修改           u ：git reset           Unstage文件或块修改
 " - ：git add       Toggle stage文件或块修改    X ：git checkout        忽略块修改
@@ -72,11 +72,20 @@ nmap <leader>hx <Plug>GitGutterUndoHunk
 " <leader>hp：预览光标所在的hunk
 nmap <leader>hp <Plug>GitGutterPreviewHunk
 
+" 插件kshenoy/vim-signature自定义设置
+" 开启/关闭signature的侧边栏mark
+nnoremap <leader>mm :SignatureToggleSigns<CR>
+" m[a-zA-Z]：Mark/Unmark字母                dm[a-zA-Z]：删除某个字母的mark
+" m.       ：Mark/Unmark紧接着的一个字母    `[a-zA-Z] ：跳转到字母所在mark
+" ]`       ：跳转到下一个mark               [`：跳转到上一个mark
+" `]       ：按字母顺序跳转到下一个mark     `[：按字母顺序跳转到上一个mark
+" m-       ：删除本行的mark                 m<Space>：删除当前buffer的所有mark
+
 " 插件terryma/vim-multiple-cursors自定义设置
 " Ctrl + n：选择下一个      Ctrl + p：回到上一个选择
-" Ctrl + x：跳过这个选择    Alt  + m：选择全部匹配（mac-keyboard）
+" Ctrl + x：跳过这个选择    Alt  + f：选择全部匹配（mac-keyboard）
 " :MultipleCursorsFind [your-search-string][\c|\C]  选择命令
-let g:multi_cursor_select_all_word_key = 'µ'
+let g:multi_cursor_select_all_word_key = 'ƒ'
 " 退出visual模式时不退出多光标模式
 let g:multi_cursor_exit_from_visual_mode = 0
 " 退出insert模式时不退出多光标模式
@@ -174,6 +183,8 @@ nnoremap <silent> <F1> :Helptags<CR>
 inoremap <silent> <F1> <ESC>:Helptags<CR>
 vnoremap <silent> <F1> :<C-u>Helptags<CR>
 cnoremap <silent> <F1> <C-u><BS>:Helptags<CR>
+" :Marks 搜索当前buffer的marks，绑定苹果键盘的Alt + m（mac-keyboard）
+nnoremap <silent> µ :Marks<CR>
 " :Maps 搜索快捷键绑定
 nnoremap <silent> <leader>km :Maps<CR>
 " :Filetypes 设置文件类型
@@ -323,10 +334,14 @@ call deoplete#custom#option({
 " inoremap <expr> <C-h> deoplete#smart_close_popup()."\<BS>"
 
 " 插件phpactor/phpactor自定义设置
-" 调用phpactor的选项菜单
-nnoremap <leader>mm :call phpactor#ContextMenu()<CR>
-" 跳转到定义处
-autocmd FileType php nnoremap <buffer> <C-]> :call phpactor#GotoDefinition()<CR>
+augroup jiang_phpactor
+  autocmd!
+  " 调用phpactor的选项菜单
+  autocmd FileType php nnoremap <leader>pm :call phpactor#ContextMenu()<CR>
+  " 跳转到定义处
+  autocmd FileType php nnoremap <buffer> <C-]> :call phpactor#GotoDefinition()<CR>
+  autocmd FileType php nnoremap <buffer> <C-\> :vs<CR>:call phpactor#GotoDefinition()<CR>
+augroup END
 
 " 插件Chiel92/vim-autoformat自定义设置
 nnoremap <leader>ff :Neoformat<CR>

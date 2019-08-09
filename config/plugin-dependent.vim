@@ -25,6 +25,12 @@ function Jiang_ChangeFugitive(info)
     execute "!sed -i" . (os == 'macOS' ? " ''" : "") . " -E 's/(map <buffer> <silent> )O/\\1<C-t>/g' " . g:jiang_plugin_dir . "/vim-fugitive/autoload/fugitive.vim"
 endf
 
+" 修复vim-signature找不到变量的bug
+function Jiang_FixSignature(info)
+    let os = Jiang_GetSystemType()
+    execute "!sed -i" . (os == 'macOS' ? " ''" : "") . " -E 's/let (b:sig_enabled) = (.b:sig_enabled)/let \\1 = exists(\"\\1\") ? \\2 : 1/g' " . g:jiang_plugin_dir . "/vim-signature/autoload/signature/utils.vim"
+endf
+
 " 安装fzf的函数
 function Jiang_InstallFzf(info)
     " info是vim-plug传来的字典变量，有以下三个参数
@@ -95,6 +101,7 @@ function Jiang_InstallFzfVim(info)
     execute "!sed -i" . (os == 'macOS' ? " ''" : "") . " -E 's/Hist[:\\/]> ./& --preview-window=hidden/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
     execute "!sed -i" . (os == 'macOS' ? " ''" : "") . " -E 's/File types> ./& --preview-window=hidden/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
     execute "!sed -i" . (os == 'macOS' ? " ''" : "") . " -E 's/Maps \\(.\\.a:mode\\..\\)> ./& --preview-window=hidden/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
+    execute "!sed -i" . (os == 'macOS' ? " ''" : "") . " -E 's/Marks> ./& --preview-window=hidden/g' " . g:jiang_plugin_dir . "/fzf.vim/autoload/fzf/vim.vim"
 endf
 
 " 修改Far.vim源代码使其搜索目录可以根据vim的pwd变化
@@ -224,7 +231,12 @@ endf
 function Jiang_ChangePhpHighlight(info)
     let os = Jiang_GetSystemType()
     " 修改因为折叠导致的public、protected等颜色被覆盖的bug
-    execute "!sed -i" . (os == 'macOS' ? " ''" : "") . " -E 's/(syn region phpFoldFunction matchgroup=Storageclass start=[^)]+\\))([^$]+\\$)(.+z1)}(.+)$/\\1\\\\(\\2\\\\)\\3\\\\(}\\\\)\\\\@=\\4/g' " . g:jiang_plugin_dir . "/php.vim/syntax/php.vim"
+    execute "!sed -i" . (os == 'macOS' ? " ''" : "") . " -E 's/(syn region phpFoldFunction matchgroup=Storageclass[^)]+\\))([^$]+\\$)(.+z1)}(.+)$/\\1\\\\(\\2\\\\)\\3\\\\(}\\\\)\\\\@=\\4/g' " . g:jiang_plugin_dir . "/php.vim/syntax/php.vim"
+    execute "!sed -i" . (os == 'macOS' ? " ''" : "") . " -E 's/(syn region phpFoldSwitch .+z1)}(.+)$/\\1\\\\(}\\\\)\\\\@=\\2/g' " . g:jiang_plugin_dir . "/php.vim/syntax/php.vim"
+    execute "!sed -i" . (os == 'macOS' ? " ''" : "") . " -E 's/(syn region phpFoldWhile .+z1)}(.+)$/\\1\\\\(}\\\\)\\\\@=\\2/g' " . g:jiang_plugin_dir . "/php.vim/syntax/php.vim"
+    execute "!sed -i" . (os == 'macOS' ? " ''" : "") . " -E 's/(syn region phpFoldDoWhile .+z1)(.+)\\\\\\((.+)$/\\1\\\\(\\2\\3/g' " . g:jiang_plugin_dir . "/php.vim/syntax/php.vim"
+    execute "!sed -i" . (os == 'macOS' ? " ''" : "") . " -E 's/(syn region phpFoldFor .+z1)}(.+)$/\\1\\\\(}\\\\)\\\\@=\\2/g' " . g:jiang_plugin_dir . "/php.vim/syntax/php.vim"
+    execute "!sed -i" . (os == 'macOS' ? " ''" : "") . " -E 's/(syn region phpFoldForeach .+z1)}(.+)$/\\1\\\\(}\\\\)\\\\@=\\2/g' " . g:jiang_plugin_dir . "/php.vim/syntax/php.vim"
 endf
 
 " 安装deoplete的依赖
