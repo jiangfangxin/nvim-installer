@@ -132,9 +132,9 @@ nnoremap <silent> <leader>cf oechom '-> ' . ' --jfx'<ESC>F'F'i
 " 新增变量log
 nnoremap <silent> <leader>cv oechom ': ' . ' --jfx'<ESC>F:i
 " 注释掉所有log
-nnoremap <silent> <leader>cd :<C-u>%s/^\( *\)\([^ "].*--jfx.*\)$/\1" \2/<CR>
+nnoremap <silent> <leader>co :<C-u>%s/^\( *\)\([^ "].*--jfx.*\)$/\1" \2/<CR>
 " 启用所有注释的log
-nnoremap <silent> <leader>cD :<C-u>%s/^\( *\)" \(.*--jfx.*\)$/\1\2/<CR>
+nnoremap <silent> <leader>cJ :<C-u>%s/^\( *\)" \(.*--jfx.*\)$/\1\2/<CR>
 " 清除所有的log
-nnoremap <silent> <leader>cJ :<C-u>%s/^.*--jfx.*$\n//<CR>
+nnoremap <silent> <leader>cd :<C-u>%s/^.*--jfx.*$\n//<CR>
 

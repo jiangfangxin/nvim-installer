@@ -50,15 +50,17 @@ nnoremap <leader>gd :Gremove<CR>
 " 插件airblade/vim-gitgutter自定义设置
 set updatetime=1000 " 设置gutter更新时间为1秒，默认是4秒
 let g:gitgutter_map_keys = 0 " 取消gitgutter插件默认的按键绑定
-" 开启或关闭gitgutter
-nnoremap <silent> <leader>hh :call Jiang_ToggleGitGutter()<CR>
-function Jiang_ToggleGitGutter()
-    if exists('g:gitgutter_enabled')
-        execute 'GitGutterToggle'
+" 开启或刷新gitgutter
+nnoremap <silent> <leader>hh :call Jiang_OnOrRefreshGitGutter()<CR>
+function Jiang_OnOrRefreshGitGutter()
+    if exists('g:gitgutter_enabled') && g:gitgutter_enabled == 1
+        execute 'GitGutterAll'
     else
         execute 'GitGutterEnable'
     endif
 endf
+" 关闭gitgutter
+nnoremap <leader>ho :GitGutterDisable<CR>
 " 折叠当前文件中所有未修改的代码
 nnoremap <leader>hz :GitGutterFold<CR>
 " ]h：跳转到下一个修改
@@ -73,8 +75,22 @@ nmap <leader>hx <Plug>GitGutterUndoHunk
 nmap <leader>hp <Plug>GitGutterPreviewHunk
 
 " 插件kshenoy/vim-signature自定义设置
-" 开启/关闭signature的侧边栏mark
-nnoremap <leader>mm :SignatureToggleSigns<CR>
+" 开启或刷新signature的侧边栏mark
+nnoremap <silent> <leader>mm :call Jiang_OnOrRefreshMarkSignature()<CR>
+function Jiang_OnOrRefreshMarkSignature()
+    if exists('b:sig_enabled') && b:sig_enabled == 1
+        execute 'SignatureRefresh'
+    else
+        execute 'SignatureToggleSigns'
+    endif
+endf
+" 关闭signature的侧边栏mark
+nnoremap <silent> <leader>mo :call Jiang_OffMarkSignature()<CR>
+function Jiang_OffMarkSignature()
+    if exists('b:sig_enabled') && b:sig_enabled == 1
+        execute 'SignatureToggleSigns'
+    endif
+endf
 " m[a-zA-Z]：Mark/Unmark字母                dm[a-zA-Z]：删除某个字母的mark
 " m.       ：Mark/Unmark紧接着的一个字母    `[a-zA-Z] ：跳转到字母所在mark
 " ]`       ：跳转到下一个mark               [`：跳转到上一个mark
