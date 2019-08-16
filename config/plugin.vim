@@ -39,6 +39,6 @@ Plug 'phpactor/phpactor', { 'for': 'php', 'do': function('Jiang_InstallPhpactor'
 Plug 'kristijanhusak/deoplete-phpactor', { 'for': 'php' }                                     " 连接代码补全框架和PHP库
 Plug 'sbdchd/neoformat', { 'on': 'Neoformat', 'do': function('Jiang_InstallFormatters') }     " 代码自动化格式化工具
 Plug 'vim-syntastic/syntastic'                                                                " 语法错误提示
-Plug 'vim-vdebug/vdebug'                                                                      " 支持多种语言的代码调试
+Plug 'vim-vdebug/vdebug', { 'do': function('Jiang_FixVdebug') }                               " 支持多种语言的代码调试
 call plug#end()
 

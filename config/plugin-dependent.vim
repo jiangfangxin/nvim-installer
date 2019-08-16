@@ -281,3 +281,18 @@ function Jiang_InstallFormatters(info)
     execute "!bash " . file
 endf
 
+" 修复vdebug在compact模式下展开变量上跳的问题
+function Jiang_FixVdebug(info)
+    let file = trim(system('mktemp -t nvim_sed.XXXXXX'))
+    let lines = []
+    call add(lines, "sed -i" . (g:jiang_os == 'macOS' ? " ''" : "") . " -e '/self\.ui\.windows\.watch()\.insert(output\.rstrip(), lineno-1, True)/a\\")
+    call add(lines, "\\        vim.command(\"normal j\")\\")
+    call add(lines, "' " . g:jiang_plugin_dir . "/vdebug/python3/vdebug/event.py")
+    call add(lines, "sed -i" . (g:jiang_os == 'macOS' ? " ''" : "") . " -e '/opts\.Options\.get(.marker_closed_tree.), 1)+append, lineno-1, True)/a\\")
+    call add(lines, "\\        vim.command(\"normal j\")\\")
+    call add(lines, "' " . g:jiang_plugin_dir . "/vdebug/python3/vdebug/event.py")
+    call writefile(lines, file)
+    " Run
+    execute "!bash " . file
+endf
+
