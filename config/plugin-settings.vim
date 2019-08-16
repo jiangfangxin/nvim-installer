@@ -51,12 +51,14 @@ nnoremap <leader>gd :Gremove<CR>
 set updatetime=1000 " 设置gutter更新时间为1秒，默认是4秒
 let g:gitgutter_map_keys = 0 " 取消gitgutter插件默认的按键绑定
 " 开启或刷新gitgutter
-nnoremap <leader>hh :call Jiang_OnOrRefreshGitGutter()<CR>
+nnoremap <silent> <leader>hh :call Jiang_OnOrRefreshGitGutter()<CR>
 function Jiang_OnOrRefreshGitGutter()
     if exists('g:gitgutter_enabled') && g:gitgutter_enabled == 1
         execute 'GitGutterAll'
+        echo 'GitGutterAll'
     else
         execute 'GitGutterEnable'
+        echo 'GitGutterEnable'
     endif
 endf
 " 关闭gitgutter
@@ -76,26 +78,31 @@ nmap <leader>hp <Plug>GitGutterPreviewHunk
 
 " 插件kshenoy/vim-signature自定义设置
 " 开启或刷新signature的侧边栏mark
-nnoremap <leader>mm :call Jiang_OnOrRefreshMarkSignature()<CR>
+nnoremap <silent> <leader>mm :call Jiang_OnOrRefreshMarkSignature()<CR>
 function Jiang_OnOrRefreshMarkSignature()
     if exists('b:sig_enabled') && b:sig_enabled == 1
         execute 'SignatureRefresh'
+        echo 'MarkSignatureRefresh'
     else
         execute 'SignatureToggleSigns'
+        echo 'MarkSignatureOn'
     endif
 endf
 " 关闭signature的侧边栏mark
-nnoremap <leader>mo :call Jiang_OffMarkSignature()<CR>
+nnoremap <silent> <leader>mo :call Jiang_OffMarkSignature()<CR>
 function Jiang_OffMarkSignature()
     if exists('b:sig_enabled') && b:sig_enabled == 1
         execute 'SignatureToggleSigns'
+        echo 'MarkSignatureOff'
     endif
 endf
+" 清空buffer中marks时强制写入nvim的shada(Share Data)文件中，避免下次打开marks重现
+nnoremap <silent> m<Space> :<C-U>call signature#mark#Purge("all")<CR>:wshada!<CR>
 " m[a-zA-Z]：Mark/Unmark字母                dm[a-zA-Z]：删除某个字母的mark
 " m.       ：Mark/Unmark紧接着的一个字母    `[a-zA-Z] ：跳转到字母所在mark
-" ]`       ：跳转到下一个mark               [`：跳转到上一个mark
-" `]       ：按字母顺序跳转到下一个mark     `[：按字母顺序跳转到上一个mark
-" m-       ：删除本行的mark                 m<Space>：删除当前buffer的所有mark
+" ]`       ：跳转到下一个mark               [`        ：跳转到上一个mark
+" `]       ：按字母顺序跳转到下一个mark     `[        ：按字母顺序跳转到上一个mark
+" m-       ：删除本行的mark                 m<Space>  ：删除当前buffer的所有mark
 
 " X 插件kien/ctrlp.vim已禁用：模糊搜索文件名来打开文件
 " X 插件kien/ctrlp.vim自定义设置
