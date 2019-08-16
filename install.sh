@@ -44,6 +44,9 @@ colorDir=$HOME/.config/nvim/colors
 pluginManagerDir=$HOME/.local/share/nvim/site/autoload
 pluginsDir=$HOME/.local/share/nvim/plugged
 
+# All Config:basic theme search file netrw edit debug-log plugin-dependent plugin plugin-settings mac-keyboard clipboard
+configFiles="basic theme search file edit debug-log plugin-dependent plugin plugin-settings mac-keyboard clipboard"
+
 # Theme
 themeRepostry=https://github.com/tomasr/molokai.git
 themeFilePath=colors/molokai.vim
@@ -175,30 +178,11 @@ cleanOldBackup() {
 
 installConfig() {
     # Merge neovim config to one init.vim file
-    cat config/basic.vim > init.vim
-        echo "config/basic.vim > init.vim"
-    cat config/theme.vim >> init.vim
-        echo "config/theme.vim >> init.vim"
-    cat config/search.vim >> init.vim
-        echo "config/search.vim >> init.vim"
-    cat config/file.vim >> init.vim
-        echo "config/file.vim >> init.vim"
-    # cat config/netrw.vim >> init.vim
-    #     echo "config/netrw.vim >> init.vim"
-    cat config/fn.vim >> init.vim
-        echo "config/fn.vim >> init.vim"
-    cat config/edit.vim >> init.vim
-        echo "config/edit.vim >> init.vim"
-    cat config/plugin-dependent.vim >> init.vim
-        echo "config/plugin-dependent.vim >> init.vim"
-    cat config/plugin.vim >> init.vim
-        echo "config/plugin.vim >> init.vim"
-    cat config/plugin-settings.vim >> init.vim
-        echo "config/plugin-settings.vim >> init.vim"
-    cat config/mac-keyboard.vim >> init.vim
-        echo "config/mac-keyboard.vim >> init.vim"
-    cat config/clipboard.vim >> init.vim
-        echo "config/clipboard.vim >> init.vim"
+    cat /dev/null > init.vim
+    for file in $configFiles; do
+        cat config/$file.vim >> init.vim
+        echo "config/$file.vim >> init.vim"
+    done
 
     # Check init.vim
     if [ -f $initDir/init.vim ]; then

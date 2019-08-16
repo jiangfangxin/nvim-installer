@@ -52,22 +52,30 @@ nnoremap <silent> ª :tablast<CR>
 inoremap <silent> ª <ESC>:tablast<CR>
 vnoremap <silent> ª <ESC>:tablast<CR>
 
-" Alt + x：关闭当前tab
-nnoremap <silent> ≈ :tabclose<CR>
-inoremap <silent> ≈ <ESC>:tabclose<CR>
-vnoremap <silent> ≈ <ESC>:tabclose<CR>
-" Alt + o（字母o）：关闭其他窗口
-nnoremap <silent> ø :only<CR>
-inoremap <silent> ø <ESC>:only<CR>a
-vnoremap <silent> ø <ESC>:only<CR>gv
-" Alt + Shift + o（字母o）：关闭其他tab
-nnoremap <silent> Ø :tabonly<CR>
-inoremap <silent> Ø <ESC>:tabonly<CR>a
-vnoremap <silent> Ø <ESC>:tabonly<CR>gv
 " Alt + p：关闭预览窗口
 nnoremap <silent> π :pclose<CR>
 inoremap <silent> π <ESC>:pclose<CR>a
 vnoremap <silent> π <ESC>:pclose<CR>gv
+" Alt + w：关闭当前窗口
+nnoremap <silent> ∑ :q<CR>
+inoremap <silent> ∑ <ESC>:q<CR>
+vnoremap <silent> ∑ <ESC>:q<CR>
+" Alt + o（字母o）：关闭其他窗口
+nnoremap <silent> ø :only<CR>
+inoremap <silent> ø <ESC>:only<CR>a
+vnoremap <silent> ø <ESC>:only<CR>gv
+" Alt + x：关闭当前tab
+nnoremap <silent> ≈ :tabclose<CR>
+inoremap <silent> ≈ <ESC>:tabclose<CR>
+vnoremap <silent> ≈ <ESC>:tabclose<CR>
+" Alt + Shift + o（字母o）：关闭其他tab
+nnoremap <silent> Ø :tabonly<CR>
+inoremap <silent> Ø <ESC>:tabonly<CR>a
+vnoremap <silent> Ø <ESC>:tabonly<CR>gv
+" Alt + q：关闭所有窗口并退出
+nnoremap <silent> œ :qa<CR>
+inoremap <silent> œ <ESC>:qa<CR>
+vnoremap <silent> œ <ESC>:qa<CR>
 
 " Alt + >：当前tab往前移动一位
 nnoremap <silent> ≥ :+tabmove<CR>

@@ -51,7 +51,7 @@ nnoremap <leader>gd :Gremove<CR>
 set updatetime=1000 " 设置gutter更新时间为1秒，默认是4秒
 let g:gitgutter_map_keys = 0 " 取消gitgutter插件默认的按键绑定
 " 开启或刷新gitgutter
-nnoremap <silent> <leader>hh :call Jiang_OnOrRefreshGitGutter()<CR>
+nnoremap <leader>hh :call Jiang_OnOrRefreshGitGutter()<CR>
 function Jiang_OnOrRefreshGitGutter()
     if exists('g:gitgutter_enabled') && g:gitgutter_enabled == 1
         execute 'GitGutterAll'
@@ -76,7 +76,7 @@ nmap <leader>hp <Plug>GitGutterPreviewHunk
 
 " 插件kshenoy/vim-signature自定义设置
 " 开启或刷新signature的侧边栏mark
-nnoremap <silent> <leader>mm :call Jiang_OnOrRefreshMarkSignature()<CR>
+nnoremap <leader>mm :call Jiang_OnOrRefreshMarkSignature()<CR>
 function Jiang_OnOrRefreshMarkSignature()
     if exists('b:sig_enabled') && b:sig_enabled == 1
         execute 'SignatureRefresh'
@@ -85,7 +85,7 @@ function Jiang_OnOrRefreshMarkSignature()
     endif
 endf
 " 关闭signature的侧边栏mark
-nnoremap <silent> <leader>mo :call Jiang_OffMarkSignature()<CR>
+nnoremap <leader>mo :call Jiang_OffMarkSignature()<CR>
 function Jiang_OffMarkSignature()
     if exists('b:sig_enabled') && b:sig_enabled == 1
         execute 'SignatureToggleSigns'
@@ -96,37 +96,6 @@ endf
 " ]`       ：跳转到下一个mark               [`：跳转到上一个mark
 " `]       ：按字母顺序跳转到下一个mark     `[：按字母顺序跳转到上一个mark
 " m-       ：删除本行的mark                 m<Space>：删除当前buffer的所有mark
-
-" 插件terryma/vim-multiple-cursors自定义设置
-" Ctrl + n：选择下一个      Ctrl + p：回到上一个选择
-" Ctrl + x：跳过这个选择    Alt  + f：选择全部匹配（mac-keyboard）
-" :MultipleCursorsFind [your-search-string][\c|\C]  选择命令
-let g:multi_cursor_select_all_word_key = 'ƒ'
-" 退出visual模式时不退出多光标模式
-let g:multi_cursor_exit_from_visual_mode = 0
-" 退出insert模式时不退出多光标模式
-let g:multi_cursor_exit_from_insert_mode = 0
-" 在使用多光标模式的时候自动禁用我的Jiang_系列映射以及一些有冲突插件
-function! Multiple_cursors_before()
-    iunmap (
-    iunmap [
-    iunmap {
-    iunmap )
-    iunmap ]
-    iunmap }
-    iunmap <CR>
-    call deoplete#custom#buffer_option('auto_complete', v:false)
-endfunction
-function! Multiple_cursors_after()
-    inoremap ( ()<ESC>i
-    inoremap [ []<ESC>i
-    inoremap { {}<ESC>i
-    inoremap ) <C-r>=Jiang_ClosePair(')')<CR>
-    inoremap ] <C-r>=Jiang_ClosePair(']')<CR>
-    inoremap } <C-r>=Jiang_ClosePair('}')<CR>
-    inoremap <CR> <C-r>=Jiang_SmartEnter()<CR>
-    call deoplete#custom#buffer_option('auto_complete', v:true)
-endfunction
 
 " X 插件kien/ctrlp.vim已禁用：模糊搜索文件名来打开文件
 " X 插件kien/ctrlp.vim自定义设置
@@ -250,7 +219,10 @@ nnoremap <leader>bd :bdelete FAR*<C-a><CR>
  
 " 插件majutsushi/tagbar自定义设置
 " 需要安装：brew/apt install universal ctags
-" <F8>：打开/关闭结构树
+" F8：关闭或开启Tagbar，用于浏览当前文件对象和函数大纲
+nnoremap <silent> <F8> :TagbarToggle<CR>
+inoremap <silent> <F8> <ESC>:TagbarToggle<CR>a
+vnoremap <silent> <F8> <ESC>:TagbarToggle<CR>gv
 " <CR>：跳转到定义的地方            p ：预览定义的地方
 " v   ：隐藏非public的变量和方法    s ：排序结构树
 " zo  ：展开目录树                  zc：折叠目录树      za：展开/折叠目录树
@@ -269,6 +241,41 @@ let g:NERDCommentEmptyLines = 1 " 空白行也添加注释
 " [count]<leader>cu         ：comment-undo    取消行注释
 " [count]<leader>c<Space>   ：comment-toggle  切换行注释
 " <leader>cA                ：comment-add     在行尾添加注释
+
+" 插件terryma/vim-multiple-cursors自定义设置
+" Ctrl + n：选择下一个      Ctrl + p：回到上一个选择
+" Ctrl + x：跳过这个选择    Alt  + f：选择全部匹配（mac-keyboard）
+" :MultipleCursorsFind [your-search-string][\c|\C]  选择命令
+let g:multi_cursor_select_all_word_key = 'ƒ'
+" 退出visual模式时不退出多光标模式
+let g:multi_cursor_exit_from_visual_mode = 0
+" 退出insert模式时不退出多光标模式
+let g:multi_cursor_exit_from_insert_mode = 0
+" 在使用多光标模式的时候自动禁用有冲突的映射和插件
+function! Multiple_cursors_before()
+    call Jiang_UnmapAutoPairs()
+    call deoplete#custom#buffer_option('auto_complete', v:false)
+endf
+function! Multiple_cursors_after()
+    call Jiang_RemapAutoPairs()
+    call deoplete#custom#buffer_option('auto_complete', v:true)
+endf
+
+" 插件jiangmiao/auto-pairs自定义设置
+" 暂时禁用auto-pairs的map因为和MultipleCursor冲突
+function Jiang_UnmapAutoPairs()
+    iunmap <buffer> <SPACE>
+    for key in b:jiang_autopairs_keys
+        execute 'iunmap <buffer> '.key
+    endfor
+endf
+" 重新map
+function Jiang_RemapAutoPairs()
+    inoremap <buffer> <silent> <SPACE> <C-R>=AutoPairsSpace()<CR>
+    for key in b:jiang_autopairs_keys
+        call AutoPairsMap(key)
+    endfor
+endf
 
 " 插件tpope/vim-surround自定义设置
 " cs'[          ：将   'Hello world!'     变为： [ Hello world! ]
@@ -333,6 +340,13 @@ let g:user_emmet_mode = 'iv'
 hi link phpRegion Function
 " 修复注释中phpDocTag的颜色错误
 hi link phpDocTags Tag
+" 取消()[]{}的斜体
+hi! Special guifg=#66D9EF guibg=bg gui=NONE
+
+" 插件jwalton512/vim-blade自定义设置
+" php模版引擎blade中主要还是html所以使用手动折叠
+" 这样可以使用vatzf来折叠一个html标签
+autocmd FileType blade setlocal foldmethod=manual
 
 " 插件Shougo/deoplete.nvim自定义设置
 " 启动neovim的时候就启动补全插件
@@ -361,4 +375,37 @@ augroup END
 
 " 插件Chiel92/vim-autoformat自定义设置
 nnoremap <leader>ff :Neoformat<CR>
+
+" 插件vim-vdebug/vdebug自定义设置
+" 在浏览器添加?XDEBUG_SESSION_START=1参数来开始调试
+" 设置PHP的调试参数：端口9000，Vagrant虚拟机上文件路径和本地路径的映射。
+if !exists('g:vdebug_options')
+    let g:vdebug_options = {}
+endif
+let g:vdebug_options.port = 9000
+let g:vdebug_options.path_maps = { "/vagrant/www": "/Users/jiang/program/www" }
+let g:vdebug_options.break_on_open = 0
+let g:vdebug_options.watch_window_style = "compact"
+"  使用自定义的快捷键，覆盖vdebug的默认快捷
+let g:vdebug_keymap = {
+            \ "step_over": "<F2>",
+            \ "step_into": "<F3>",
+            \ "step_out": "<F4>",
+            \ "run": "<F5>",
+            \ "close": "<F6>",
+            \ "run_to_cursor": "<F9>",
+            \ "set_breakpoint": "<F10>",
+            \ "get_context": "<F11>",
+            \ "eval_under_cursor": "<F12>"
+            \ }
+" :BreakpointWindow 显示所有断点
+nnoremap <leader>db :BreakpointWindow<CR>
+" :BreakpointRemove ID/* 删除指定ID的断点/所有断点
+nnoremap <leader>dd :BreakpointRemove *
+" :VdebugEval <code>: 显示指定表达式的值
+nnoremap <leader>de :VdebugEval $
+vnoremap <leader>de "ay:VdebugEval <C-r>a
+" :VdebugTracd <code>: 在Tarce窗口固定显示指定表达式的值
+nnoremap <leader>dw :VdebugTrace $
+vnoremap <leader>dw "ay:VdebugTrace <C-r>a
 
