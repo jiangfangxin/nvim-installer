@@ -25,7 +25,7 @@ nnoremap <C-\> :vs<CR><C-]>
 
 " 在新tab页打开当前文件：Ctrl + w T
 " 新建空白的标签页
-nnoremap T :tabe<CR>
+nnoremap <leader>t :tabe<CR>
 
 " 对比两个文件的差异，在当前文件的COMMAND栏输入要diff的文件
 " :diffsplit {file-path}

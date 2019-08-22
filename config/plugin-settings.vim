@@ -77,25 +77,25 @@ nmap <leader>hx <Plug>GitGutterUndoHunk
 nmap <leader>hp <Plug>GitGutterPreviewHunk
 
 " 插件kshenoy/vim-signature自定义设置
-" 开启或刷新signature的侧边栏mark
-nnoremap <silent> <leader>mm :call Jiang_OnOrRefreshMarkSignature()<CR>
-function Jiang_OnOrRefreshMarkSignature()
-    if exists('b:sig_enabled') && b:sig_enabled == 1
-        execute 'SignatureRefresh'
-        echo 'MarkSignatureRefresh'
-    else
-        execute 'SignatureToggleSigns'
-        echo 'MarkSignatureOn'
-    endif
-endf
-" 关闭signature的侧边栏mark
-nnoremap <silent> <leader>mo :call Jiang_OffMarkSignature()<CR>
-function Jiang_OffMarkSignature()
-    if exists('b:sig_enabled') && b:sig_enabled == 1
-        execute 'SignatureToggleSigns'
-        echo 'MarkSignatureOff'
-    endif
-endf
+" " 开启或刷新signature的侧边栏mark
+" nnoremap <silent> <leader>mm :call Jiang_OnOrRefreshMarkSignature()<CR>
+" function Jiang_OnOrRefreshMarkSignature()
+"     if exists('b:sig_enabled') && b:sig_enabled == 1
+"         execute 'SignatureRefresh'
+"         echo 'MarkSignatureRefresh'
+"     else
+"         execute 'SignatureToggleSigns'
+"         echo 'MarkSignatureOn'
+"     endif
+" endf
+" " 关闭signature的侧边栏mark
+" nnoremap <silent> <leader>mo :call Jiang_OffMarkSignature()<CR>
+" function Jiang_OffMarkSignature()
+"     if exists('b:sig_enabled') && b:sig_enabled == 1
+"         execute 'SignatureToggleSigns'
+"         echo 'MarkSignatureOff'
+"     endif
+" endf
 " 清空buffer中marks时强制写入nvim的shada(Share Data)文件中，避免下次打开marks重现
 nnoremap m<Space> :<C-U>call signature#mark#Purge("all")<CR>:wshada!<CR>
 nnoremap M<Space> :<C-U>delmarks A-Z<CR>:wshada!<CR>
@@ -103,6 +103,7 @@ nnoremap M<Space> :<C-U>delmarks A-Z<CR>:wshada!<CR>
 " m.       ：Mark/Unmark紧接着的一个字母    `[a-zA-Z] ：跳转到字母所在mark
 " ]`       ：跳转到下一个mark               [`        ：跳转到上一个mark
 " `]       ：按字母顺序跳转到下一个mark     `[        ：按字母顺序跳转到上一个mark
+" `"       ：去到上一次关闭文件的位置       ·.        ：去到最后一次修改的位置
 " m-       ：删除本行的mark                 m<Space>  ：删除当前buffer的所有mark
 
 " X 插件kien/ctrlp.vim已禁用：模糊搜索文件名来打开文件
@@ -337,7 +338,7 @@ vmap ga <Plug>(EasyAlign)
 " 插件mattn/emmet-vim自定义设置
 " 只在html和css文件中启用Emmet
 let g:user_emmet_install_global = 0
-autocmd FileType html,css EmmetInstall
+autocmd FileType html,css,blade EmmetInstall
 " 只在insert和visual模式下启用Emmet
 let g:user_emmet_mode = 'iv'
 " Ctrl + y + , ：触发Emmet自动生成代码
@@ -375,7 +376,7 @@ call deoplete#custom#option({
 augroup jiang_phpactor
   autocmd!
   " 调用phpactor的选项菜单
-  autocmd FileType php nnoremap <leader>pm :call phpactor#ContextMenu()<CR>
+  autocmd FileType php nnoremap <buffer> <leader>mm :call phpactor#ContextMenu()<CR>
   " 跳转到定义处
   autocmd FileType php nnoremap <buffer> <C-]> :call phpactor#GotoDefinition()<CR>
   autocmd FileType php nnoremap <buffer> <C-\> :vs<CR>:call phpactor#GotoDefinition()<CR>
@@ -409,11 +410,11 @@ let g:vdebug_keymap = {
 " :BreakpointWindow 显示所有断点
 nnoremap <leader>db :BreakpointWindow<CR>
 " :BreakpointRemove ID/* 删除指定ID的断点/所有断点
-nnoremap <leader>dd :BreakpointRemove *
+nnoremap <leader>dd :BreakpointRemove *<CR>
 " :VdebugEval <code>: 显示指定表达式的值
-nnoremap <leader>de :VdebugEval $
-vnoremap <leader>de "ay:VdebugEval <C-r>a
+nnoremap <leader>de :VdebugEval<Space>
+vnoremap <leader>de "ay:VdebugEval <C-r>a<CR>
 " :VdebugTracd <code>: 在Tarce窗口固定显示指定表达式的值
-nnoremap <leader>dw :VdebugTrace $
-vnoremap <leader>dw "ay:VdebugTrace <C-r>a
+nnoremap <leader>dw :VdebugTrace<Space>
+vnoremap <leader>dw "ay:VdebugTrace <C-r>a<CR>
 

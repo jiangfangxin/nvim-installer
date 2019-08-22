@@ -76,6 +76,14 @@ vnoremap <silent> Ø <ESC>:tabonly<CR>gv
 nnoremap <silent> œ :qa<CR>
 inoremap <silent> œ <ESC>:qa<CR>
 vnoremap <silent> œ <ESC>:qa<CR>
+" Alt + Shift + q：mksession!，然后关闭所有窗口并退出
+nnoremap <silent> Œ :mksession!<CR>:qa<CR>
+inoremap <silent> Œ <ESC>:mksession!<CR>:qa<CR>
+vnoremap <silent> Œ <ESC>:mksession!<CR>:qa<CR>
+" :mksession[!] [file] 保存当前工作状态（包括所有tab、window和光标位置等）到指定文件
+" 若不提供file默认保存在当前目录下的Session.vim文件，如果已存在需要加!覆盖。
+" :source [file] 重新打开之前保存的编辑状态。
+" nvim -S Session.vim 也可以在启动nvim的时候指定Session.vim文件。
 
 " Alt + >：当前tab往前移动一位
 nnoremap <silent> ≥ :+tabmove<CR>

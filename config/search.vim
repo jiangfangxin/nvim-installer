@@ -10,6 +10,9 @@
 " n：number的缩写，表示不替换，只显示匹配出现的次数
 " \< \>：匹配完整的一个单词，如:%s/\<foo\>/Foo/gc只会匹配foo，而不会匹配get_foo
 "
+" /：搜索整个buffer的内容
+" :[range]g[lobal]/{pattern}/[cmd]：对局部区域进行搜索，[cmd]默认是:p即输出搜索到的结果，如：30,50g/jiang
+"
 " vim的正则规则分为4种：\v(very magic)、\m(magic)、\M(nomagic)、\V(very nomagic)
 " 其中：\m(magic)      对应POSIX的BRE(Basic Regular Expressions)
 " 其中：\v(very magic) 对应POSIX的ERE(Extended Regular Expressions)

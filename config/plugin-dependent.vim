@@ -136,11 +136,13 @@ endf
 function Jiang_CustomNerdtree(info)
     " 改善由于插件vim-signature也绑定了m开头的快捷键所带来的menu菜单弹出速度问题
     execute "!sed -i" . (g:jiang_os == 'macOS' ? " ''" : "") . " -e 's/nnoremap <buffer> <silent> ./&.(self.key==\"m\" ? \"<nowait> \" : \"\")/g' " . g:jiang_plugin_dir . "/nerdtree/lib/nerdtree/key_map.vim"
+    " 下面这两行用于修复在nerdtree在一个有多个窗口的页面中刷新root的时候出现的bug
+    execute "!sed -i" . (g:jiang_os == 'macOS' ? " ''" : "") . " -e '/call nerdtree.exec(g:NERDTree\\.GetWinNum() \\. .wincmd w.)/d' " . g:jiang_plugin_dir . "/nerdtree/autoload/nerdtree/ui_glue.vim"
+    execute "!sed -i" . (g:jiang_os == 'macOS' ? " ''" : "") . " -e '/call nerdtree.exec(l:curWin \\. .wincmd w.)/d' " . g:jiang_plugin_dir . "/nerdtree/autoload/nerdtree/ui_glue.vim"
     let lines = []
     call add(lines, "call NERDTreeAddKeyMap({ 'key': '<CR>', 'callback': 'Jiang_NERDTreeOpenFile', 'quickhelpText': '查看目录或在当前窗口打开文件', 'scope': 'FileNode', 'override': 1 })")
     call add(lines, "call NERDTreeAddKeyMap({ 'key': 'o', 'callback': 'Jiang_NERDTreeOpenFile', 'quickhelpText': '查看目录或在当前窗口打开文件', 'scope': 'FileNode', 'override': 1 })")
     call add(lines, "call NERDTreeAddKeyMap({ 'key': 't', 'callback': 'Jiang_NERDTreeOpenInTab', 'quickhelpText': '在新标签页打开文件或目录', 'scope': 'Node', 'override': 1 })")
-    call add(lines, "call NERDTreeAddKeyMap({ 'key': 'T', 'callback': 'Jiang_NERDTreeOpenBlankTab', 'quickhelpText': '非节点处打开新的空白标签页', 'scope': 'all'})")
     call add(lines, "call NERDTreeAddKeyMap({ 'key': 'v', 'callback': 'Jiang_NERDTreeOpenInVSplit', 'quickhelpText': '在纵向窗口中打开文件或目录', 'scope': 'Node', 'override': 1 })")
     call add(lines, "call NERDTreeAddKeyMap({ 'key': 's', 'callback': 'Jiang_NERDTreeOpenInSplit', 'quickhelpText': '在横向窗口中打开文件或目录', 'scope': 'Node', 'override': 1 })")
     call add(lines, "call NERDTreeAddKeyMap({ 'key': 'p', 'callback': 'Jiang_NERDTreeLivePreview', 'quickhelpText': '展开目录或预览当前文件', 'scope': 'Node', 'override': 1 })")
@@ -150,9 +152,6 @@ function Jiang_CustomNerdtree(info)
     call add(lines, "endf")
     call add(lines, "function Jiang_NERDTreeOpenInTab(dirnode)")
     call add(lines, "    execute 'pclose | e ' . a:dirnode.path.str() . ' | wincmd T'")
-    call add(lines, "endf")
-    call add(lines, "function Jiang_NERDTreeOpenBlankTab()")
-    call add(lines, "    execute 'tabe'")
     call add(lines, "endf")
     call add(lines, "function Jiang_NERDTreeOpenInVSplit(dirnode)")
     call add(lines, "    execute 'pclose | vs ' . a:dirnode.path.str()")

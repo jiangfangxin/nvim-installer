@@ -22,6 +22,7 @@ Plug 'junegunn/fzf.vim', { 'on': ['FZF', 'Files', 'Buffers', 'Ag', 'BLines', 'Ta
                          \ 'do': function('Jiang_InstallFzfVim') }                            " Fzf功能扩展
 Plug 'brooth/far.vim', { 'on': ['F', 'Far', 'Fardo'], 'do': function('Jiang_ChangeFar') }     " 多文件搜索和替换工具
 Plug 'scrooloose/nerdtree', { 'do': function('Jiang_CustomNerdtree') }                        " 文件浏览器
+Plug 'Xuyuanp/nerdtree-git-plugin'                                                            " 给Nerdtree目录树添加git标识
 Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' , 'do': function('Jiang_InstallCtags')}      " 显示对象和函数大纲
 Plug 'ludovicchabant/vim-gutentags'                                                           " 自动化生成和管理tags文件
 Plug 'scrooloose/nerdcommenter'                                                               " 快速注释代码
