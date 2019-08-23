@@ -36,6 +36,7 @@ Plug 'StanAngeloff/php.vim', { 'for': 'php', 'do': function('Jiang_ChangePhpHigh
 Plug 'jwalton512/vim-blade', { 'for': 'blade' }                                               " Blade模版引擎语法支持
 Plug 'pangloss/vim-javascript'                                                                " Javascript语法支持插件
 Plug 'Shougo/deoplete.nvim', { 'do': function('Jiang_InstallDeoplete') }                      " 代码自动补全框架
+Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }                                       " 具有深度学习能力的代码补全插件
 Plug 'phpactor/phpactor', { 'for': 'php', 'do': function('Jiang_InstallPhpactor') }           " PHP代码补全
 Plug 'kristijanhusak/deoplete-phpactor', { 'for': 'php' }                                     " 连接代码补全框架和PHP库
 Plug 'sbdchd/neoformat', { 'on': 'Neoformat', 'do': function('Jiang_InstallFormatters') }     " 代码自动化格式化工具

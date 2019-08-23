@@ -382,8 +382,9 @@ augroup jiang_phpactor
   autocmd FileType php nnoremap <buffer> <C-\> :vs<CR>:call phpactor#GotoDefinition()<CR>
 augroup END
 
-" 插件Chiel92/vim-autoformat自定义设置
+" 插件sbdchd/neoformat自定义设置
 nnoremap <leader>ff :Neoformat<CR>
+" :Neoformat! html ：强制使用特定的Filetype来格式化代码
 
 " 插件vim-vdebug/vdebug自定义设置
 " 在浏览器添加?XDEBUG_SESSION_START=1参数来开始调试

@@ -1,6 +1,6 @@
 " ---------- plugin-dependent.vim ----------
 " 设置Vim插件安装位置
-let g:jiang_plugin_dir = '~/.local/share/nvim/plugged'
+let g:jiang_plugin_dir = expand('~/.local/share/nvim/plugged')
 
 " 获得系统类别
 function Jiang_GetSystemType()
@@ -182,7 +182,7 @@ function Jiang_CustomNerdtree(info)
     call add(lines, "    call l:dirnode.parent.putCursorHere(1, 0)")
     call add(lines, "    call b:NERDTree.ui.centerView()")
     call add(lines, "endf")
-    call writefile(lines, expand(g:jiang_plugin_dir . '/nerdtree/nerdtree_plugin/custom_nerdtree.vim'))
+    call writefile(lines, g:jiang_plugin_dir . '/nerdtree/nerdtree_plugin/custom_nerdtree.vim')
 endf
 
 " 安装ctags这个工具
@@ -253,8 +253,6 @@ endf
 
 " 安装代码格式化工具
 function Jiang_InstallFormatters(info)
-    let file = trim(system('mktemp -t nvim_sed.XXXXXX'))
-    let lines = []
     " 安装js-beautify的python版本
     if (g:jiang_os == 'macOS')
         !brew install node
@@ -271,7 +269,15 @@ function Jiang_InstallFormatters(info)
         !sudo chmod a+x php-cs-fixer
         !sudo mv php-cs-fixer /usr/local/bin/php-cs-fixer
     endif
+    " 设置Laravel中Blade模板的格式化
+    let lines = []
+    call add(lines, "function neoformat#formatters#blade#enabled()")
+    call add(lines, "    return ['htmlbeautify', 'prettier', 'tidy', 'prettydiff']")
+    call add(lines, "endf")
+    call writefile(lines, g:jiang_plugin_dir . '/neoformat/autoload/neoformat/formatters/blade.vim')
     " 修复Neoformat中php-cs-fixer的问题
+    let file = trim(system('mktemp -t nvim_sed.XXXXXX'))
+    let lines = []
     call add(lines, "sed -i" . (g:jiang_os == 'macOS' ? " ''" : "") . " -E '/exe.: .php-cs-fixer.,/a\\")
     call add(lines, "\\           \\\\ \"replace\": 1,\\")
     call add(lines, "' " . g:jiang_plugin_dir . "/neoformat/autoload/neoformat/formatters/php.vim")
