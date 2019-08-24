@@ -223,6 +223,8 @@ endf
 function Jiang_ChangePhpHighlight(info)
     " 修改因为折叠导致的public、protected等颜色被覆盖的bug
     execute "!sed -i" . (g:jiang_os == 'macOS' ? " ''" : "") . " -E 's/(syn region phpFoldFunction matchgroup=Storageclass[^)]+\\))([^$]+\\$)(.+z1)}(.+)$/\\1\\\\(\\2\\\\)\\3\\\\(}\\\\)\\\\@=\\4/g' " . g:jiang_plugin_dir . "/php.vim/syntax/php.vim"
+    execute "!sed -i" . (g:jiang_os == 'macOS' ? " ''" : "") . " -E 's/(syn region phpFoldElseIf .+start=.).+(=elseif.+)$/\\1\\\\(^\\\\z(\\\\s*\\\\)\\\\(}\\\\s\\\\+\\\\)\\\\=\\\\)\\\\@<\\2/g' " . g:jiang_plugin_dir . "/php.vim/syntax/php.vim"
+    execute "!sed -i" . (g:jiang_os == 'macOS' ? " ''" : "") . " -E 's/(syn region phpFoldElse .+start=.)(.+)(else[^i+]+\\+)(.+)$/\\1\\\\(\\2\\\\)\\\\@<=\\3\\\\(if\\\\)\\\\=\\4/g' " . g:jiang_plugin_dir . "/php.vim/syntax/php.vim"
     execute "!sed -i" . (g:jiang_os == 'macOS' ? " ''" : "") . " -E 's/(syn region phpFoldSwitch .+z1)}(.+)$/\\1\\\\(}\\\\)\\\\@=\\2/g' " . g:jiang_plugin_dir . "/php.vim/syntax/php.vim"
     execute "!sed -i" . (g:jiang_os == 'macOS' ? " ''" : "") . " -E 's/(syn region phpFoldWhile .+z1)}(.+)$/\\1\\\\(}\\\\)\\\\@=\\2/g' " . g:jiang_plugin_dir . "/php.vim/syntax/php.vim"
     execute "!sed -i" . (g:jiang_os == 'macOS' ? " ''" : "") . " -E 's/(syn region phpFoldDoWhile .+z1)(.+)\\\\\\((.+)$/\\1\\\\(\\2\\3/g' " . g:jiang_plugin_dir . "/php.vim/syntax/php.vim"
