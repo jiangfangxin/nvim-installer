@@ -27,6 +27,9 @@ nnoremap <C-\> :vs<CR><C-]>
 " 新建空白的标签页
 nnoremap <leader>t :tabe<CR>
 
+" 回到上一个buffer
+nnoremap <silent> <leader>bp :e #<CR>
+
 " 对比两个文件的差异，在当前文件的COMMAND栏输入要diff的文件
 " :diffsplit {file-path}
 " internal,filler是默认项，我主要添加了vertical让默认的diff为纵向

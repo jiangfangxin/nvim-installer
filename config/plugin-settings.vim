@@ -150,10 +150,6 @@ inoremap <silent> <C-p> <ESC>:Files<CR>
 vnoremap <silent> <C-p> :<C-u>Files<CR>
 " :Buffers 实时模糊搜索buffers
 nnoremap <silent> <C-b> :Buffers<CR>
-" 回到上一个buffer
-nnoremap <silent> <leader>bp :bprevious<CR>
-" 去到下一个buffer
-nnoremap <silent> <leader>bn :bnext<CR>
 " :Ag [PATTERN] 使用Ag搜索项目所有文件，Alt + a 全选，Alt + d 全不选
 nnoremap <silent> <C-f> :Ag<CR>
 " :BLines [QUERY] 对当前文件进行行搜索
