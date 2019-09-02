@@ -27,7 +27,6 @@
 let g:vimsyn_folding = 'af'
 let g:markdown_folding = 1
 let g:tex_fold_enabled = 1
-let g:xml_syntax_folding = 1
 let g:javaScript_fold = 1
 let g:sh_fold_enabled= 7
 let g:ruby_fold = 1
@@ -37,7 +36,10 @@ let g:r_syntax_folding = 1
 let g:rust_fold = 1
 let g:php_folding = 1 " 启用php文件的syntax折叠
 set foldlevelstart=99 " 99表示打开文件时默认不折叠
-" 对于html和xml在manual模式下折叠快捷键
+" html和xml标签比较多，最好还是手动折叠
+" 所以不用：let g:xml_syntax_folding = 1
+autocmd FileType html,xml setlocal foldmethod=manual
+" 对于html和xml在nanual模式下折叠快捷键
 nnoremap <leader>zt vatzf
 vnoremap <leader>zt atzf
 " zR：展开所有折叠          zM：关闭所有折叠

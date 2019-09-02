@@ -33,12 +33,11 @@ set mouse=a
 " F7：切换paste粘贴模式，insert模式下从外部复制代码就不会改变代码原格式
 set pastetoggle=<F7>
 
-" 在insert模式下连续按j-k可以立即回到normal模式
+" 在insert模式下连续按jj/jk/jl可以立即回到normal模式
 " `^：回到上一次insert的位置
 inoremap jj <ESC>`^
-inoremap kk <ESC>`^
 inoremap jk <ESC>`^
-inoremap kj <ESC>`^
+inoremap jl <ESC>`^
 
 " 切换开启列高亮显示，用于对齐
 nnoremap <leader>fc :set cursorcolumn!<CR>
