@@ -26,6 +26,8 @@ nnoremap <C-\> :vs<CR><C-]>
 " 在新tab页打开当前文件：Ctrl + w T
 " 新建空白的标签页
 nnoremap <leader>t :tabe<CR>
+" 新建文件浏览的标签页
+nnoremap <leader>T :tabe .<CR>
 
 " 回到上一个buffer
 nnoremap <silent> <leader>bp :e #<CR>
