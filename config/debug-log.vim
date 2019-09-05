@@ -31,6 +31,13 @@ augroup jiang_laravel_debug_log
     autocmd FileType php nnoremap <silent> <leader>lc :<C-u>%s/^\( *\)\(\/\/ \)\?\(.*--jfx.*\)$/\1\/\/ \3/<CR>
     " 启用所有注释的log
     autocmd FileType php nnoremap <silent> <leader>ll :<C-u>%s/^\( *\)\/\/ \(.*--jfx.*\)$/\1\2/<CR>
+    " 新增sql log
+    " 需要在vendor/laravel/framework/src/Illuminate/Database/Connection.php:330中添加代码
+    " if (isset($_GET['logSql']) && $_GET['logSql'] == 1) { /* --jfx */
+    "     logger('~$', ['sql-dump' => $query]); /* --jfx */
+    "     logger('~$', ['bindings' => $bindings]); /* --jfx */
+    " } /* --jfx */
+    autocmd FileType php nnoremap <silent> <leader>ls o$_GET['logSql'] = 1; /* --jfx */<ESC>F1
 augroup END
 
 " vim调试log
