@@ -358,7 +358,7 @@ autocmd FileType blade setlocal foldmethod=manual
 let g:deoplete#enable_at_startup = 1
 " 延迟200毫秒弹出补全菜单，开启智能大小写
 call deoplete#custom#option({
-            \ 'auto_complete_delay': 200,
+            \ 'auto_complete_delay': 500,
             \ 'smart_case': v:true
             \})
 " Omni提示会阻塞deoplete，所以慎用！

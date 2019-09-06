@@ -73,7 +73,7 @@ vnoremap <S-Down> <Down>
 " Shift + Right 用e来前进一个单词
 " Vim默认Shift + Right是w，但是e会好用些
 nnoremap <S-Right> e
-inoremap <S-Right> <C-o>e
+inoremap <expr> <S-Right> ((getline('.')[col('.')-1] =~ '[_a-zA-Z0-9]') && (getline('.')[col('.')] =~ '[^a-zA-Z0-9]')) ? "<Right>" : "<ESC>ea"
 vnoremap <S-Right> e
 
 " Ctrl + d: 向右删除一个word
