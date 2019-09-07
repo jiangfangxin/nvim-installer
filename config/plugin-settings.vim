@@ -373,6 +373,8 @@ augroup jiang_phpactor
   autocmd!
   " 调用phpactor的选项菜单
   autocmd FileType php nnoremap <buffer> <leader>mm :call phpactor#ContextMenu()<CR>
+  " 调用phpactor的use引入菜单
+  autocmd FileType php nnoremap <buffer> <leader>mp :call phpactor#UseAdd()<CR>
   " 跳转到定义处
   autocmd FileType php nnoremap <buffer> <C-]> :call phpactor#GotoDefinition()<CR>
   autocmd FileType php nnoremap <buffer> <C-\> :vs<CR>:call phpactor#GotoDefinition()<CR>
