@@ -206,6 +206,40 @@ nnoremap <leader>bd :bdelete FAR*<C-a><CR>
 " zo：展开文件搜索条目          zc：折叠文件搜索条目    za：展开/折叠文件搜索条目
 " zr：展开所有搜索条目          zm：折叠所有文件搜索条目
 
+" 插件tpope/vim-eunuch自定义设置
+" 自己定义了一个命令:Copy
+command -nargs=1 Copy :call Jiang_Copy_Current_File(expand('%'), '<args>')
+function Jiang_Copy_Current_File(source, distination)
+    let src = fnameescape(a:source)
+    let dis = fnameescape(a:distination)
+    let dir = fnameescape(fnamemodify(a:distination, ':h'))
+    call mkdir(dir, 'p')
+    call system('cp ' . src . ' ' . dis)
+    if isdirectory(dis)
+        call execute('e ' . dir . '/'. fnamemodify(a:source, ':t'))
+    else
+        call execute('e ' . dis)
+    endif
+endf
+" 复制当前文件到指定位置
+nnoremap <leader>fc :Copy <C-r>%
+vnoremap <leader>fc <ESC>:Copy <C-r>%
+" 移动当前文件以及buffer到指定位置
+nnoremap <leader>fm :Move <C-r>%
+vnoremap <leader>fm <ESC>:Move <C-r>%
+" 删除当前文件以及文件的buffer
+nnoremap <leader>fD :Delete
+vnoremap <leader>fD <ESC>:Delete
+" 修改当前文件的权限
+nnoremap <leader>fp :Chmod \| call trim('<C-r>=substitute(system("ls -l ".expand("%")), "\\v(\\s+\\d+){4}:.*$", "", "")<CR>') \| echo trim(system('ls -l %'))<Home><Right><Right><Right><Right><Right><Space>
+vnoremap <leader>fp <ESC>:Chmod \| call trim('<C-r>=substitute(system("ls -l ".expand("%")), "\\v(\\s+\\d+){4}:.*$", "", "")<CR>') \| echo trim(system('ls -l %'))<Home><Right><Right><Right><Right><Right><Space>
+" 以当前文件路径为基础创建文件夹
+nnoremap <leader>md :Mkdir <C-r>=expand('%:h')<CR>
+vnoremap <leader>md <ESC>:Mkdir <C-r>=expand('%:h')<CR>
+" 以根目录为基础创建文件夹
+nnoremap <leader>mD :Mkdir<Space>
+vnoremap <leader>mD <ESC>:Mkdir<Space>
+
 " 插件scrooloose/nerdtree自定义设置
 " <CR>：查看目录或在当前窗口打开文件
 " o：查看目录或在当前窗口打开文件   O：展开当前节点的所有子节点

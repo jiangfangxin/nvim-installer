@@ -8,9 +8,9 @@ set splitbelow      " 横向打开文件显示在下侧
 " Ctrl + r + "/0~9/+/*等：输出指定寄存器中的内容
 
 " 复制当前文件的相对路径
-nnoremap <leader>yf :let @*='<C-r>%'<CR>
+nnoremap <leader>yy :let @*='<C-r>%'<CR>
 " 复制当前文件的绝对路径
-nnoremap <leader>yy :let @*='<C-r>=expand("%:p")<CR>'<CR>
+nnoremap <leader>yp :let @*='<C-r>=expand("%:p")<CR>'<CR>
 
 " 在新页面打开光标所在路径的文件，gf默认情况下在本页面打开需要跳转的文件，我们让它在新页面打开
 nnoremap gf :vertical wincmd f<CR>

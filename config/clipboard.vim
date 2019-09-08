@@ -51,6 +51,10 @@ nnoremap P "*P
 vnoremap p "*p
 vnoremap P "*P
 
+" 复制整个文件内容
+nnoremap <leader>yf :<C-u>1,$y *<CR>
+vnoremap <leader>yf <ESC>:<C-u>1,$y *<CR>
+
 " 选择给定行数，因为默认的V选择在带有v:count时有问题。
 " 前面的j是为了抵消掉用户按下的数字，然后再用k回到原处，需要比较是否走到文件末尾，如果是就差值返回。
 nnoremap <expr> V (line('.') == line('$') ? "<ESC>V" : "j".((v:count1 <= line('$')-line('.') ? v:count1 : line('$')-line('.')) ."kV". (v:count1 > 1 ? (v:count-1)."j" : "")))

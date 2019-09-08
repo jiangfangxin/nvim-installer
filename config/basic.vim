@@ -39,7 +39,11 @@ inoremap jj <ESC>`^
 inoremap jk <ESC>`^
 inoremap jl <ESC>`^
 
+" 切换开启行高亮显示
+nnoremap <leader>hl :set cursorline!<CR>
+vnoremap <leader>hl <ESC>:set cursorline!<CR>gv
+
 " 切换开启列高亮显示，用于对齐
-nnoremap <leader>fc :set cursorcolumn!<CR>
-vnoremap <leader>fc <ESC>:set cursorcolumn!<CR>gv
+nnoremap <leader>hc :set cursorcolumn!<CR>
+vnoremap <leader>hc <ESC>:set cursorcolumn!<CR>gv
 
