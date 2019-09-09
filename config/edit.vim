@@ -101,10 +101,10 @@ endf
 augroup jiang_run_code
   autocmd!
   " 运行指定行的bash代码
-  autocmd FileType sh nnoremap <buffer> <expr> <leader>r ":<C-u>.," . (v:count1-1 <= line('$')-line('.') ? line('.')+v:count1-1 : "$") . "w !bash<CR>"
+  autocmd FileType sh nnoremap <buffer> <expr> <leader>r ":<C-u>" .line('.'). "," . (v:count1-1 <= line('$')-line('.') ? line('.')+v:count1-1 : "$") . "w !bash<CR>"
   autocmd FileType sh vnoremap <buffer> <leader>r :<C-u>'<,'>w !bash<CR>
   " 运行指定行的php代码
-  autocmd FileType php nnoremap <buffer> <expr> <leader>r ":<C-u>.," . (v:count1-1 <= line('$')-line('.') ? line('.')+v:count1-1 : "$") . "w !php -a<CR>"
+  autocmd FileType php nnoremap <buffer> <expr> <leader>r ":<C-u>" .line('.'). "," . (v:count1-1 <= line('$')-line('.') ? line('.')+v:count1-1 : "$") . "w !php -a<CR>"
   autocmd FileType php vnoremap <buffer> <leader>r :<C-u>'<,'>w !php -a<CR>
 augroup END
 
