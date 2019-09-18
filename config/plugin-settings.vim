@@ -269,6 +269,7 @@ vnoremap <silent> <F8> <ESC>:TagbarToggle<CR>gv
 " Ctrl + n：跳转到上一个节点        Ctrl + p：跳转到下一个节点
 
 " 插件ludovicchabant/vim-gutentags自定义设置
+" 插件会自动识别.git、.hg等所在的目录为项目目录，在保存时后台自动生成tags文件
 let g:gutentags_cache_dir = '~/.cache/gutentags' " 在gutentags这个缓存目录中存放所有项目的tags文件避免污染项目
 " Ctrl + ]：跳转到定义  Ctrl + t：跳转回来
 
@@ -279,6 +280,8 @@ let g:NERDCommentEmptyLines = 1 " 空白行也添加注释
 " [count]<leader>cc         ：comment-comment 添加行注释
 " [count]<leader>cu         ：comment-undo    取消行注释
 " [count]<leader>c<Space>   ：comment-toggle  切换行注释
+" [count]<leader>cn         ：comment-nested  对单词或片段代码注释
+" [count]<leader>cs         ：comment-sexy    块注释用于函数介绍
 " <leader>cA                ：comment-add     在行尾添加注释
 
 " 插件terryma/vim-multiple-cursors自定义设置
