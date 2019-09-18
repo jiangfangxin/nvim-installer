@@ -29,6 +29,8 @@ set shiftwidth=4    " 缩进宽度设置为4个space
 
 " 支持鼠标，a：表示所有模式，i：insert模式，v：visual模式
 set mouse=a
+" 鼠标右键为弹出菜单, 该模式下Shift+左键是扩展选择区域
+set mousemodel=popup
 
 " F7：切换paste粘贴模式，insert模式下从外部复制代码就不会改变代码原格式
 set pastetoggle=<F7>
