@@ -271,7 +271,6 @@ vnoremap <silent> <F8> <ESC>:TagbarToggle<CR>gv
 " 插件ludovicchabant/vim-gutentags自定义设置
 " 插件会自动识别.git、.hg等所在的目录为项目目录，在保存时后台自动生成tags文件
 let g:gutentags_cache_dir = '~/.cache/gutentags' " 在gutentags这个缓存目录中存放所有项目的tags文件避免污染项目
-" Ctrl + ]：跳转到定义  Ctrl + t：跳转回来
 
 " 插件crooloose/nerdcommenter自定义设置
 let g:NERDSpaceDelims = 1       " 注释后添加空格
@@ -414,7 +413,7 @@ augroup jiang_phpactor
   autocmd FileType php nnoremap <buffer> <leader>mp :call phpactor#UseAdd()<CR>
   " 跳转到定义处
   autocmd FileType php nnoremap <buffer> <C-]> :call phpactor#GotoDefinition()<CR>
-  autocmd FileType php nnoremap <buffer> <C-\> :vs<CR>:call phpactor#GotoDefinition()<CR>
+  autocmd FileType php nnoremap <buffer> <C-\> <C-w>v:call phpactor#GotoDefinition()<CR>
 augroup END
 
 " 插件sbdchd/neoformat自定义设置

@@ -12,12 +12,26 @@ nnoremap <leader>yy :let @*='<C-r>%'<CR>
 " 复制当前文件的绝对路径
 nnoremap <leader>yp :let @*='<C-r>=expand("%:p")<CR>'<CR>
 
-" 在新页面打开光标所在路径的文件，gf默认情况下在本页面打开需要跳转的文件，我们让它在新页面打开
-nnoremap gf :vertical wincmd f<CR>
-" gx：用系统软件打开光标所在路径的文件
+" 跳转到光标所在位置的tag, 只存在normal模式
+" 针对不同的编程语言文件中, 可以覆盖这两个跳转到定义的操作
+" Ctrl + ]: 在当前窗口中, 打开光标处tag
+" Ctrl + \: 在纵向窗口中, 打开光标处tag
+nnoremap <C-\> <C-w>v<C-]>
+" Ctrl + t: 跳转回来
 
-" 在纵向窗口中打开tag跳转
-nnoremap <C-\> :vs<CR><C-]>
+" 在新页面打开光标所在路径或链接，gf默认情况下在本页面打开需要跳转的文件，我们让它在新页面打开
+nnoremap gf :vertical wincmd f<CR>
+vnoremap gf "ay:call Jiang_GoToFilePath(@a)<CR>
+function Jiang_GoToFilePath(file)
+    if filereadable(a:file)
+        execute "vs " . a:file
+    else
+        echohl ErrorMsg " 设置随后echo输出的配色
+        echo 'E447: 在路径中找不到文件 "' . a:file . '"'
+        echohl None     " 关闭echo配色
+    endif
+endf
+" gx：用系统软件(如:浏览器/Office/图片查看器等), 打开光标所在路径或链接
 
 " nvim自带的文件模糊搜索方式
 " 例如输入:tabe **/*file<Tab>   弹出选项有：config/plugin.vim  init.vim  install.sh  pluginManager/
