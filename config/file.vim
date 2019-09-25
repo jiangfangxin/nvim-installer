@@ -38,10 +38,19 @@ endf
 " 如果要打开所有匹配的文件可以输入:tabe config/*，然后在COMMAND栏Ctrl + a会自动补上所有匹配的文件打开文件
 
 " 在新tab页打开当前文件：Ctrl + w T
+" 新建横向文件浏览页
+nnoremap <leader>s :sp .<CR>
+" 新建纵向文件浏览页
+nnoremap <leader>v :vs .<CR>
 " 新建文件浏览的标签页
 nnoremap <leader>t :tabe .<CR>
 " 新建空白的标签页
 nnoremap <leader>T :tabe<CR>
+
+" 在横向窗口打开当前文件
+nnoremap <leader>fs :sp<CR>
+" 在纵向窗口打开当前文件
+nnoremap <leader>fv :vs<CR>
 
 " 回到上一个buffer
 nnoremap <silent> <leader>bp :e #<CR>

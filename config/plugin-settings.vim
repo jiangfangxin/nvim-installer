@@ -21,9 +21,9 @@ nnoremap <leader>fd :Gdiffsplit<CR>
 " :Gblame                   即：git blame %                 blame当前文件
 nnoremap <leader>fb :Gblame<CR>
 " :Gwrite                   即：git add %                   添加当前文件到stage
-nnoremap <leader>fs :Gwrite<CR>
+" 暂时用处不大: nnoremap <leader>fs :Gwrite<CR>
 " :G reset HEAD %           即：git reset HEAD %            添加当前文件到unstage
-nnoremap <leader>fu :G reset HEAD %<CR><CR>
+" 暂时用处不大: nnoremap <leader>fu :G reset HEAD %<CR><CR>
 " :Gread                    即：git checkout %              检出当前文件到HEAD版本
 nnoremap <leader>fx :Gread<CR>
 " :Grebase {branch}         即：git rebase {branch}         基于分支做rebase
