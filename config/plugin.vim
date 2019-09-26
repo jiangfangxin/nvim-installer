@@ -36,6 +36,7 @@ Plug 'mattn/emmet-vim', { 'on': 'EmmetInstall' }                                
 Plug 'StanAngeloff/php.vim', { 'for': 'php', 'do': function('Jiang_ChangePhpHighlight') }     " PHP语法支持插件
 Plug 'jwalton512/vim-blade', { 'for': 'blade' }                                               " Blade模版引擎语法支持
 Plug 'pangloss/vim-javascript'                                                                " Javascript语法支持插件
+Plug 'posva/vim-vue', { 'for': 'vue' }                                                        " Vue模板文件的语法支持
 Plug 'Shougo/deoplete.nvim', { 'do': function('Jiang_InstallDeoplete') }                      " 代码自动补全框架
 Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }                                       " 具有深度学习能力的代码补全插件
 Plug 'phpactor/phpactor', { 'for': 'php', 'do': function('Jiang_InstallPhpactor') }           " PHP代码补全

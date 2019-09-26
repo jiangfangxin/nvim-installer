@@ -282,6 +282,28 @@ let g:NERDCommentEmptyLines = 1 " 空白行也添加注释
 " [count]<leader>cn         ：comment-nested  对单词或片段代码注释
 " [count]<leader>cs         ：comment-sexy    块注释用于函数介绍
 " <leader>cA                ：comment-add     在行尾添加注释
+" 对文件嵌套其他语言时注释的支持, 如Vue中的js, PHP中的Html
+let g:jiang_ft = ''
+let g:jiang_nesting_fts = ['html', 'vue', 'php', 'blade']
+function! NERDCommenter_before()
+    if index(g:jiang_nesting_fts, &ft) >= 0
+        let g:jiang_ft = &ft
+        let stack = synstack(line('.'), col('.'))
+        if len(stack) > 0
+            let syn = synIDattr((stack)[0], 'name')
+            if len(syn) > 0
+                let syn = tolower(syn)
+                exe 'setf '.syn
+            endif
+        endif
+    endif
+endf
+function! NERDCommenter_after()
+    if index(g:jiang_nesting_fts, g:jiang_ft) >= 0
+        setf g:jiang_ft
+        let g:jiang_ft = ''
+    endif
+endf
 
 " 插件terryma/vim-multiple-cursors自定义设置
 " Ctrl + n：选择下一个      Ctrl + p：回到上一个选择
