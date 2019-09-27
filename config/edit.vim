@@ -108,5 +108,9 @@ augroup jiang_run_code
   autocmd FileType php nnoremap <buffer> <expr> <leader>R ":<C-u>" .(getline(1) =~ '\s*<?\(php\)\?\s*' ? "2,$" : "1,$"). "w !php -a<CR>"
   autocmd FileType php nnoremap <buffer> <expr> <leader>r ":<C-u>" .line('.'). "," . (v:count1-1 <= line('$')-line('.') ? line('.')+v:count1-1 : "$") . "w !php -a<CR>"
   autocmd FileType php vnoremap <buffer> <leader>r :<C-u>'<,'>w !php -a<CR>
+  " 运行指定行的javascript代码
+  autocmd FileType javascript,html,vue,blade nnoremap <buffer> <expr> <leader>R ":<C-u>1,$w !node<CR>"
+  autocmd FileType javascript,html,vue,blade nnoremap <buffer> <expr> <leader>r ":<C-u>" .line('.'). "," . (v:count1-1 <= line('$')-line('.') ? line('.')+v:count1-1 : "$") . "w !node<CR>"
+  autocmd FileType javascript,html,vue,blade vnoremap <buffer> <leader>r :<C-u>'<,'>w !node<CR>
 augroup END
 
