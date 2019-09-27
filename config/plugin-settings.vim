@@ -96,9 +96,10 @@ nmap <leader>hp <Plug>GitGutterPreviewHunk
 "         echo 'MarkSignatureOff'
 "     endif
 " endf
-" 清空buffer中marks时强制写入nvim的shada(Share Data)文件中，避免下次打开marks重现
-nnoremap m<Space> :<C-U>call signature#mark#Purge("all")<CR>:wshada!<CR>
-nnoremap M<Space> :<C-U>delmarks A-Z<CR>:wshada!<CR>
+" 删除buffer中marks和global的marks
+nnoremap m<BS> :<C-U>delmarks a-zA-Z<CR>
+" 删除buffer中marks和global的marks, 强制写入nvim的shada(Share Data)文件中，避免下次打开marks重现
+nnoremap M<BS> :<C-U>delmarks a-zA-Z<CR>:wshada!<CR>
 " m[a-zA-Z]：Mark/Unmark字母                dm[a-zA-Z]：删除某个字母的mark
 " m.       ：Mark/Unmark紧接着的一个字母    `[a-zA-Z] ：跳转到字母所在mark
 " ]`       ：跳转到下一个mark               [`        ：跳转到上一个mark
