@@ -1,36 +1,30 @@
 " ---------- debug-log.vim ----------
-" " php调试log
-" augroup jiang_php_debug_log
-"     autocmd!
-"     " 在行末添加log标识，用于调试
-"     autocmd FileType php nnoremap <silent> <leader>lj A /* --jfx */<ESC>F'b
-"     " 新增函数log
-"     autocmd FileType php nnoremap <silent> <leader>lf oerror_log('-> '); /* --jfx */<ESC>F'P
-"     autocmd FileType php nnoremap <silent> <leader>lF oerror_log('-> '); /* --jfx */<ESC>F'
-"     " 新增变量log
-"     autocmd FileType php nnoremap <silent> <leader>lv oerror_log(': ' . print_r()); /* --jfx */<ESC>F:Pf)P
-"     autocmd FileType php nnoremap <silent> <leader>lV oerror_log(': ' . print_r()); /* --jfx */<ESC>F:
-"     " 注释掉所有log
-"     autocmd FileType php nnoremap <silent> <leader>lc :<C-u>%s/^\( *\)\(\/\/ \)\?\(.*--jfx.*\)$/\1\/\/ \3/<CR>
-"     " 启用所有注释的log
-"     autocmd FileType php nnoremap <silent> <leader>ll :<C-u>%s/^\( *\)\/\/ \(.*--jfx.*\)$/\1\2/<CR>
-" augroup END
+" php调试log
+augroup jiang_php_debug_log
+    autocmd!
+    " 在行末添加log标识，用于调试
+    autocmd FileType php nnoremap <silent> <leader>lj A /* --jfx */<ESC>F'b
+    " 新增函数log
+    autocmd FileType php nnoremap <silent> <leader>lef oerror_log('-> '); /* --jfx */<ESC>F'P
+    autocmd FileType php nnoremap <silent> <leader>leF oerror_log('-> '); /* --jfx */<ESC>F'
+    " 新增变量log
+    autocmd FileType php nnoremap <silent> <leader>lev oerror_log(': ' . print_r()); /* --jfx */<ESC>F:Pf)P
+    autocmd FileType php nnoremap <silent> <leader>leV oerror_log(': ' . print_r()); /* --jfx */<ESC>F:
+    " 注释掉所有log
+    autocmd FileType php nnoremap <silent> <leader>lc :<C-u>%s/^\( *\)\(\/\/ \)\?\(.*--jfx.*\)$/\1\/\/ \3/<CR>
+    " 启用所有注释的log
+    autocmd FileType php nnoremap <silent> <leader>ll :<C-u>%s/^\( *\)\/\/ \(.*--jfx.*\)$/\1\2/<CR>
+augroup END
 
 " Laravel调试log
 augroup jiang_laravel_debug_log
     autocmd!
-    " 在行末添加log标识，用于调试
-    autocmd FileType php nnoremap <silent> <leader>lj A /* --jfx */<ESC>F'b
     " 新增函数log
     autocmd FileType php nnoremap <silent> <leader>lf ologger('-> '.''); /* --jfx */<ESC>F'P
     autocmd FileType php nnoremap <silent> <leader>lF ologger('-> '.''); /* --jfx */<ESC>F'
     " 新增变量log
     autocmd FileType php nnoremap <silent> <leader>lv ologger('~$', ['' => ]); /* --jfx */<ESC>F'Pf]P
     autocmd FileType php nnoremap <silent> <leader>lV ologger('~$', ['' => ]); /* --jfx */<ESC>F'
-    " 注释掉所有log
-    autocmd FileType php nnoremap <silent> <leader>lc :<C-u>%s/^\( *\)\(\/\/ \)\?\(.*--jfx.*\)$/\1\/\/ \3/<CR>
-    " 启用所有注释的log
-    autocmd FileType php nnoremap <silent> <leader>ll :<C-u>%s/^\( *\)\/\/ \(.*--jfx.*\)$/\1\2/<CR>
 augroup END
 
 " vim调试log
