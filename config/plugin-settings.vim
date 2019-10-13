@@ -286,6 +286,15 @@ let g:NERDCommentEmptyLines = 1 " 空白行也添加注释
 " 对文件嵌套其他语言时注释的支持, 如Vue中的js, PHP中的Html
 let g:jiang_ft = ''
 let g:jiang_nesting_fts = ['html', 'vue', 'php', 'blade']
+function Jiang_Simplify_Nesting_Filetype(ft)
+    if a:ft =~ 'php.*'
+        return 'php'
+    elseif a:ft =~ 'html.*'
+        return 'html'
+    else
+        return tolower(a:ft)
+    endif
+endf
 function! NERDCommenter_before()
     if index(g:jiang_nesting_fts, &ft) >= 0
         let g:jiang_ft = &ft
@@ -293,7 +302,7 @@ function! NERDCommenter_before()
         if len(stack) > 0
             let syn = synIDattr((stack)[0], 'name')
             if len(syn) > 0
-                let syn = tolower(syn)
+                let syn = Jiang_Simplify_Nesting_Filetype(syn)
                 exe 'setf '.syn
             endif
         endif
@@ -301,7 +310,7 @@ function! NERDCommenter_before()
 endf
 function! NERDCommenter_after()
     if index(g:jiang_nesting_fts, g:jiang_ft) >= 0
-        setf g:jiang_ft
+        exe 'setf '.g:jiang_ft
         let g:jiang_ft = ''
     endif
 endf
