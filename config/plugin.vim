@@ -10,6 +10,7 @@
 
 call plug#begin(g:jiang_plugin_dir)
 Plug 'mhinz/vim-startify'                                                                     " 自定义vim启动页
+Plug 'wsdjeg/vim-fetch'                                                                       " 支持在文件末尾添加行号和列号
 Plug 'tpope/vim-fugitive', { 'do': function('Jiang_ChangeFugitive') }                         " 支持在nvim中使用Git
 Plug 'airblade/vim-gitgutter', { 'on': 'GitGutterEnable' }                                    " 显示Git文件的变化
 Plug 'kshenoy/vim-signature', { 'do': function('Jiang_FixSignature') }                        " 在最左侧显示marks

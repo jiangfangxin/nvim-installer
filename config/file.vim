@@ -8,9 +8,9 @@ set splitbelow      " 横向打开文件显示在下侧
 " Ctrl + r + "/0~9/+/*等：输出指定寄存器中的内容
 
 " 复制当前文件的相对路径
-nnoremap <leader>yy :let @*='<C-r>%'<CR>
+nnoremap <leader>yy :let @*='<c-r>=expand("%") .":". line(".") .":". col(".")<cr>'<CR>
 " 复制当前文件的绝对路径
-nnoremap <leader>yp :let @*='<C-r>=expand("%:p")<CR>'<CR>
+nnoremap <leader>yp :let @*='<c-r>=expand("%:p") .":". line(".") .":". col(".")<cr>'<CR>
 
 " 跳转到光标所在位置的tag, 只存在normal模式
 " 针对不同的编程语言文件中, 可以覆盖这两个跳转到定义的操作
@@ -37,7 +37,6 @@ endf
 " 例如输入:tabe **/*file<Tab>   弹出选项有：config/plugin.vim  init.vim  install.sh  pluginManager/
 " 如果要打开所有匹配的文件可以输入:tabe config/*，然后在COMMAND栏Ctrl + a会自动补上所有匹配的文件打开文件
 
-" 在新tab页打开当前文件：Ctrl + w T
 " 当前窗口浏览文件
 nnoremap <leader>e :e .<CR>
 " 新建横向文件浏览页
@@ -53,6 +52,9 @@ nnoremap <leader>T :tabe<CR>
 nnoremap <leader>fs :sp<CR>
 " 在纵向窗口打开当前文件
 nnoremap <leader>fv :vs<CR>
+" 在新tab页打开当前文件：Ctrl + w T
+" 在新tab页复制当前文件
+nnoremap <silent> <leader>fT :tabe <C-r>=expand('%') .':'. line('.') .':'. col('.')<CR><CR>
 
 " 回到上一个buffer
 nnoremap <silent> <leader>bp :e #<CR>
