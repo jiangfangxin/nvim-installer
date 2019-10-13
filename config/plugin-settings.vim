@@ -5,6 +5,9 @@ let g:startify_change_to_dir = 0
 " 打开文件时自动cd到git等项目的根目录
 let g:startify_change_to_vcs_root = 1
 
+" 插件wsdjeg/vim-fetch自定义设置
+" gF: 跳转到光标所在路径包括行号和列号
+
 " 插件tpope/vim-fugitive自定义设置
 " :G  / :Git   [command]    即：:!git [command]             在vim中调用bash命令git
 " :G! / :Git!  [command]    即：:!git [command]             在vim中调用bash命令git，输出结果到一个临时文件中

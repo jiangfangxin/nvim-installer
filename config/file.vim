@@ -31,6 +31,7 @@ function Jiang_GoToFilePath(file)
         echohl None     " 关闭echo配色
     endif
 endf
+" gF: 跳转到光标所在路径, 包括行号和列号, 由插件wsdjeg/vim-fetch提供的功能
 " gx：用系统软件(如:浏览器/Office/图片查看器等), 打开光标所在路径或链接
 
 " nvim自带的文件模糊搜索方式
