@@ -114,3 +114,6 @@ augroup jiang_run_code
   autocmd FileType javascript,html,vue,blade vnoremap <buffer> <leader>r :<C-u>'<,'>w !node<CR>
 augroup END
 
+" 搜索项目中的TODO和FIXME
+nnoremap <leader>do :Ag TODO\|FIXME<CR>
+
