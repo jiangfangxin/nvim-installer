@@ -156,12 +156,12 @@ vnoremap <silent> <C-p> :<C-u>Files<CR>
 nnoremap <silent> <C-b> :Buffers<CR>
 " :Ag [PATTERN] 使用Ag搜索项目所有文件，Alt + a 全选，Alt + d 全不选
 nnoremap <silent> <C-f> :Ag<CR>
-" :BLines [QUERY] 对当前文件进行行搜索
-nnoremap <silent> <C-l> :BLines<CR>
-" :Tags [QUERY] 搜索项目内的所有标签，绑定苹果键盘的Alt + g（mac-keyboard）
-nnoremap <silent> © :Tags<CR>
-" :BTags [QUERY] 搜索当前文件内的所有标签
-nnoremap <silent> <C-g> :BTags<CR>
+" :BLines [QUERY] 对当前文件进行行搜索，绑定苹果键盘的Alt + f（mac-keyboard）
+nnoremap <silent> ƒ :BLines<CR>
+" :Tags [QUERY] 搜索项目内的所有标签
+nnoremap <silent> <C-g> :Tags<CR>
+" :BTags [QUERY] 搜索当前文件内的所有标签，绑定苹果键盘的Alt + g（mac-keyboard）
+nnoremap <silent> © :BTags<CR>
 " :History 搜索之前打开的文件以及buffer
 nnoremap <silent> <C-h> :History<CR>
 inoremap <silent> <C-h> <ESC>:History<CR>
@@ -320,9 +320,9 @@ endf
 
 " 插件terryma/vim-multiple-cursors自定义设置
 " Ctrl + n：选择下一个      Ctrl + p：回到上一个选择
-" Ctrl + x：跳过这个选择    Alt  + f：选择全部匹配（mac-keyboard）
+" Ctrl + x：跳过这个选择    Ctrl + k：选择全部匹配
 " :MultipleCursorsFind [your-search-string][\c|\C]  选择命令
-let g:multi_cursor_select_all_word_key = 'ƒ'
+let g:multi_cursor_select_all_word_key = '<C-k>'
 " 退出visual模式时不退出多光标模式
 let g:multi_cursor_exit_from_visual_mode = 0
 " 退出insert模式时不退出多光标模式
