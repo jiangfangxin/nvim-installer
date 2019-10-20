@@ -8,9 +8,9 @@ set splitbelow      " 横向打开文件显示在下侧
 " Ctrl + r + "/0~9/+/*等：输出指定寄存器中的内容
 
 " 复制当前文件的相对路径
-nnoremap <leader>yy :let @*='<c-r>=expand("%") .":". line(".") .":". col(".")<cr>'<CR>
+nnoremap <leader>yy :let @*='<C-r>=expand("%") .":". line(".") .":". col(".")<CR>'<CR>
 " 复制当前文件的绝对路径
-nnoremap <leader>yp :let @*='<c-r>=expand("%:p") .":". line(".") .":". col(".")<cr>'<CR>
+nnoremap <leader>yp :let @*='<C-r>=expand("%:p") .":". line(".") .":". col(".")<CR>'<CR>
 
 " 跳转到光标所在位置的tag, 只存在normal模式
 " 针对不同的编程语言文件中, 可以覆盖这两个跳转到定义的操作
@@ -49,6 +49,8 @@ nnoremap <leader>t :tabe .<CR>
 " 新建空白的标签页
 nnoremap <leader>T :tabe<CR>
 
+" 在当前窗口打开当前文件
+nnoremap <leader>fe :e %<CR>
 " 在横向窗口打开当前文件
 nnoremap <leader>fs :sp<CR>
 " 在纵向窗口打开当前文件

@@ -259,7 +259,9 @@ vnoremap <leader>mD <ESC>:Mkdir<Space>
 " I：隐藏或显示隐藏文件             B：打开或关闭书签浏览器
 " q：关闭nerdtree文件浏览器         A：最小或最大化nerdtree窗口
 " m：显示选项菜单                   ?：toggle help
- 
+" 在NERFTree中找到当前文件
+nnoremap <leader>fr :NERDTreeFind %<CR>
+
 " 插件majutsushi/tagbar自定义设置
 " 需要安装：brew/apt install universal ctags
 " F8：关闭或开启Tagbar，用于浏览当前文件对象和函数大纲
