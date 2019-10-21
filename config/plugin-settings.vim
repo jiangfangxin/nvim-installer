@@ -407,7 +407,7 @@ vmap ga <Plug>(EasyAlign)
 " 插件mattn/emmet-vim自定义设置
 " 只在html和css文件中启用Emmet
 let g:user_emmet_install_global = 0
-autocmd FileType html,css,blade EmmetInstall
+autocmd FileType html,css,blade,vue EmmetInstall
 " 只在insert和visual模式下启用Emmet
 let g:user_emmet_mode = 'iv'
 " Ctrl + y + , ：触发Emmet自动生成代码
@@ -431,7 +431,7 @@ autocmd FileType blade setlocal foldmethod=manual
 let g:deoplete#enable_at_startup = 1
 " 延迟200毫秒弹出补全菜单，开启智能大小写
 call deoplete#custom#option({
-            \ 'auto_complete_delay': 500,
+            \ 'auto_complete_delay': 200,
             \ 'smart_case': v:true
             \})
 " Omni提示会阻塞deoplete，所以慎用！
