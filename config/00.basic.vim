@@ -23,7 +23,7 @@ vnoremap <leader>fn <ESC>:set number! relativenumber!<CR>gv
 " augroup END
 
 " 缩进设置
-set expandtab       " 用space来替换tab
+" set expandtab     " 用space来替换tab
 set tabstop=4       " tab显示为4格的宽度
 set shiftwidth=4    " 缩进宽度设置为4个space
 

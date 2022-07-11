@@ -3,7 +3,6 @@
 ## 摘要
 
 在Mac或者Ubuntu中自动安装Neovim和Neovim的主题以及Neovim插件
-**注意: 还没有在Ubuntu上正式的测试过**
 
 ## 如何使用
 

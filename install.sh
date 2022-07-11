@@ -44,9 +44,6 @@ colorDir=$HOME/.config/nvim/colors
 pluginManagerDir=$HOME/.local/share/nvim/site/autoload
 pluginsDir=$HOME/.local/share/nvim/plugged
 
-# All Config:basic theme search file netrw edit debug-log plugin-dependent plugin plugin-settings mac-keyboard clipboard
-configFiles="basic theme search file edit debug-log plugin-dependent plugin plugin-settings mac-keyboard clipboard"
-
 # Theme
 themeRepostry=https://github.com/tomasr/molokai.git
 themeFilePath=colors/molokai.vim
@@ -56,16 +53,21 @@ pluginManagerRepostry=https://github.com/junegunn/vim-plug.git
 pluginManagerPath=plug.vim
 
 # System check
-if [[ "$OSTYPE" == "darwin"* ]] || [[ "$OSTYPE" == "linux"* && -x "$(which apt)" ]]; then
-    echo "System supported."
-else
-    echo "System not support."
+if [[ "$OSTYPE" == "darwin"* ]]; then # Mac
+    OS=Mac
+    echo "Mac supported."
+elif [[ "$OSTYPE" == "linux"* && -x "$(which apt)" ]]; then # Ubuntu
+    OS=Ubuntu
+    echo "Ubuntu supported."
+else # Others
+    OS=Other
+    echo "System not support now."
     quit 1
 fi
 
 # Functions
 installHomeBrewIfMac() {
-    if [[ "$OSTYPE" == "darwin"* && ! -x "$(which brew)" ]]; then
+    if [[ "$OS" == "Mac"* && "" == "$(which brew)" ]]; then   # [[]] is more powerfull test command which support pattern.
         read -p "Package manager HomeBrew not exits, do you want to install it? [y/n] " choice
         if [ "$choice" == "y" ]; then
             # There always has ruby on mac.
@@ -83,18 +85,18 @@ installHomeBrewIfMac() {
 }
 
 installGit() {
-    if [ ! -x "$(which git)" ]; then
+    if [[ "" == "$(which git)" ]]; then
         read -p "Git is not exist, try to install it? [y/n] " choice
         if [ "$choice" == "y" ]; then
-            case "$OSTYPE" in
-                "darwin"*) # Mac
+            case "$OS" in
+                "Mac"*) # Mac
                     if brew install git; then
                         echo "Git installed."
                     else
                         echo "Install Git failed."
                         quit 1
                     fi;;
-                "linux"*) # Ubuntu
+                "Ubuntu"*) # Ubuntu
                     if sudo apt install git; then
                         echo "Git installed."
                     else
@@ -110,16 +112,16 @@ installGit() {
 }
 
 installNeovim() {
-    if [ ! -x $(which nvim) ]; then
-        case "$OSTYPE" in
-            "darwin"*) # Mac
+    if [[ "" == $(which nvim) ]]; then
+        case "$OS" in
+            "Mac"*) # Mac
                 if brew install neovim; then
                     echo "Neovim installed."
                 else
                     echo "Install neovim failed."
                     quit 1
                 fi;;
-            "linux"*) # Ubuntu
+            "Ubuntu"*) # Ubuntu
                 if sudo apt install neovim; then
                     echo "Neovim installed."
                 else
@@ -160,9 +162,9 @@ cleanOldBackup() {
     elif [ $(ls $prefix*$suffix 2>/dev/null | wc -l) -gt 3 ]; then   # Only delete backup when count more than 3.
         # Delete backup more than 30 days.
         # The date syntax has some diffrent between Ubuntu and Mac.
-        case "$OSTYPE" in
-            "darwin"*) lastMonth=$(date -v -30d +%Y%m%d%H%M%S) ;;       # Mac
-            "linux"*)  lastMonth=$(date -d "-30 days" +%Y%m%d%H%M%S) ;; # Ubuntu
+        case "$OS" in
+            "Mac"*) lastMonth=$(date -v -30d +%Y%m%d%H%M%S) ;;       # Mac
+            "Ubuntu"*)  lastMonth=$(date -d "-30 days" +%Y%m%d%H%M%S) ;; # Ubuntu
         esac
         for f in $prefix*$suffix; do
             # Delete path only leave time to compare.
@@ -177,11 +179,35 @@ cleanOldBackup() {
 }
 
 installConfig() {
+    # 读取config目录下的配置文件
+    files=() # 定义一个空数组
+    for file in $(ls $workDir/config); do
+        if [[ "$file" == "--."* ]]; then
+            echo "Ignored disabled config: $file"
+        elif [[ "$file" == *".mac.vim" && "$OS" != "Mac" ]]; then
+            echo "Ignored unpaired config: $file"
+        elif [[ "$file" == *".ubuntu.vim" && "$OS" != "Ubuntu" ]]; then
+            echo "Ignored unpaired config: $file"
+        else
+            # 插入排序：递增
+            len=${#files[@]}
+            for (( i=0; $i < $len; i++)); do
+                if [[ $file < ${files[$i]} ]]; then
+                    break
+                fi
+            done
+            for (( j=$len; $j > $i; j--)); do
+                files[$j]=${files[$j-1]}
+            done
+            files[$i]=$file
+        fi
+    done
+
     # Merge neovim config to one init.vim file
-    cat /dev/null > init.vim
-    for file in $configFiles; do
-        cat config/$file.vim >> init.vim
-        echo "config/$file.vim >> init.vim"
+    echo "" > init.vim
+    for file in ${files[@]}; do
+        cat config/$file >> init.vim
+        echo "config/$file >> init.vim"
     done
 
     # Check init.vim
@@ -221,11 +247,17 @@ installTheme() {
         mkdir -p $colorDir
     fi
 
-    if [ -d theme ]; then
-        rm -rf theme
+    if [ ! -d theme ]; then
+        if [ -d theme~ ]; then
+            rm -rf theme~
+        fi
+        if git clone $themeRepostry theme~; then
+            mv theme~ theme
+        else
+            quit 1
+        fi
     fi
 
-    git clone $themeRepostry theme
     cp theme/$themeFilePath $colorDir/
     echo "Theme updated."
     
@@ -246,11 +278,17 @@ installPluginManager() {
         mkdir -p $pluginManagerDir
     fi
 
-    if [ -d pluginManager ]; then
-        rm -rf pluginManager
+    if [ ! -d pluginManager ]; then
+        if [ -d pluginManager~ ]; then
+            rm -rf pluginManager~
+        fi
+        if git clone $pluginManagerRepostry pluginManager~; then
+            mv pluginManager~ pluginManager
+        else
+            quit 1
+        fi
     fi
 
-    git clone $pluginManagerRepostry pluginManager
     cp pluginManager/$pluginManagerPath $pluginManagerDir/
     echo "Plugin manager updated."
 
@@ -258,30 +296,8 @@ installPluginManager() {
 }
 
 installPluginNeedTools() {
-    # echo "Start install plugin need tools."
-    # Plugin [majutsushi/tagbar](https://github.com/majutsushi/tagbar) needed.
-    # case "$OSTYPE" in
-    #     "darwin"*) brew tap universal-ctags/universal-ctags           # Mac
-	#                brew install --HEAD universal-ctags;;
-    #     "linux"*)  git clone https://github.com/universal-ctags/ctags # Ubuntu
-    #                cd ctags
-    #                ./autogen.sh
-    #                ./configure  # 默认是安装到/usr/local
-    #                make
-    #                make install;; # 安装的时候可能还需要其他权限，未测试
-    # esac
-    # Plugin [Shougo/deoplete.nvim](https://github.com/Shougo/deoplete.nvim.git) needed.
-    # case "$OSTYPE" in
-    #     "darwin"*) brew install python3;;     # Mac
-    #     "linux"*)  sudo apt install python3;; # Ubuntu
-    # esac
-    # pip3 install pynvim
-    # Plugin [phpactor/phpactor](https://github.com/phpactor/phpactor.git) needed.
-    # case "$OSTYPE" in
-    #     "darwin"*) brew install composer;;     # Mac
-    #     "linux"*)  sudo apt install composer;; # Ubuntu
-    # esac
-    echo "Tools installed.";
+    # This will installed in config/plugin-dependent.vim
+    echo "Tools install later.";
 }
 
 installPlugins() {
